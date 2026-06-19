@@ -20,8 +20,8 @@
 <link href="./icons/icon-180.png?v=3" rel="apple-touch-icon" sizes="180x180"/>
 <meta content="./icons/icon-192.png?v=3" name="msapplication-TileImage"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <script>
         if (window.tailwind) {
             tailwind.config = {
@@ -819,7 +819,7 @@
   @media(max-width:767px){:root{--top-btn:44px;--top-gap:.42rem}.glass-header{grid-template-columns:minmax(0,1fr)!important;gap:.58rem!important;padding:calc(.72rem + env(safe-area-inset-top)) .72rem .72rem!important;max-width:100vw!important}.glass-header>div:first-child{display:grid!important;grid-template-columns:minmax(0,1fr) 52px!important;gap:.55rem!important}#searchContainer{min-width:0!important}#searchInput{height:48px!important;min-height:48px!important;font-size:16px!important;border-radius:1rem!important}#btnVoice{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;border-radius:1rem!important}#voiceFilterBadge{grid-column:1/-1!important;width:100%!important;min-width:0!important;justify-content:space-between!important}#voiceFilterText{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}.glass-header>div:nth-child(2){display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:.42rem!important;width:100%!important;overflow:visible!important}.glass-header>div:nth-child(2)>button,#btnAutoSync,#btnDailyPanel,#btnFocusMode,#btnTaskModels,#btnProductivityDashboard,#btnQuickFilters,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header button[onclick="openModal()"],#quickFiltersMenuWrap,#mobileJarvisActions{width:100%!important;min-width:0!important;height:44px!important;min-height:44px!important;flex:initial!important}#mobileJarvisActions{display:contents!important}.glass-header>div:nth-child(2)>.h-5{display:none!important}#viewSwitcher{grid-column:1/-1!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%!important;margin-left:0!important;padding:.25rem!important;border-radius:1rem!important}#viewSwitcher .view-btn{min-width:0!important;height:42px!important}main#reportContainer{padding:.8rem!important;gap:.85rem!important;max-width:100vw!important;overflow-x:hidden!important}.planner-toolbar{padding:.9rem!important;border-radius:1rem!important}#plannerView article,.hud-card,.hud-column{border-radius:1rem!important;padding:.88rem!important}#plannerView article [onclick*="toggleTaskStatus"],#plannerView article [onclick*="deleteTaskById"],.hud-card [onclick*="toggleTaskStatus"],.hud-card [onclick*="deleteTaskById"]{min-width:40px!important;min-height:40px!important}}
   @media(max-width:420px){.glass-header{padding-left:.55rem!important;padding-right:.55rem!important}.glass-header>div:nth-child(2){grid-template-columns:repeat(4,minmax(0,1fr))!important}#searchInput{font-size:15px!important}}
 </style>
-</link></link></head>
+</head>
 <body class="min-h-screen flex antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
 <!-- OVERLAY DO NÚCLEO JARVIS 3D -->
 <div class="fixed inset-0 z-[100] hidden bg-[#05050a]/75 flex flex-col items-center justify-center transition-opacity duration-300 opacity-0" id="jarvisOverlay">
@@ -5352,7 +5352,7 @@ function normalizeText(str) {
     const menu=$id('quickFiltersMenu');if(!menu||menu.dataset.ws10)return;menu.dataset.ws10='1';
     menu.innerHTML=`<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-amber-200 hover:bg-amber-500/10 transition" onclick="applyQuickTaskFilter({ todayOnly: true, label: 'Hoje' })" type="button"><i class="fas fa-sun w-4 text-center text-amber-400"></i><span><span class="block">Hoje</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Demandas do dia</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ overdueOnly: true, label: 'Atrasadas' })" type="button"><i class="fas fa-triangle-exclamation w-4 text-center text-rose-400"></i><span><span class="block">Atrasadas</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Vencidas</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ priority: 'Urgente', label: 'Urgentes' })" type="button"><i class="fas fa-fire w-4 text-center text-rose-400"></i><span><span class="block">Urgentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Prioridade urgente</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-cyan-200 hover:bg-cyan-500/10 transition" onclick="applyQuickTaskFilter({ status: 'Aguardando orçamento', label: 'Aguardando orçamento' })" type="button"><i class="fas fa-file-signature w-4 text-center text-cyan-400"></i><span><span class="block">Aguardando orçamento</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Propostas pendentes</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-fuchsia-200 hover:bg-fuchsia-500/10 transition" onclick="applyQuickTaskFilter({ recurringOnly: true, label: 'Recorrentes' })" type="button"><i class="fas fa-repeat w-4 text-center text-fuchsia-400"></i><span><span class="block">Recorrentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Automações ativas</span></span></button><div class="my-2 border-t border-white/10"></div><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:bg-white/5 transition" onclick="clearAllQuickTaskFilters()" type="button"><i class="fas fa-eraser w-4 text-center text-slate-400"></i><span><span class="block">Limpar filtros</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Voltar à visão atual</span></span></button>`;
   }
-  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.5 — Lista de Números Corrigida';}
+  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.6 — Lista de Números Corrigida';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
   Object.assign(window,{workspace10:{version:VERSION,openDailyPanel,openFocusMode,openTaskModelsPanel,openProductivityDashboard,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone,taskModels:TASK_MODELS}});
 })();
@@ -5374,7 +5374,7 @@ function normalizeText(str) {
 <script id="jarvis11-mega-brain">
 (function(){
   'use strict';
-  const VERSION='11.3-mega-brain-final-lote-neural';
+  const VERSION='11.7-pacote-regras-seguro';
   const RULE_KEY='jarvisBrain.rules.v11';
   const LEGACY_RULE_KEY='jarvisBrain.rules.v10';
   const HISTORY_KEY='jarvisBrain.history.v11';
@@ -5424,6 +5424,11 @@ function normalizeText(str) {
     priority_alta:['alta','alto','importante','prioridade alta','atenção','atencao'],
     priority_urgente:['urgente','urgencia','urgência','muito urgente','prioridade maxima','prioridade máxima','pra ontem','para ontem','emergencial','critico','crítico','critica','crítica'],
     bulk:['tarefas','itens','demandas','pendencias','pendências','varias','várias','em lote','lista'],
+    view_day:['dia','hoje','diaria','diário','agenda do dia','visao dia','visão dia'],
+    view_week:['semana','semanal','esta semana','agenda semanal','agenda da semana','visao semana','visão semana'],
+    view_month:['mes','mês','mensal','este mes','este mês','agenda mensal','agenda do mes','agenda do mês','visao mes','visão mês'],
+    view_year:['ano','anual','este ano','agenda anual','agenda do ano','visao ano','visão ano'],
+    view_notes:['notas','nota','anotacoes','anotações','bloco de notas','caderno'],
     confirm:['sim','pode','pode fazer','pode executar','executar','confirmar','confirmo','ok','positivo','isso','aplicar'],
     deny:['nao','não','negativo','cancelar','cancela','deixa','deixa quieto']
   };
@@ -5440,6 +5445,7 @@ function normalizeText(str) {
     ['categoria','Categoria / condomínio','nome total ou parcial do condomínio','Categoria continua sendo o condomínio.'],
     ['titulo','Título','texto livre','Usado para criar ou editar tarefa.'],
     ['comentario','Comentário','texto livre','Usado para observações da tarefa.'],
+    ['visao','Visualização','dia, hoje, semana, mês, ano, notas','Muda a visualização da agenda sem depender de intenção fixa.'],
     ['periodo','Período','hoje, semana, mês, ano, atrasadas, urgentes','Usado para filtros e resumos.'],
     ['recorrencia','Recorrência','diária, semanal, mensal, anual, todo mês','Usado para rotinas.']
   ];
@@ -5456,6 +5462,7 @@ function normalizeText(str) {
     {id:'add_comment',name:'Adicionar comentário',group:'Tarefas',action:'TASK_ADD_COMMENT',risk:'baixo',slots:['numero','comentario'],desc:'Adicionar observação/comentário em uma tarefa.'},
     {id:'create_task',name:'Criar tarefa',group:'Tarefas',action:'TASK_CREATE',risk:'baixo',slots:['titulo'],desc:'Criar uma nova tarefa, com data/categoria/prioridade opcionais.'},
     {id:'show_date',name:'Mostrar data',group:'Visualização',action:'SHOW_DATE',risk:'baixo',slots:['data'],desc:'Abrir agenda de uma data específica.'},
+    {id:'set_view',name:'Mudar visualização',group:'Visualização',action:'SET_VIEW',risk:'baixo',slots:['visao'],desc:'Alternar entre dia, semana, mês, ano ou notas por comando de voz.'},
     {id:'filter_status',name:'Filtrar status',group:'Visualização',action:'FILTER_STATUS',risk:'baixo',slots:['status'],desc:'Mostrar tarefas por status.'},
     {id:'filter_priority',name:'Filtrar prioridade',group:'Visualização',action:'FILTER_PRIORITY',risk:'baixo',slots:['prioridade'],desc:'Mostrar tarefas por prioridade.'},
     {id:'filter_category',name:'Filtrar categoria/condomínio',group:'Visualização',action:'FILTER_CATEGORY',risk:'baixo',slots:['categoria'],desc:'Mostrar tarefas de uma categoria/condomínio.'},
@@ -5482,6 +5489,21 @@ function normalizeText(str) {
     summary_day:['resumo do dia','resumo de hoje','meu dia','painel do dia','hoje eu preciso resolver'],
     undo_last:['desfazer ultima acao','desfazer última ação','desfazer','voltar ultima acao','reverter ultima acao']
   };
+
+
+  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
+  function isPackageRule(rule){return /^(model|package|pacote)$/i.test(String(rule?.source||'')) || String(rule?.name||'').toLowerCase().startsWith('pacote') || !!rule?.packageId || rule?.auxiliary===true}
+  function isProtectedPlan(plan){return !!plan && PROTECTED_NATIVE_ACTIONS.has(String(plan.action||''))}
+  function candidatePriority(plan){
+    if(!plan)return 0;
+    if(/^Nativo/.test(String(plan.source||'')))return 400;
+    if(plan.source==='Inferência')return 120;
+    if(isPackageRule(plan.rule))return 20;
+    if(plan.rule)return 220;
+    return 100;
+  }
+  function cleanPackageRules(list){return (Array.isArray(list)?list:[]).filter(r=>!isPackageRule(r))}
+  function packageRuleForIntent(intent){return {id:uid('r'),name:'Pacote auxiliar — '+intent.name,kind:'action',intent:intent.id,action:intent.action,triggers:MODEL_TRIGGERS[intent.id]||[],finalCommand:intent.action,enabled:true,auto:true,minConfidence:72,askBelow:70,risk:intent.risk,source:'package',packageId:'core-models-11-7',auxiliary:true,created_at:new Date().toISOString()}}
 
   function $(id){return document.getElementById(id)}
   function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn);else fn()}
@@ -5589,6 +5611,17 @@ function normalizeText(str) {
     const value=firstMatchingValue(raw,{Baixa:['priority_baixa'], Normal:['priority_normal'], Alta:['priority_alta'], Urgente:['priority_urgente']});
     return value || '';
   }
+  function parseView(raw){
+    const n=norm(raw);
+    if(!n)return '';
+    if(hasAny(n,'view_notes') || /\b(bloco de notas|notas|anotacoes|anotacao)\b/.test(n))return 'notes';
+    if(hasAny(n,'view_week') || /\b(semana|semanal)\b/.test(n))return 'week';
+    if(hasAny(n,'view_month') || /\b(mes|mensal)\b/.test(n))return 'month';
+    if(hasAny(n,'view_year') || /\b(ano|anual)\b/.test(n))return 'year';
+    if(hasAny(n,'view_day') || /\b(dia|hoje|diaria|diario)\b/.test(n))return 'day';
+    return '';
+  }
+  function viewLabel(v){return {day:'dia',week:'semana',month:'mês',year:'ano',notes:'notas'}[v]||String(v||'')}
   function parseDate(raw){
     const n=norm(raw); const now=new Date(); now.setHours(0,0,0,0);
     if(/\bhoje\b/.test(n))return iso(now);
@@ -5628,9 +5661,38 @@ function normalizeText(str) {
     try{if(window.jarvisConversation && Array.isArray(window.jarvisConversation.numberedTaskIds))return window.jarvisConversation.numberedTaskIds.map(Number);}catch(e){}
     return [];
   }
+  function domVisualTaskMap(){
+    const list=allTasks();
+    const byId=new Map(list.map(t=>[Number(t.id),t]));
+    const out=[];
+    const seen=new Set();
+    try{
+      const nodes=[...document.querySelectorAll('[onclick*=\"editTask(\"]')];
+      for(const node of nodes){
+        const attr=String(node.getAttribute('onclick')||'');
+        const idMatch=attr.match(/editTask\((\d+)\)/);
+        if(!idMatch)continue;
+        const id=Number(idMatch[1]);
+        const scope=node.closest('article,tr,.hud-card,.ws10-card,.rounded-2xl,.rounded-3xl')||node;
+        const txt=String(scope.textContent||'');
+        const numMatch=txt.match(/#\s*(\d{1,4})/);
+        if(!numMatch)continue;
+        const number=Number(numMatch[1]);
+        if(!Number.isFinite(number)||!byId.has(id)||seen.has(number))continue;
+        seen.add(number);
+        out.push({number,id,task:byId.get(id)});
+      }
+    }catch(e){}
+    return out.sort((a,b)=>a.number-b.number);
+  }
   function visualTaskMap(){
     const list=allTasks();
-    return currentNumberedIds().map((id,i)=>({number:i+1,id,task:list.find(t=>Number(t.id)===Number(id))})).filter(x=>x.task);
+    const dom=domVisualTaskMap();
+    if(dom.length)return dom;
+    const fromMemory=currentNumberedIds().map((id,i)=>({number:i+1,id,task:list.find(t=>Number(t.id)===Number(id))})).filter(x=>x.task);
+    if(fromMemory.length)return fromMemory;
+    const v=visibleTasks();
+    return v.map((task,i)=>({number:i+1,id:task.id,task}));
   }
   function getRules(){
     let list=[]; try{list=JSON.parse(localStorage.getItem(RULE_KEY)||'[]')}catch(e){list=[]}
@@ -5701,12 +5763,15 @@ function normalizeText(str) {
     if(slot==='status')return parseStatus(raw);
     if(slot==='prioridade')return parsePriority(raw);
     if(slot==='data')return parseDate(raw);
+    if(slot==='visao')return parseView(raw);
     if(slot==='categoria')return findCategory(raw)||String(raw||'').trim();
     if(slot==='titulo'||slot==='comentario'||slot==='texto')return String(raw||'').trim();
     return String(raw||'').trim();
   }
   function patternForSlot(slot){
-    if(slot==='numero')return '((?:numero\\s*)?\\d{1,4}|um|uma|primeiro|primeira|dois|duas|segundo|segunda|tres|terceiro|terceira|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|catorze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte(?:\\s+e\\s+(?:um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove))?)';
+    if(slot==='numero')return '((?:numero\s*)?\d{1,4}|um|uma|primeiro|primeira|dois|duas|segundo|segunda|tres|terceiro|terceira|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|catorze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte(?:\s+e\s+(?:um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove))?)';
+    if(slot==='numeros')return '(.+?)';
+    if(slot==='visao')return '(dia|hoje|semana|semanal|mes|mês|mensal|ano|anual|notas|bloco de notas|agenda do dia|agenda da semana|agenda do mes|agenda do mês|agenda do ano|agenda semanal|agenda mensal|agenda anual)';
     if(slot==='status')return '(.+?)';
     if(slot==='prioridade')return '(.+?)';
     if(slot==='data')return '(.+?)';
@@ -5729,7 +5794,8 @@ function normalizeText(str) {
       const m=normalized.match(c.regex); if(!m)continue;
       const slots={}; c.vars.forEach((v,i)=>{slots[v]=slotValue(v,m[i+1]||'')});
       const missing=(intentById(rule.intent).slots||[]).filter(s=>!slots[s] && s!=='titulo' && s!=='comentario');
-      return makePlan({source:'Regra aprendida',rule,trigger,raw,normalized,intent:rule.intent||guessIntentFromFinal(rule.finalCommand).id,action:rule.action||intentById(rule.intent).action,slots,confidence:missing.length?68:96,missing});
+      const fromPackage=isPackageRule(rule);
+      return makePlan({source:fromPackage?'Pacote auxiliar':'Regra aprendida',rule,trigger,raw,normalized,intent:rule.intent||guessIntentFromFinal(rule.finalCommand).id,action:rule.action||intentById(rule.intent).action,slots,confidence:missing.length?68:(fromPackage?72:96),missing});
     }
     return null;
   }
@@ -5755,6 +5821,8 @@ function normalizeText(str) {
     if(date && num && hasAny(n,'reschedule')){return makePlan({source:'Nativo',raw,normalized:n,intent:'reschedule_task',action:'TASK_RESCHEDULE',slots:{numero:num,data:date},confidence:92})}
     if(hasAny(n,'comment') && num){let c=n.replace(/^.*?(?:tarefa|item|demanda|pendencia)?\s*(?:numero\s*)?\d+\s*/,'').trim(); if(c)return makePlan({source:'Nativo',raw,normalized:n,intent:'add_comment',action:'TASK_ADD_COMMENT',slots:{numero:num,comentario:c},confidence:89})}
     if(hasAny(n,'create')){let title=clean.replace(/^(criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|salvar|salva)\s+(tarefa|demanda|item)?\s*/i,'').trim(); if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',prioridade:priority||'',status:status||'',categoria:findCategory(n)||''},confidence:86})}
+    const visao=parseView(n);
+    if(visao && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'set_view',action:'SET_VIEW',slots:{visao},confidence:94});
     if(date && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'show_date',action:'SHOW_DATE',slots:{data:date},confidence:90});
     if(priority && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_priority',action:'FILTER_PRIORITY',slots:{prioridade:priority},confidence:88});
     if(status && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_status',action:'FILTER_STATUS',slots:{status},confidence:88});
@@ -5772,7 +5840,7 @@ function normalizeText(str) {
     let confidence=Number(p.confidence||70); if(missing.length)confidence=Math.min(confidence,62);
     const plan={id:uid('plan'),raw:p.raw||'',normalized:p.normalized||norm(p.raw),source:p.source||'Mega Brain',rule:p.rule||null,trigger:p.trigger||'',intent:p.intent,action:p.action||intent.action,slots,required:intent.slots||[],missing,risk:p.risk||intent.risk,confidence,errors:[],warnings:[],task:null,taskError:''};
     if((intent.slots||[]).includes('numero')){const res=resolveTask(slots,p.raw||''); plan.task=res.task; plan.taskError=res.error||''; if(!res.task)plan.errors.push(res.error||'Tarefa não localizada.'); if(res.byTitle)plan.warnings.push('Tarefa localizada por similaridade, não por número.');}
-    if((intent.slots||[]).includes('numeros')){const res=resolveTasksByNumbers(slots.numeros||p.raw||''); plan.slots.numeros=res.nums; plan.tasks=res.resolved; if(!res.resolved.length)plan.errors.push('Nenhuma tarefa da lista foi localizada na visualização atual.'); if(res.missing.length)plan.errors.push(`Não encontrei as tarefas ${res.missing.join(', ')} na visualização atual.`);}
+    if((intent.slots||[]).includes('numeros')){const res=resolveTasksByNumbers(slots.numeros||p.raw||''); plan.slots.numeros=res.nums; plan.tasks=res.resolved; if(!res.nums.length)plan.errors.push('Não consegui identificar os números das tarefas.'); else { if(!res.resolved.length)plan.warnings.push('A lista será resolvida novamente no momento da execução.'); if(res.missing.length)plan.warnings.push(`Algumas tarefas serão conferidas na execução: ${res.missing.join(', ')}.`); }}
     missing.forEach(s=>plan.errors.push(`Variável obrigatória ausente: ${s}.`));
     return plan;
   }
@@ -5780,11 +5848,14 @@ function normalizeText(str) {
     const text=String(raw||'').trim(); const clean=stripWake(text); const pieces=splitCompound(clean);
     if(pieces.length>1){const plans=pieces.map(p=>analyze(p).best).filter(Boolean); if(plans.length===pieces.length){return {raw:text,normalized:norm(clean),compound:true,plans,best:{action:'COMPOUND',intent:'compound',confidence:Math.min(...plans.map(p=>p.confidence)),errors:plans.flatMap(p=>p.errors),warnings:plans.flatMap(p=>p.warnings),slots:{},source:'Composto'}}}}
     const candidates=[];
-    getRules().filter(r=>r.enabled!==false).forEach(r=>{const m=matchRule(r,text); if(m)candidates.push(m)});
     const n=nativePlan(text); if(n)candidates.push(n);
-    candidates.sort((a,b)=>b.confidence-a.confidence);
+    getRules().filter(r=>r.enabled!==false).forEach(r=>{
+      if(isPackageRule(r) && isProtectedPlan(n))return;
+      const m=matchRule(r,text); if(m)candidates.push(m)
+    });
+    candidates.sort((a,b)=>candidatePriority(b)-candidatePriority(a) || b.confidence-a.confidence);
     const best=candidates[0]||null;
-    const conflicts=candidates.length>1 && candidates[1].confidence>=((best?.confidence||0)-8) ? candidates.slice(0,3) : [];
+    const conflicts=candidates.length>1 && candidatePriority(candidates[1])===candidatePriority(best) && candidates[1].confidence>=((best?.confidence||0)-8) ? candidates.slice(0,3) : [];
     if(best && conflicts.length>1)best.warnings.push('Possível conflito com outra intenção.');
     return {raw:text,normalized:norm(clean),candidates,best,conflicts,compound:false};
   }
@@ -5844,15 +5915,26 @@ function normalizeText(str) {
   }
   function executeBulkAction(plan){
     const s=plan.slots||{};
-    const resolvedSource=Array.isArray(plan.tasks)&&plan.tasks.length?plan.tasks:resolveTasksByNumbers(s.numeros||plan.raw).resolved;
-    const resolved=resolvedSource.filter(x=>x&&x.task);
-    if(!resolved.length)return {ok:false,message:'Entendi o lote, mas não encontrei nenhuma tarefa da lista na visualização atual.'};
     const base=bulkBaseAction(plan);
     if(!base)return {ok:false,message:'Entendi o lote, mas a ação-base não foi definida.'};
+    if(!['TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY'].includes(base))return {ok:false,message:'Entendi o lote, mas essa ação-base ainda não executa em várias tarefas.'};
     if(base==='TASK_RESCHEDULE'&&!s.data)return {ok:false,message:'Entendi o lote, mas falta a data de destino.'};
     if(base==='TASK_SET_STATUS'&&!s.status)return {ok:false,message:'Entendi o lote, mas falta o status.'};
     if(base==='TASK_SET_PRIORITY'&&!s.prioridade)return {ok:false,message:'Entendi o lote, mas falta a prioridade.'};
-    if(!['TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY'].includes(base))return {ok:false,message:'Entendi o lote, mas essa ação-base ainda não executa em várias tarefas.'};
+
+    const nums=Array.isArray(s.numeros)?s.numeros.map(Number).filter(Boolean):numbersFromText(s.numeros||plan.raw||'');
+    if(!nums.length)return {ok:false,message:'Entendi que é uma ação em lote, mas não identifiquei os números das tarefas.'};
+
+    const resolved=[], missing=[];
+    for(const num of nums){
+      const direct=resolveTaskByNumber(num);
+      if(direct&&direct.task)resolved.push({number:num,task:direct.task,id:direct.task.id});
+      else missing.push(num);
+    }
+    if(!resolved.length){
+      const disponiveis=visualTaskMap().map(x=>`#${x.number}`).slice(0,30).join(', ');
+      return {ok:false,message:`Entendi o lote, mas não encontrei as tarefas ${nums.join(', ')} na visualização atual.${disponiveis?` Números visíveis: ${disponiveis}.`:''}`};
+    }
 
     const ids=resolved.map(x=>Number(x.task.id)).filter(Boolean);
     pushUndo('Ação em lote',ids);
@@ -5861,30 +5943,22 @@ function normalizeText(str) {
       const childSlots=Object.assign({},s,{numero:item.number});
       delete childSlots.numeros;
       delete childSlots.baseAction;
-      const childPlan={
-        source:'Executor de lote',
-        raw:plan.raw,
-        normalized:plan.normalized,
-        intent:childIntentForBulk(base),
-        action:base,
-        slots:childSlots,
-        task:item.task,
-        confidence:99,
-        risk:'baixo',
-        errors:[]
-      };
+      const before=clone(item.task);
+      const childPlan={source:'Executor de lote',raw:`${bulkActionLabel(base)} tarefa ${item.number}`,normalized:plan.normalized,intent:childIntentForBulk(base),action:base,slots:childSlots,task:item.task,confidence:99,risk:'baixo',errors:[]};
       const result=executePlan(childPlan,{confirmed:true,bulkChild:true});
-      if(result&&result.ok&&verifyBulkSingle(item.task,base,childSlots))ok.push(item);
-      else failed.push({item,result});
+      const after=allTasks().find(t=>Number(t.id)===Number(item.task.id))||item.task;
+      const verified=result&&result.ok&&verifyBulkSingle(after,base,childSlots);
+      if(verified)ok.push(item);
+      else { Object.assign(item.task,before); failed.push({item,result}); }
     }
     try{if(typeof saveToStorage==='function')saveToStorage()}catch(e){}
     try{if(typeof updateCategoryFilter==='function')updateCategoryFilter()}catch(e){}
     try{if(typeof render==='function')render()}catch(e){}
 
     const okNums=ok.map(x=>'#'+x.number).join(', ');
-    const failNums=failed.map(x=>'#'+x.item.number).join(', ');
+    const failNums=[...new Set([...failed.map(x=>'#'+x.item.number),...missing.map(x=>'#'+x)])].join(', ');
     if(!ok.length)return {ok:false,message:`Entendi o lote, mas nenhuma tarefa foi alterada${failNums?` (${failNums})`:''}.`};
-    if(failed.length)return {ok:false,message:`Ação em lote aplicada parcialmente: ${okNums}. Não consegui alterar: ${failNums}.`};
+    if(failed.length||missing.length)return {ok:false,message:`Ação em lote aplicada parcialmente: ${okNums}. Não consegui alterar/localizar: ${failNums}.`};
     const detalhe=base==='TASK_RESCHEDULE'?` para ${formatDateBR(s.data)}`:base==='TASK_SET_STATUS'?` para ${statusLabelSafe(s.status)}`:base==='TASK_SET_PRIORITY'?` para ${s.prioridade}`:'';
     return {ok:true,message:`Ação em lote aplicada: ${ok.length} tarefas ${bulkActionLabel(base)}${detalhe} (${okNums}).`};
   }
@@ -5895,7 +5969,7 @@ function normalizeText(str) {
       const results=[]; for(const p of opts.plans||[]){const r=executePlan(p,Object.assign({},opts,{skipConfirm:true})); if(!r.ok)return r; results.push(r.message)}
       return {ok:true,message:`Executei ${results.length} ações.`};
     }
-    if(plan.errors&&plan.errors.length)return {ok:false,message:plan.errors[0]};
+    if(plan.errors&&plan.errors.length && plan.action!=='BULK_ACTION')return {ok:false,message:plan.errors[0]};
     const cfg=settings();
     const highRisk=['alto'].includes(plan.risk)||['TASK_DELETE','BULK_ACTION'].includes(plan.action);
     if(!opts.confirmed && (cfg.safeMode || plan.confidence<cfg.minAutoConfidence || (highRisk&&cfg.confirmHighRisk))){
@@ -5910,6 +5984,7 @@ function normalizeText(str) {
       if(plan.action==='UNDO_LAST_ACTION'){return undoLastAction()}
       if(plan.action==='BULK_ACTION'){return executeBulkAction(plan)}
       if(plan.action==='SHOW_DATE'){if(typeof setView==='function')setView('day'); window.plannerDate=s.data; if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false}); if(typeof render==='function')render(); return {ok:true,message:`Visualização de ${formatDateBR(s.data)} ativada.`}}
+      if(plan.action==='SET_VIEW'){const view=s.visao||parseView(plan.raw); if(view==='notes'){if(typeof setView==='function')setView('notes'); else {window.currentView='notes'; if(typeof render==='function')render();} return {ok:true,message:'Visualização de notas ativada.'}} if(!['day','week','month','year'].includes(view))return {ok:false,message:'Entendi que deseja mudar a visualização, mas não identifiquei dia, semana, mês ou ano.'}; if(typeof setView==='function')setView(view); else {window.currentView=view; if(typeof render==='function')render();} if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false}); if(typeof render==='function')render(); return {ok:true,message:`Visualização de ${viewLabel(view)} ativada.`}}
       if(plan.action==='FILTER_STATUS'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({status:s.status,label:statusLabelSafe(s.status)}); else {window.voiceFilter={status:s.status,label:statusLabelSafe(s.status)}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando ${statusLabelSafe(s.status)}.`}}
       if(plan.action==='FILTER_PRIORITY'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({priority:s.prioridade,label:`Prioridade ${s.prioridade}`}); else {window.voiceFilter={priority:s.prioridade,label:`Prioridade ${s.prioridade}`}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando prioridade ${s.prioridade}.`}}
       if(plan.action==='FILTER_CATEGORY'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({category:s.categoria,label:s.categoria}); else {window.voiceFilter={category:s.categoria,label:s.categoria}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando ${s.categoria}.`}}
@@ -5988,7 +6063,8 @@ function normalizeText(str) {
   function clearForm(){fillForm({name:'',kind:'action',intent:'complete_task',action:'TASK_COMPLETE',triggers:[],finalCommand:'',enabled:true,auto:true,minConfidence:90,askBelow:70})}
   function fillForm(r){buildModal(); const intent=intentById(r.intent||'complete_task'); const values={j11Id:r.id||'',j11Name:r.name||'',j11Kind:r.kind||'action',j11Intent:r.intent||intent.id,j11Triggers:Array.isArray(r.triggers)?r.triggers.join('\n'):(r.trigger||''),j11Final:r.finalCommand||r.answer||'',j11MinConfidence:r.minConfidence||90,j11AskBelow:r.askBelow||70}; Object.entries(values).forEach(([id,val])=>{const el=$(id); if(el)el.value=val}); const en=$('j11Enabled'); if(en)en.checked=r.enabled!==false; const au=$('j11Auto'); if(au)au.checked=r.auto!==false; updateIntentHelp(); activeTab='learn'; renderAll()}
   function loadModel(intentId){const i=intentById(intentId); fillForm({name:i.name,kind:i.id==='answer'?'answer':'action',intent:i.id,triggers:MODEL_TRIGGERS[i.id]||[],finalCommand:i.action,enabled:true,auto:true,minConfidence:90,askBelow:70})}
-  function installAllModels(){const list=getRules(); INTENTS.filter(i=>MODEL_TRIGGERS[i.id]).forEach(i=>list.unshift({id:uid('r'),name:'Pacote — '+i.name,kind:'action',intent:i.id,action:i.action,triggers:MODEL_TRIGGERS[i.id],finalCommand:i.action,enabled:true,auto:true,minConfidence:90,askBelow:70,risk:i.risk,source:'model',created_at:new Date().toISOString()})); setRules(list); activeTab='rules'; renderAll(); toast('Pacote completo instalado.','fa-box-open')}
+  function installAllModels(){const base=cleanPackageRules(getRules()); const pack=INTENTS.filter(i=>MODEL_TRIGGERS[i.id]).map(packageRuleForIntent); setRules([...base,...pack]); activeTab='rules'; renderAll(); toast('Pacote auxiliar instalado sem sobrescrever comandos nativos.','fa-shield-halved')}
+  function uninstallModelRules(){const before=getRules(); const after=cleanPackageRules(before); setRules(after); activeTab='rules'; renderAll(); toast(`Removi ${before.length-after.length} regra(s) de pacote.`, 'fa-trash-can')}
   function editRule(id){const r=getRules().find(x=>x.id===id); if(r)fillForm(r)}
   function duplicateRule(id){const r=getRules().find(x=>x.id===id); if(r){const copy=Object.assign({},r,{id:uid('r'),name:(r.name||'Regra')+' — cópia'}); setRules([copy,...getRules()]);}}
   function toggleRule(id){setRules(getRules().map(r=>r.id===id?Object.assign({},r,{enabled:r.enabled===false}):r))}
@@ -6018,9 +6094,9 @@ function normalizeText(str) {
     .j11-card{background:rgba(15,23,42,.72);border:1px solid rgba(255,255,255,.075);border-radius:1.1rem;padding:1rem}.j11-soft{background:rgba(255,255,255,.035)}.j11-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:1000;color:#e2e8f0;display:flex;gap:.5rem;align-items:center}.j11-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#64748b;margin-bottom:.35rem;display:block}.j11-input,.j11-select,.j11-textarea{width:100%;background:#060b14;border:1px solid rgba(255,255,255,.09);border-radius:.85rem;color:#e2e8f0;padding:.78rem .85rem;font-size:.82rem;outline:none}.j11-textarea{min-height:140px;resize:vertical}.j11-input:focus,.j11-select:focus,.j11-textarea:focus{border-color:rgba(34,211,238,.45);box-shadow:0 0 0 3px rgba(34,211,238,.08)}
     .j11-btn{border-radius:.85rem;padding:.75rem .95rem;font-size:.72rem;font-weight:1000;text-transform:uppercase;letter-spacing:.08em;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.055);color:#e2e8f0}.j11-btn-primary{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.35);color:#cffafe}.j11-btn-green{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.28);color:#bbf7d0}.j11-btn-red{background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.28);color:#fecdd3}.j11-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.08);color:#a5f3fc;border-radius:999px;padding:.25rem .55rem;font-size:.68rem;font-weight:800}.j11-diag{background:#050a12;border:1px solid rgba(34,211,238,.16);border-radius:.9rem;padding:.9rem;font-size:.78rem;line-height:1.75;color:#cbd5e1;white-space:normal}.j11-good{color:#86efac;font-weight:900}.j11-warn{color:#fcd34d;font-weight:900}.j11-bad{color:#fda4af;font-weight:900;white-space:pre-wrap}.j11-hidden{display:none!important}.j11-table{width:100%;border-collapse:separate;border-spacing:0 .4rem;font-size:.75rem}.j11-table th{text-align:left;color:#64748b;text-transform:uppercase;font-size:.62rem;letter-spacing:.1em}.j11-table td{background:rgba(255,255,255,.035);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:.65rem}.j11-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}@media(max-width:767px){#jarvisBrainModal{align-items:flex-end!important;padding:.5rem!important}#jarvisBrainContent{max-height:calc(100svh - 1rem)!important;border-radius:1.25rem!important}.j11-table,.j11-table tbody,.j11-table tr,.j11-table td{display:block;width:100%}.j11-table thead{display:none}.j11-tabs{padding:.2rem}.j11-tab{font-size:.62rem;padding:.65rem .75rem}}
   `; document.head.appendChild(st)}
-  function buildModal(){if($('jarvisBrainModal'))return; injectStyle(); const modal=document.createElement('div'); modal.id='jarvisBrainModal'; modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200'; modal.onclick=e=>{if(e.target===modal)closePanel()}; modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300"><div class="px-5 sm:px-6 py-4 border-b border-cyan-500/10 flex justify-between items-center bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white"><i class="fas fa-brain text-cyan-300 mr-2"></i>Jarvis Mega Brain 11.3</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">central de intenções, regras, simulação, conflitos e execução segura</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto space-y-5"><div class="j11-tabs"><button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')">Criar regra</button><button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')">Intenções</button><button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')">Modelos</button><button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')">Dicionário</button><button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')">Variáveis</button><button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')">Simulador</button><button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')">Conflitos</button><button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')">Regras</button><button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')">Histórico</button><button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')">Segurança</button></div>
+  function buildModal(){if($('jarvisBrainModal'))return; injectStyle(); const modal=document.createElement('div'); modal.id='jarvisBrainModal'; modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200'; modal.onclick=e=>{if(e.target===modal)closePanel()}; modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300"><div class="px-5 sm:px-6 py-4 border-b border-cyan-500/10 flex justify-between items-center bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white"><i class="fas fa-brain text-cyan-300 mr-2"></i>Jarvis Mega Brain 11.6</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">central de intenções, regras, simulação, conflitos e execução segura</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto space-y-5"><div class="j11-tabs"><button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')">Criar regra</button><button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')">Intenções</button><button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')">Modelos</button><button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')">Dicionário</button><button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')">Variáveis</button><button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')">Simulador</button><button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')">Conflitos</button><button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')">Regras</button><button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')">Histórico</button><button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')">Segurança</button></div>
     <section data-j11-panel="learn" class="space-y-4"><div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(330px,.95fr)] gap-5"><div class="j11-card space-y-4"><div class="j11-title"><i class="fas fa-wand-magic-sparkles text-cyan-300"></i> Criador de regra inteligente</div><input type="hidden" id="j11Id"><div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="j11-label">Nome da regra</label><input id="j11Name" class="j11-input" placeholder="Ex.: Concluir tarefa"></div><div><label class="j11-label">Tipo</label><select id="j11Kind" class="j11-select" onchange="jarvisBrain.updateIntentHelp()"><option value="action">Ação estruturada</option><option value="answer">Resposta personalizada</option></select></div><div><label class="j11-label">Intenção</label><select id="j11Intent" class="j11-select" onchange="jarvisBrain.updateIntentHelp()">${INTENTS.map(i=>`<option value="${i.id}">${i.group} — ${i.name}</option>`).join('')}</select></div><div><label class="j11-label">Ação real</label><input id="j11ActionView" class="j11-input" readonly></div></div><div id="j11IntentHelp" class="j11-diag"></div><div><label class="j11-label">Frases que o Jarvis deve entender — uma por linha</label><textarea id="j11Triggers" class="j11-textarea" placeholder="concluir tarefa {numero}\ndar baixa na tarefa {numero}\nfinalizar item {numero}"></textarea></div><div><label class="j11-label">Comando / resposta final opcional</label><textarea id="j11Final" class="j11-textarea" style="min-height:80px" placeholder="Para resposta personalizada, escreva a resposta aqui. Para ação estruturada, pode deixar em branco."></textarea></div><div class="grid grid-cols-1 sm:grid-cols-4 gap-3"><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Enabled" type="checkbox" checked class="accent-cyan-500"><span class="text-xs text-slate-300 font-bold">Ativa</span></label><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Auto" type="checkbox" checked class="accent-emerald-500"><span class="text-xs text-slate-300 font-bold">Executar se seguro</span></label><div><label class="j11-label">Executa com</label><input id="j11MinConfidence" class="j11-input" type="number" min="50" max="100" value="90"></div><div><label class="j11-label">Pergunta abaixo</label><input id="j11AskBelow" class="j11-input" type="number" min="30" max="99" value="70"></div></div><div class="flex flex-wrap gap-2"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.saveRule()"><i class="fas fa-save mr-2"></i>Salvar regra</button><button class="j11-btn" onclick="jarvisBrain.validateCurrentRule()"><i class="fas fa-shield-halved mr-2"></i>Validar</button><button class="j11-btn" onclick="jarvisBrain.clearForm()">Limpar</button></div></div><div class="space-y-4"><div class="j11-card space-y-3"><div class="j11-title"><i class="fas fa-vial text-emerald-300"></i> Testador Mega Brain</div><input id="j11Test" class="j11-input" placeholder="Ex.: Jarvis, dá baixa na tarefa três"><button class="j11-btn j11-btn-green w-full" onclick="jarvisBrain.testRule()"><i class="fas fa-play mr-2"></i>Testar comando</button><div id="j11TestResult"></div></div><div class="j11-card"><div class="j11-title mb-3"><i class="fas fa-bolt text-amber-300"></i> Atalhos de modelos</div><div id="j11QuickModels" class="j11-grid"></div></div></div></div></section>
-    <section data-j11-panel="intents" class="j11-hidden"><div id="j11Intents" class="j11-grid"></div></section><section data-j11-panel="models" class="j11-hidden"><div class="j11-card mb-4 flex flex-wrap justify-between gap-3"><div><div class="j11-title">Biblioteca pronta</div><p class="text-xs text-slate-500 mt-2">Carregue um modelo no formulário ou instale o pacote completo de regras estruturadas.</p></div><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.installAllModels()">Instalar pacote completo</button></div><div id="j11Models" class="j11-grid"></div></section><section data-j11-panel="dictionary" class="j11-hidden"><div class="j11-card mb-4"><div class="j11-title">Dicionário vivo</div><p class="text-xs text-slate-500 mt-2">Adicione sinônimos sem mexer no código. Um por linha.</p></div><div id="j11Dictionary" class="j11-grid"></div></section><section data-j11-panel="variables" class="j11-hidden"><div id="j11Variables" class="j11-grid"></div></section><section data-j11-panel="simulator" class="j11-hidden"><div class="j11-card space-y-3"><div class="j11-title">Simulador em lote</div><textarea id="j11Batch" class="j11-textarea" placeholder="dar baixa na tarefa 3\nfinaliza o item três\ncoloca tarefa 2 como urgente\njoga tarefa 4 para amanhã"></textarea><button class="j11-btn j11-btn-green" onclick="jarvisBrain.simulateBatch()">Simular lote</button><div id="j11BatchResult"></div></div></section><section data-j11-panel="conflicts" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Conflitos e riscos</div><div id="j11Conflicts"></div></div></section><section data-j11-panel="rules" class="j11-hidden"><div class="j11-card"><div class="flex flex-wrap justify-between gap-3 mb-4"><div class="j11-title">Regras aprendidas</div><div class="flex gap-2"><button class="j11-btn" onclick="jarvisBrain.exportRules()">Exportar</button><button class="j11-btn" onclick="jarvisBrain.importRules()">Importar</button><input id="j11Import" type="file" accept="application/json,.json" class="hidden"></div></div><div id="j11Rules" class="space-y-3"></div></div></section><section data-j11-panel="history" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Histórico de decisões</div><div id="j11History" class="space-y-3"></div></div></section><section data-j11-panel="settings" class="j11-hidden"><div id="j11Settings" class="j11-grid"></div></section></div></div>`; document.body.appendChild(modal); bindEvents(); updateIntentHelp()}
+    <section data-j11-panel="intents" class="j11-hidden"><div id="j11Intents" class="j11-grid"></div></section><section data-j11-panel="models" class="j11-hidden"><div class="j11-card mb-4 flex flex-wrap justify-between gap-3"><div><div class="j11-title">Biblioteca pronta</div><p class="text-xs text-slate-500 mt-2">Carregue um modelo no formulário ou instale o pacote seguro como camada auxiliar, sem sobrescrever comandos nativos.</p></div><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.installAllModels()">Instalar pacote seguro</button><button class="j11-btn j11-btn-red" onclick="jarvisBrain.uninstallModelRules()">Remover pacote</button></div><div id="j11Models" class="j11-grid"></div></section><section data-j11-panel="dictionary" class="j11-hidden"><div class="j11-card mb-4"><div class="j11-title">Dicionário vivo</div><p class="text-xs text-slate-500 mt-2">Adicione sinônimos sem mexer no código. Um por linha.</p></div><div id="j11Dictionary" class="j11-grid"></div></section><section data-j11-panel="variables" class="j11-hidden"><div id="j11Variables" class="j11-grid"></div></section><section data-j11-panel="simulator" class="j11-hidden"><div class="j11-card space-y-3"><div class="j11-title">Simulador em lote</div><textarea id="j11Batch" class="j11-textarea" placeholder="dar baixa na tarefa 3\nfinaliza o item três\ncoloca tarefa 2 como urgente\njoga tarefa 4 para amanhã"></textarea><button class="j11-btn j11-btn-green" onclick="jarvisBrain.simulateBatch()">Simular lote</button><div id="j11BatchResult"></div></div></section><section data-j11-panel="conflicts" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Conflitos e riscos</div><div id="j11Conflicts"></div></div></section><section data-j11-panel="rules" class="j11-hidden"><div class="j11-card"><div class="flex flex-wrap justify-between gap-3 mb-4"><div class="j11-title">Regras aprendidas</div><div class="flex gap-2"><button class="j11-btn" onclick="jarvisBrain.exportRules()">Exportar</button><button class="j11-btn" onclick="jarvisBrain.importRules()">Importar</button><input id="j11Import" type="file" accept="application/json,.json" class="hidden"></div></div><div id="j11Rules" class="space-y-3"></div></div></section><section data-j11-panel="history" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Histórico de decisões</div><div id="j11History" class="space-y-3"></div></div></section><section data-j11-panel="settings" class="j11-hidden"><div id="j11Settings" class="j11-grid"></div></section></div></div>`; document.body.appendChild(modal); bindEvents(); updateIntentHelp()}
 
   function bindEvents(){const imp=$('j11Import'); if(imp&&!imp.__j11){imp.__j11=true;imp.addEventListener('change',handleImport)}}
   function openPanel(tab){buildModal(); activeTab=tab||activeTab||'learn'; const m=$('jarvisBrainModal'),c=$('jarvisBrainContent'); m.classList.replace('hidden','flex'); setTimeout(()=>{m.classList.add('opacity-100'); c?.classList.remove('scale-95')},15); renderAll()}
@@ -6029,7 +6105,7 @@ function normalizeText(str) {
   function renderTabs(){document.querySelectorAll('[data-j11-tab]').forEach(b=>b.classList.toggle('active',b.dataset.j11Tab===activeTab)); document.querySelectorAll('[data-j11-panel]').forEach(p=>p.classList.toggle('j11-hidden',p.dataset.j11Panel!==activeTab))}
   function renderAll(){renderTabs(); renderQuickModels(); renderIntents(); renderModels(); renderVariables(); renderDictionary(); renderRules(); renderConflicts(); renderHistory(); renderSettings(); bindEvents(); updateIntentHelp(); ensureLearningTools()}
   function updateIntentHelp(){const intent=intentById($('j11Intent')?.value||'complete_task'); const action=$('j11ActionView'); if(action)action.value=intent.action; const help=$('j11IntentHelp'); if(help)help.innerHTML=`<b>${esc(intent.name)}</b><br>${esc(intent.desc)}<br><b>Variáveis obrigatórias:</b> ${(intent.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join(' ')||'nenhuma'}<br><b>Risco:</b> ${esc(intent.risk)}`}
-  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','set_status','set_priority','reschedule_task','bulk_reschedule','bulk_complete','bulk_status','bulk_priority','add_comment','create_task'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
+  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','set_status','set_priority','reschedule_task','bulk_reschedule','bulk_complete','bulk_status','bulk_priority','set_view','add_comment','create_task'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
   function renderIntents(){const box=$('j11Intents'); if(!box)return; box.innerHTML=INTENTS.map(i=>`<div class="j11-card"><div class="j11-title">${esc(i.group)} — ${esc(i.name)}</div><p class="text-xs text-slate-400 mt-2">${esc(i.desc)}</p><div class="mt-3 flex flex-wrap gap-2">${(i.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join('')||'<span class="text-xs text-slate-500">sem variável obrigatória</span>'}</div><button class="j11-btn j11-btn-primary mt-4" onclick="jarvisBrain.loadModel('${i.id}')">Usar intenção</button></div>`).join('')}
   function renderModels(){const box=$('j11Models'); if(!box)return; box.innerHTML=Object.keys(MODEL_TRIGGERS).map(id=>{const i=intentById(id); return `<div class="j11-card"><div class="j11-title">${esc(i.name)}</div><pre class="j11-diag mt-3" style="max-height:150px;overflow:auto">${esc(MODEL_TRIGGERS[id].join('\n'))}</pre><button class="j11-btn j11-btn-primary mt-3" onclick="jarvisBrain.loadModel('${id}')">Carregar modelo</button></div>`}).join('')}
   function renderVariables(){const box=$('j11Variables'); if(!box)return; box.innerHTML=SLOT_DEFS.map(([id,name,accepts,rule])=>`<div class="j11-card"><div class="j11-title">{${id}} — ${esc(name)}</div><p class="text-xs text-slate-400 mt-3"><b>Aceita:</b> ${esc(accepts)}</p><p class="text-xs text-slate-500 mt-2"><b>Validação:</b> ${esc(rule)}</p></div>`).join('')}
@@ -6043,6 +6119,7 @@ function normalizeText(str) {
   function generatedVariationsForIntent(intentId){
     const base={
       bulk_reschedule:['reagendar tarefas {numeros} para {data}','jogar tarefas {numeros} para {data}','mover tarefas {numeros} para {data}','passar tarefas {numeros} para {data}','remarcar tarefas {numeros} para {data}','transferir tarefas {numeros} para {data}','colocar tarefas {numeros} para {data}'],
+      set_view:['mostrar {visao}','abrir {visao}','ver {visao}','ir para {visao}','mudar para {visao}','mostrar agenda da {visao}','abrir agenda da {visao}','visualizar {visao}'],
       bulk_complete:['concluir tarefas {numeros}','finalizar tarefas {numeros}','dar baixa nas tarefas {numeros}','baixar tarefas {numeros}','resolver tarefas {numeros}','encerrar tarefas {numeros}'],
       bulk_status:['alterar status das tarefas {numeros} para {status}','mudar tarefas {numeros} para {status}','colocar tarefas {numeros} como {status}','passar tarefas {numeros} para {status}','marcar tarefas {numeros} como {status}'],
       bulk_priority:['alterar prioridade das tarefas {numeros} para {prioridade}','colocar tarefas {numeros} como prioridade {prioridade}','marcar tarefas {numeros} como prioridade {prioridade}','tornar tarefas {numeros} prioridade {prioridade}']
@@ -6066,9 +6143,9 @@ function normalizeText(str) {
   function validateCurrentRule(){const r=ruleFromForm(); const problems=validateRule(r); showTestHTML(problems.length?`<div class="j11-bad">${esc(problems.join('\n'))}</div>`:'<div class="j11-good">Regra válida para salvar.</div>')}
 
   function ensureButtons(){if($('btnJarvisBrain'))return; const anchor=$('quickFiltersMenuWrap'); const parent=anchor?.parentElement||document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor?.nextSibling||null); parent.insertBefore(watch,brain.nextSibling)}
-  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 11.3 carregado.','fa-brain')}
+  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 11.7 carregado.','fa-brain')}
   ready(boot); ready(()=>{try{new MutationObserver(()=>ensureButtons()).observe(document.body,{childList:true,subtree:true})}catch(e){}});
-  window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,learnPending,testRule,simulateBatch,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
+  window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,simulateBatch,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
 })();
 
 </script>
