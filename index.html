@@ -908,7 +908,7 @@
 <img alt="Logo" class="w-10 h-10 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] ring-2 ring-white/10" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%2318e8ff'/%3E%3Cstop offset='1' stop-color='%232d7dff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='22' fill='%2302040a'/%3E%3Ccircle cx='48' cy='48' r='31' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M33 55c7 9 23 9 30 0M34 39h8M54 39h8' stroke='%2318e8ff' stroke-width='5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"/>
 <div>
 <h2 class="text-sm font-bold text-white tracking-wide uppercase">ROBERTO</h2>
-<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 10.5</p>
+<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 11.8</p>
 </div>
 </div>
 <div class="space-y-2">
@@ -5352,7 +5352,7 @@ function normalizeText(str) {
     const menu=$id('quickFiltersMenu');if(!menu||menu.dataset.ws10)return;menu.dataset.ws10='1';
     menu.innerHTML=`<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-amber-200 hover:bg-amber-500/10 transition" onclick="applyQuickTaskFilter({ todayOnly: true, label: 'Hoje' })" type="button"><i class="fas fa-sun w-4 text-center text-amber-400"></i><span><span class="block">Hoje</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Demandas do dia</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ overdueOnly: true, label: 'Atrasadas' })" type="button"><i class="fas fa-triangle-exclamation w-4 text-center text-rose-400"></i><span><span class="block">Atrasadas</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Vencidas</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ priority: 'Urgente', label: 'Urgentes' })" type="button"><i class="fas fa-fire w-4 text-center text-rose-400"></i><span><span class="block">Urgentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Prioridade urgente</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-cyan-200 hover:bg-cyan-500/10 transition" onclick="applyQuickTaskFilter({ status: 'Aguardando orçamento', label: 'Aguardando orçamento' })" type="button"><i class="fas fa-file-signature w-4 text-center text-cyan-400"></i><span><span class="block">Aguardando orçamento</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Propostas pendentes</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-fuchsia-200 hover:bg-fuchsia-500/10 transition" onclick="applyQuickTaskFilter({ recurringOnly: true, label: 'Recorrentes' })" type="button"><i class="fas fa-repeat w-4 text-center text-fuchsia-400"></i><span><span class="block">Recorrentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Automações ativas</span></span></button><div class="my-2 border-t border-white/10"></div><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:bg-white/5 transition" onclick="clearAllQuickTaskFilters()" type="button"><i class="fas fa-eraser w-4 text-center text-slate-400"></i><span><span class="block">Limpar filtros</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Voltar à visão atual</span></span></button>`;
   }
-  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.6 — Lista de Números Corrigida';}
+  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.9 — Nota por Voz Protegida';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
   Object.assign(window,{workspace10:{version:VERSION,openDailyPanel,openFocusMode,openTaskModelsPanel,openProductivityDashboard,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone,taskModels:TASK_MODELS}});
 })();
@@ -5374,7 +5374,7 @@ function normalizeText(str) {
 <script id="jarvis11-mega-brain">
 (function(){
   'use strict';
-  const VERSION='11.7-pacote-regras-seguro';
+  const VERSION='11.9-create-note-protegido';
   const RULE_KEY='jarvisBrain.rules.v11';
   const LEGACY_RULE_KEY='jarvisBrain.rules.v10';
   const HISTORY_KEY='jarvisBrain.history.v11';
@@ -5408,6 +5408,7 @@ function normalizeText(str) {
     setStatus:['alterar status','mudar status','trocar status','colocar como','deixar como','marcar como','passar para','mudar para','atualizar para'],
     setPriority:['alterar prioridade','mudar prioridade','trocar prioridade','prioridade','colocar como prioridade','deixar urgente','marcar como prioridade','tornar prioridade'],
     create:['criar','cria','crie','nova','novo','adicionar','adiciona','incluir','inclui','registrar','registra','salvar','salva'],
+    createNote:['criar nota','cria nota','crie nota','nova nota','adicionar nota','adiciona nota','incluir nota','registra nota','registrar nota','salvar nota','salva nota','anotar nas notas','anota nas notas','salvar nas notas','salva nas notas','guardar nas notas','guarda nas notas','ditar nota','nota por voz','criar anotacao','criar anotação','nova anotacao','nova anotação','bloco de notas'],
     comment:['comentario','comentário','comentar','anotar','nota','observacao','observação','registrar comentario','registrar comentário','adicionar comentario','adicionar comentário'],
     delete:['excluir','apagar','remover','deletar'],
     show:['mostrar','mostra','ver','listar','exibir','abrir','filtrar','trazer','consultar'],
@@ -5461,6 +5462,7 @@ function normalizeText(str) {
     {id:'bulk_priority',name:'Alterar prioridade em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros','prioridade'],desc:'Alterar prioridade de várias tarefas visíveis.'},
     {id:'add_comment',name:'Adicionar comentário',group:'Tarefas',action:'TASK_ADD_COMMENT',risk:'baixo',slots:['numero','comentario'],desc:'Adicionar observação/comentário em uma tarefa.'},
     {id:'create_task',name:'Criar tarefa',group:'Tarefas',action:'TASK_CREATE',risk:'baixo',slots:['titulo'],desc:'Criar uma nova tarefa, com data/categoria/prioridade opcionais.'},
+    {id:'create_note',name:'Criar nota',group:'Notas',action:'CREATE_NOTE',risk:'baixo',slots:[],desc:'Criar uma nota por voz sem cair como tarefa.'},
     {id:'show_date',name:'Mostrar data',group:'Visualização',action:'SHOW_DATE',risk:'baixo',slots:['data'],desc:'Abrir agenda de uma data específica.'},
     {id:'set_view',name:'Mudar visualização',group:'Visualização',action:'SET_VIEW',risk:'baixo',slots:['visao'],desc:'Alternar entre dia, semana, mês, ano ou notas por comando de voz.'},
     {id:'filter_status',name:'Filtrar status',group:'Visualização',action:'FILTER_STATUS',risk:'baixo',slots:['status'],desc:'Mostrar tarefas por status.'},
@@ -5482,6 +5484,7 @@ function normalizeText(str) {
     bulk_priority:['alterar prioridade das tarefas {numeros} para {prioridade}','colocar tarefas {numeros} como prioridade {prioridade}','marcar tarefas {numeros} como prioridade {prioridade}','tornar tarefas {numeros} prioridade {prioridade}','deixar tarefas {numeros} como {prioridade}'],
     add_comment:['adicionar comentario na tarefa {numero} {comentario}','anotar na tarefa {numero} {comentario}','registrar comentario na tarefa {numero} {comentario}','colocar observacao na tarefa {numero} {comentario}','comentar tarefa {numero} {comentario}'],
     create_task:['criar tarefa {titulo}','nova tarefa {titulo}','adicionar tarefa {titulo}','registrar demanda {titulo}','criar demanda {titulo}'],
+    create_note:['criar nota','nova nota','criar nota {titulo}','nova nota {titulo}','criar nota com texto {comentario}','salvar nota {comentario}','salvar isso nas notas {comentario}','anotar nas notas {comentario}','ditar nota','nota por voz'],
     show_date:['mostrar {data}','abrir {data}','ver tarefas de {data}','o que tem {data}','agenda de {data}'],
     filter_status:['mostrar {status}','listar {status}','filtrar {status}','mostrar tarefas {status}'],
     filter_priority:['mostrar prioridade {prioridade}','mostrar tarefas {prioridade}','listar prioridade {prioridade}','filtrar prioridade {prioridade}'],
@@ -5491,7 +5494,7 @@ function normalizeText(str) {
   };
 
 
-  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
+  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','CREATE_NOTE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
   function isPackageRule(rule){return /^(model|package|pacote)$/i.test(String(rule?.source||'')) || String(rule?.name||'').toLowerCase().startsWith('pacote') || !!rule?.packageId || rule?.auxiliary===true}
   function isProtectedPlan(plan){return !!plan && PROTECTED_NATIVE_ACTIONS.has(String(plan.action||''))}
   function candidatePriority(plan){
@@ -5800,6 +5803,25 @@ function normalizeText(str) {
     return null;
   }
 
+  function looksLikeMegaCreateNote(raw){
+    const clean=stripWake(raw); const n=norm(clean);
+    if(!n)return false;
+    if(typeof looksLikeVoiceNoteCreationCommand==='function' && looksLikeVoiceNoteCreationCommand(clean))return true;
+    const hasNote=/(^|\b)(nota|notas|anotacao|anotacoes|bloco de notas|caderno)(\b|$)/.test(n);
+    const directTarget=/(nas notas|no bloco|no bloco de notas|como nota|em nota)/.test(n);
+    const createVerb=hasAny(n,'create') || /(ditar|dita|escrever|escreve|anotar|anota|guardar|guarda|salvar|salva)/.test(n);
+    const viewOnly=hasAny(n,'show') && hasNote && !/(nova|novo|criar|cria|crie|salvar|salva|guardar|guarda|anotar|anota|escrever|escreve|ditar|dita|registrar|registra)/.test(n);
+    const taskNoun=/(tarefa|demanda|item|pendencia|pendência|card|cartao|cartão)/.test(n);
+    if(viewOnly)return false;
+    if(taskNoun && !hasNote && !directTarget)return false;
+    return (hasNote && createVerb) || (directTarget && /(salvar|salva|guardar|guarda|anotar|anota|registrar|registra|colocar|coloca)/.test(n));
+  }
+  function noteDraftFromRaw(raw){
+    try{if(typeof parseVoiceNoteDraft==='function')return parseVoiceNoteDraft(raw)}catch(e){}
+    const clean=stripWake(raw).replace(/^\s*(?:criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|salvar|salva|guardar|guarda|fazer|faz|escrever|escreve|ditar|dita|anotar|anota)\s+(?:uma\s+|um\s+)?(?:nova\s+|novo\s+)?(?:nota|anotacao|anotação|bloco de notas)\s*:?,?\s*/i,'').replace(/^\s*(?:salvar|salva|guardar|guarda|anotar|anota|colocar|coloca)\s+(?:isso\s+)?(?:nas notas|no bloco(?: de notas)?|como nota)\s*:?,?\s*/i,'').trim();
+    return {title:clean?clean.split(/\s+/).slice(0,7).join(' '):'Nota por voz',text:clean};
+  }
+
   function nativePlan(raw){
     const clean=stripWake(raw); const n=norm(clean); if(!n)return null;
     let slots={};
@@ -5820,10 +5842,17 @@ function normalizeText(str) {
     if(status && num && (hasAny(n,'setStatus') || /\bstatus\b|\baguardando\b|\bandamento\b|\bpendente\b|\bcancelad/.test(n))){return makePlan({source:'Nativo',raw,normalized:n,intent:'set_status',action:'TASK_SET_STATUS',slots:{numero:num,status},confidence:92})}
     if(date && num && hasAny(n,'reschedule')){return makePlan({source:'Nativo',raw,normalized:n,intent:'reschedule_task',action:'TASK_RESCHEDULE',slots:{numero:num,data:date},confidence:92})}
     if(hasAny(n,'comment') && num){let c=n.replace(/^.*?(?:tarefa|item|demanda|pendencia)?\s*(?:numero\s*)?\d+\s*/,'').trim(); if(c)return makePlan({source:'Nativo',raw,normalized:n,intent:'add_comment',action:'TASK_ADD_COMMENT',slots:{numero:num,comentario:c},confidence:89})}
+    // Rota nativa protegida: nota sempre vence tarefa.
+    if(looksLikeMegaCreateNote(raw)){
+      const draft=noteDraftFromRaw(raw);
+      return makePlan({source:'Nativo protegido',raw,normalized:n,intent:'create_note',action:'CREATE_NOTE',slots:{titulo:draft.title||'',comentario:draft.text||''},confidence:96});
+    }
     if(hasAny(n,'create')){let title=clean.replace(/^(criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|salvar|salva)\s+(tarefa|demanda|item)?\s*/i,'').trim(); if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',prioridade:priority||'',status:status||'',categoria:findCategory(n)||''},confidence:86})}
     const visao=parseView(n);
+    // Primeiro trata comandos com data explícita/relativa: mostrar amanhã, abrir 25/06, ir para próxima segunda.
+    // Só depois interpreta dia/semana/mês/ano como troca de visualização.
+    if(date && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'show_date',action:'SHOW_DATE',slots:{data:date},confidence:94});
     if(visao && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'set_view',action:'SET_VIEW',slots:{visao},confidence:94});
-    if(date && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'show_date',action:'SHOW_DATE',slots:{data:date},confidence:90});
     if(priority && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_priority',action:'FILTER_PRIORITY',slots:{prioridade:priority},confidence:88});
     if(status && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_status',action:'FILTER_STATUS',slots:{status},confidence:88});
     const category=findCategory(n); if(category && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_category',action:'FILTER_CATEGORY',slots:{categoria:category},confidence:86});
@@ -5983,7 +6012,14 @@ function normalizeText(str) {
       if(plan.action==='SUMMARY_DAY'){openSummary();return {ok:true,message:'Resumo do dia aberto.'}}
       if(plan.action==='UNDO_LAST_ACTION'){return undoLastAction()}
       if(plan.action==='BULK_ACTION'){return executeBulkAction(plan)}
-      if(plan.action==='SHOW_DATE'){if(typeof setView==='function')setView('day'); window.plannerDate=s.data; if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false}); if(typeof render==='function')render(); return {ok:true,message:`Visualização de ${formatDateBR(s.data)} ativada.`}}
+      if(plan.action==='SHOW_DATE'){
+        const targetDate=s.data||parseDate(plan.raw);
+        if(!targetDate)return {ok:false,message:'Entendi que deseja abrir uma data, mas não identifiquei qual data.'};
+        if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false});
+        if(typeof setPlannerDate==='function')setPlannerDate(targetDate,'day');
+        else {plannerDate=targetDate; currentView='day'; if(typeof updateViewButtons==='function')updateViewButtons(); if(typeof render==='function')render();}
+        return {ok:true,message:`Visualização de ${formatDateBR(targetDate)} ativada.`}
+      }
       if(plan.action==='SET_VIEW'){const view=s.visao||parseView(plan.raw); if(view==='notes'){if(typeof setView==='function')setView('notes'); else {window.currentView='notes'; if(typeof render==='function')render();} return {ok:true,message:'Visualização de notas ativada.'}} if(!['day','week','month','year'].includes(view))return {ok:false,message:'Entendi que deseja mudar a visualização, mas não identifiquei dia, semana, mês ou ano.'}; if(typeof setView==='function')setView(view); else {window.currentView=view; if(typeof render==='function')render();} if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false}); if(typeof render==='function')render(); return {ok:true,message:`Visualização de ${viewLabel(view)} ativada.`}}
       if(plan.action==='FILTER_STATUS'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({status:s.status,label:statusLabelSafe(s.status)}); else {window.voiceFilter={status:s.status,label:statusLabelSafe(s.status)}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando ${statusLabelSafe(s.status)}.`}}
       if(plan.action==='FILTER_PRIORITY'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({priority:s.prioridade,label:`Prioridade ${s.prioridade}`}); else {window.voiceFilter={priority:s.prioridade,label:`Prioridade ${s.prioridade}`}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando prioridade ${s.prioridade}.`}}
@@ -5993,6 +6029,24 @@ function normalizeText(str) {
       if(plan.action==='TASK_SET_PRIORITY'){pushUndo('Alterar prioridade',[task.id]); task.prioridade=s.prioridade; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Prioridade da tarefa ${s.numero} atualizada para ${s.prioridade}.`}}
       if(plan.action==='TASK_RESCHEDULE'){pushUndo('Reagendar tarefa',[task.id]); task.proxima_data=s.data; if(!isDone(task))task.status=task.status||'Pendente'; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Tarefa ${s.numero} reagendada para ${formatDateBR(s.data)}.`}}
       if(plan.action==='TASK_ADD_COMMENT'){pushUndo('Adicionar comentário',[task.id]); task.comentarios=Array.isArray(task.comentarios)?task.comentarios:[]; task.comentarios.push({texto:s.comentario,criado_em:new Date().toISOString()}); task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Comentário registrado na tarefa ${s.numero}.`}}
+      if(plan.action==='CREATE_NOTE'){
+        if(typeof handleVoiceNoteCreationCommand==='function'){
+          handleVoiceNoteCreationCommand(plan.raw||s.comentario||s.titulo||'criar nota');
+          return {ok:true,message:'Criação de nota acionada.'};
+        }
+        if(!Array.isArray(window.notes) && !Array.isArray(notes)) notes=[];
+        const list=Array.isArray(notes)?notes:[];
+        const now=new Date().toISOString();
+        const body=String(s.comentario||s.titulo||'').trim();
+        const title=String(s.titulo||body.split(/\s+/).slice(0,7).join(' ')||'Nota por voz').trim();
+        if(!body && typeof startGuidedVoiceNoteCreation==='function'){startGuidedVoiceNoteCreation(); return {ok:true,message:'Criação de nota iniciada.'};}
+        list.unshift({id:typeof getNextNoteId==='function'?getNextNoteId():Date.now(),titulo:title,texto:body||title,criado_em:now,atualizado_em:now,origem:'workspace-jarvis-mega-brain'});
+        if(typeof saveNotesToStorage==='function')saveNotesToStorage();
+        if(typeof setView==='function')setView('notes');
+        if(typeof render==='function')render();
+        if(typeof renderNotes==='function')renderNotes();
+        return {ok:true,message:'Nota criada.'};
+      }
       if(plan.action==='TASK_CREATE'){const list=mutableTasks(); const id=list.length?Math.max(...list.map(t=>Number(t.id)||0))+1:1; const date=s.data||todayISO(); list.push({id,nome:s.titulo||'Nova tarefa',descricao:'',categoria:s.categoria||'',prioridade:s.prioridade||'Normal',status:s.status||'Pendente',comentarios:[],links:[],recorrencia:{ativa:false,tipo:''},proxima_data:date,created_at:new Date().toISOString(),updated_at:new Date().toISOString()}); saveAndRender(); localStorage.setItem(UNDO_KEY,JSON.stringify({time:new Date().toISOString(),label:'Criar tarefa',createdId:id})); return {ok:true,message:`Tarefa criada para ${formatDateBR(date)}.`}}
       if(plan.action==='ANSWER'){return {ok:true,message:String(plan.slots.answer||plan.rule?.answer||plan.rule?.finalCommand||'')}}
       return {ok:false,message:'Ação ainda não registrada no executor.'};
@@ -6105,7 +6159,7 @@ function normalizeText(str) {
   function renderTabs(){document.querySelectorAll('[data-j11-tab]').forEach(b=>b.classList.toggle('active',b.dataset.j11Tab===activeTab)); document.querySelectorAll('[data-j11-panel]').forEach(p=>p.classList.toggle('j11-hidden',p.dataset.j11Panel!==activeTab))}
   function renderAll(){renderTabs(); renderQuickModels(); renderIntents(); renderModels(); renderVariables(); renderDictionary(); renderRules(); renderConflicts(); renderHistory(); renderSettings(); bindEvents(); updateIntentHelp(); ensureLearningTools()}
   function updateIntentHelp(){const intent=intentById($('j11Intent')?.value||'complete_task'); const action=$('j11ActionView'); if(action)action.value=intent.action; const help=$('j11IntentHelp'); if(help)help.innerHTML=`<b>${esc(intent.name)}</b><br>${esc(intent.desc)}<br><b>Variáveis obrigatórias:</b> ${(intent.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join(' ')||'nenhuma'}<br><b>Risco:</b> ${esc(intent.risk)}`}
-  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','set_status','set_priority','reschedule_task','bulk_reschedule','bulk_complete','bulk_status','bulk_priority','set_view','add_comment','create_task'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
+  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','set_status','set_priority','reschedule_task','bulk_reschedule','bulk_complete','bulk_status','bulk_priority','set_view','add_comment','create_task','create_note'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
   function renderIntents(){const box=$('j11Intents'); if(!box)return; box.innerHTML=INTENTS.map(i=>`<div class="j11-card"><div class="j11-title">${esc(i.group)} — ${esc(i.name)}</div><p class="text-xs text-slate-400 mt-2">${esc(i.desc)}</p><div class="mt-3 flex flex-wrap gap-2">${(i.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join('')||'<span class="text-xs text-slate-500">sem variável obrigatória</span>'}</div><button class="j11-btn j11-btn-primary mt-4" onclick="jarvisBrain.loadModel('${i.id}')">Usar intenção</button></div>`).join('')}
   function renderModels(){const box=$('j11Models'); if(!box)return; box.innerHTML=Object.keys(MODEL_TRIGGERS).map(id=>{const i=intentById(id); return `<div class="j11-card"><div class="j11-title">${esc(i.name)}</div><pre class="j11-diag mt-3" style="max-height:150px;overflow:auto">${esc(MODEL_TRIGGERS[id].join('\n'))}</pre><button class="j11-btn j11-btn-primary mt-3" onclick="jarvisBrain.loadModel('${id}')">Carregar modelo</button></div>`}).join('')}
   function renderVariables(){const box=$('j11Variables'); if(!box)return; box.innerHTML=SLOT_DEFS.map(([id,name,accepts,rule])=>`<div class="j11-card"><div class="j11-title">{${id}} — ${esc(name)}</div><p class="text-xs text-slate-400 mt-3"><b>Aceita:</b> ${esc(accepts)}</p><p class="text-xs text-slate-500 mt-2"><b>Validação:</b> ${esc(rule)}</p></div>`).join('')}
@@ -6120,6 +6174,7 @@ function normalizeText(str) {
     const base={
       bulk_reschedule:['reagendar tarefas {numeros} para {data}','jogar tarefas {numeros} para {data}','mover tarefas {numeros} para {data}','passar tarefas {numeros} para {data}','remarcar tarefas {numeros} para {data}','transferir tarefas {numeros} para {data}','colocar tarefas {numeros} para {data}'],
       set_view:['mostrar {visao}','abrir {visao}','ver {visao}','ir para {visao}','mudar para {visao}','mostrar agenda da {visao}','abrir agenda da {visao}','visualizar {visao}'],
+      create_note:['criar nota','nova nota','criar nota por voz','ditar nota','salvar nota {comentario}','anotar nas notas {comentario}','salvar isso nas notas {comentario}','guardar isso nas notas {comentario}'],
       bulk_complete:['concluir tarefas {numeros}','finalizar tarefas {numeros}','dar baixa nas tarefas {numeros}','baixar tarefas {numeros}','resolver tarefas {numeros}','encerrar tarefas {numeros}'],
       bulk_status:['alterar status das tarefas {numeros} para {status}','mudar tarefas {numeros} para {status}','colocar tarefas {numeros} como {status}','passar tarefas {numeros} para {status}','marcar tarefas {numeros} como {status}'],
       bulk_priority:['alterar prioridade das tarefas {numeros} para {prioridade}','colocar tarefas {numeros} como prioridade {prioridade}','marcar tarefas {numeros} como prioridade {prioridade}','tornar tarefas {numeros} prioridade {prioridade}']
