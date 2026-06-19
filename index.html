@@ -2556,6 +2556,49 @@
             return d;
         }
 
+        function jarvisValidDateToISO(day, month, year) {
+            day = Number(day); month = Number(month); year = Number(year);
+            if (!Number.isFinite(day) || !Number.isFinite(month) || !Number.isFinite(year)) return null;
+            if (year < 100) year += 2000;
+            if (year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1 || day > 31) return null;
+            const candidate = new Date(year, month - 1, day);
+            if (candidate.getFullYear() !== year || candidate.getMonth() !== month - 1 || candidate.getDate() !== day) return null;
+            return dateToISO(candidate);
+        }
+
+        function jarvisMonthNumberFromText(value) {
+            const v = normalizeSpeechText(value);
+            if (/^\d{1,2}$/.test(v)) return parseInt(v, 10);
+            if (JARVIS_MONTHS[v]) return JARVIS_MONTHS[v];
+            const n = numberFromSpeech(v);
+            return Number.isFinite(n) ? n : null;
+        }
+
+        function extractBrazilianNumericDate(cmd, now = new Date()) {
+            const raw = String(cmd || '').toLowerCase()
+                .replace(/\bbarra\b/g, '/')
+                .replace(/\btra[cç]o\b|\bh[ií]fen\b/g, '-')
+                .replace(/\bponto\b/g, '.');
+            let m = raw.match(/\b(?:dia\s+)?(\d{1,2})\s*[\/\-.]\s*(\d{1,2})(?:\s*[\/\-.]\s*(\d{2,4}))?\b/);
+            if (m) {
+                let year = m[3] ? parseInt(m[3], 10) : now.getFullYear();
+                let isoValue = jarvisValidDateToISO(parseInt(m[1], 10), parseInt(m[2], 10), year);
+                if (isoValue && !m[3] && isoValue < hojeISO()) isoValue = jarvisValidDateToISO(parseInt(m[1], 10), parseInt(m[2], 10), year + 1);
+                return isoValue;
+            }
+            const text = normalizeSpeechText(raw);
+            m = text.match(/\b(?:dia\s+)?(\d{1,2})\s+(?:de\s+|do\s+|da\s+)?(\d{1,2}|um|uma|primeiro|primeira|dois|duas|segundo|segunda|tres|terceiro|terceira|quatro|cinco|seis|sete|oito|nove|dez|onze|doze)(?:\s+(?:de\s+)?(\d{2,4}))\b/);
+            if (m) return jarvisValidDateToISO(parseInt(m[1], 10), jarvisMonthNumberFromText(m[2]), parseInt(m[3], 10));
+            m = text.match(/\bdia\s+(\d{1,2})\s+(\d{1,2})(?:\s+(\d{2,4}))?\b/);
+            if (m) {
+                let year = m[3] ? parseInt(m[3], 10) : now.getFullYear();
+                let isoValue = jarvisValidDateToISO(parseInt(m[1], 10), parseInt(m[2], 10), year);
+                if (isoValue && !m[3] && isoValue < hojeISO()) isoValue = jarvisValidDateToISO(parseInt(m[1], 10), parseInt(m[2], 10), year + 1);
+                return isoValue;
+            }
+            return null;
+        }
+
         function parseDayOfWeek(text, prefixRequired = false) {
             const t = normalizeSpeechText(text);
             const entries = Object.entries(JARVIS_WEEKDAYS).sort((a, b) => b[0].length - a[0].length);
@@ -2597,19 +2640,21 @@
             if (/\bsemana que vem\b|\bsemana seguinte\b/.test(text)) return dateToISO(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7));
             if (/\bmes que vem\b|\bmês que vem\b|\bmes seguinte\b/.test(text)) return dateToISO(addMonthsDate(now, 1));
 
+            const numericBR = extractBrazilianNumericDate(cmd, now);
+            if (numericBR) return numericBR;
+
             const weekday = parseDayOfWeek(text, false);
             if (weekday !== null && /(segunda|terca|terça|quarta|quinta|sexta|sabado|sábado|domingo)/.test(text)) {
                 return getNextDayOfWeekLocal(weekday);
             }
 
-            m = text.match(/\b(?:dia\s+)?(\d{1,2})\s*[\/\-]\s*(\d{1,2})(?:\s*[\/\-]\s*(\d{2,4}))?\b/);
+            m = text.match(/\b(?:dia\s+)?(\d{1,2})\s*[\/\-.]\s*(\d{1,2})(?:\s*[\/\-.]\s*(\d{2,4}))?\b/);
             if (m) {
                 const dia = parseInt(m[1], 10), mes = parseInt(m[2], 10);
                 let ano = m[3] ? parseInt(m[3], 10) : now.getFullYear();
-                if (ano < 100) ano += 2000;
-                const candidate = new Date(ano, mes - 1, dia);
-                if (!m[3] && dateToISO(candidate) < hojeISO()) candidate.setFullYear(candidate.getFullYear() + 1);
-                return dateToISO(candidate);
+                let isoValue = jarvisValidDateToISO(dia, mes, ano);
+                if (isoValue && !m[3] && isoValue < hojeISO()) isoValue = jarvisValidDateToISO(dia, mes, ano + 1);
+                return isoValue;
             }
 
             const monthKeys = Object.keys(JARVIS_MONTHS).join('|');
@@ -5352,7 +5397,7 @@ function normalizeText(str) {
     const menu=$id('quickFiltersMenu');if(!menu||menu.dataset.ws10)return;menu.dataset.ws10='1';
     menu.innerHTML=`<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-amber-200 hover:bg-amber-500/10 transition" onclick="applyQuickTaskFilter({ todayOnly: true, label: 'Hoje' })" type="button"><i class="fas fa-sun w-4 text-center text-amber-400"></i><span><span class="block">Hoje</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Demandas do dia</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ overdueOnly: true, label: 'Atrasadas' })" type="button"><i class="fas fa-triangle-exclamation w-4 text-center text-rose-400"></i><span><span class="block">Atrasadas</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Vencidas</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ priority: 'Urgente', label: 'Urgentes' })" type="button"><i class="fas fa-fire w-4 text-center text-rose-400"></i><span><span class="block">Urgentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Prioridade urgente</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-cyan-200 hover:bg-cyan-500/10 transition" onclick="applyQuickTaskFilter({ status: 'Aguardando orçamento', label: 'Aguardando orçamento' })" type="button"><i class="fas fa-file-signature w-4 text-center text-cyan-400"></i><span><span class="block">Aguardando orçamento</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Propostas pendentes</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-fuchsia-200 hover:bg-fuchsia-500/10 transition" onclick="applyQuickTaskFilter({ recurringOnly: true, label: 'Recorrentes' })" type="button"><i class="fas fa-repeat w-4 text-center text-fuchsia-400"></i><span><span class="block">Recorrentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Automações ativas</span></span></button><div class="my-2 border-t border-white/10"></div><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:bg-white/5 transition" onclick="clearAllQuickTaskFilters()" type="button"><i class="fas fa-eraser w-4 text-center text-slate-400"></i><span><span class="block">Limpar filtros</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Voltar à visão atual</span></span></button>`;
   }
-  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.9 — Nota por Voz Protegida';}
+  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.12 — Data Numérica BR';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
   Object.assign(window,{workspace10:{version:VERSION,openDailyPanel,openFocusMode,openTaskModelsPanel,openProductivityDashboard,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone,taskModels:TASK_MODELS}});
 })();
@@ -5462,6 +5507,7 @@ function normalizeText(str) {
     {id:'bulk_priority',name:'Alterar prioridade em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros','prioridade'],desc:'Alterar prioridade de várias tarefas visíveis.'},
     {id:'add_comment',name:'Adicionar comentário',group:'Tarefas',action:'TASK_ADD_COMMENT',risk:'baixo',slots:['numero','comentario'],desc:'Adicionar observação/comentário em uma tarefa.'},
     {id:'create_task',name:'Criar tarefa',group:'Tarefas',action:'TASK_CREATE',risk:'baixo',slots:['titulo'],desc:'Criar uma nova tarefa, com data/categoria/prioridade opcionais.'},
+    {id:'open_task_form',name:'Abrir formulário de tarefa',group:'Tarefas',action:'OPEN_TASK_FORM',risk:'baixo',slots:[],desc:'Abrir o formulário de nova tarefa vazio para preenchimento manual.'},
     {id:'create_note',name:'Criar nota',group:'Notas',action:'CREATE_NOTE',risk:'baixo',slots:[],desc:'Criar uma nota por voz sem cair como tarefa.'},
     {id:'show_date',name:'Mostrar data',group:'Visualização',action:'SHOW_DATE',risk:'baixo',slots:['data'],desc:'Abrir agenda de uma data específica.'},
     {id:'set_view',name:'Mudar visualização',group:'Visualização',action:'SET_VIEW',risk:'baixo',slots:['visao'],desc:'Alternar entre dia, semana, mês, ano ou notas por comando de voz.'},
@@ -5494,7 +5540,7 @@ function normalizeText(str) {
   };
 
 
-  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','CREATE_NOTE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
+  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
   function isPackageRule(rule){return /^(model|package|pacote)$/i.test(String(rule?.source||'')) || String(rule?.name||'').toLowerCase().startsWith('pacote') || !!rule?.packageId || rule?.auxiliary===true}
   function isProtectedPlan(plan){return !!plan && PROTECTED_NATIVE_ACTIONS.has(String(plan.action||''))}
   function candidatePriority(plan){
@@ -5625,15 +5671,56 @@ function normalizeText(str) {
     return '';
   }
   function viewLabel(v){return {day:'dia',week:'semana',month:'mês',year:'ano',notes:'notas'}[v]||String(v||'')}
+  function validDateBR(day,month,year){
+    day=Number(day);month=Number(month);year=Number(year);
+    if(!Number.isFinite(day)||!Number.isFinite(month)||!Number.isFinite(year))return '';
+    if(year<100)year+=2000;
+    if(year<1900||year>2100||month<1||month>12||day<1||day>31)return '';
+    const d=new Date(year,month-1,day);
+    if(d.getFullYear()!==year||d.getMonth()!==month-1||d.getDate()!==day)return '';
+    return iso(d);
+  }
+  function monthFromNumericSpeech(value){
+    const v=norm(value);
+    if(/^\d{1,2}$/.test(v))return Number(v);
+    const map={janeiro:1,fevereiro:2,marco:3,março:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12,um:1,uma:1,primeiro:1,primeira:1,dois:2,duas:2,segundo:2,segunda:2,tres:3,terceiro:3,terceira:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,dez:10,onze:11,doze:12};
+    return map[v]||null;
+  }
+  function parseBrazilianNumericDate(raw,now){
+    const source=String(raw||'').toLowerCase()
+      .replace(/\bbarra\b/g,'/')
+      .replace(/\btra[cç]o\b|\bh[ií]fen\b/g,'-')
+      .replace(/\bponto\b/g,'.');
+    let m=source.match(/\b(?:dia\s+)?(\d{1,2})\s*[\/\-.]\s*(\d{1,2})(?:\s*[\/\-.]\s*(\d{2,4}))?\b/);
+    if(m){
+      let y=m[3]?Number(m[3]):now.getFullYear();
+      let out=validDateBR(Number(m[1]),Number(m[2]),y);
+      if(out&&!m[3]&&out<todayISO())out=validDateBR(Number(m[1]),Number(m[2]),y+1);
+      return out;
+    }
+    const n=norm(source);
+    m=n.match(/\b(?:dia\s+)?(\d{1,2})\s+(?:de\s+|do\s+|da\s+)?(\d{1,2}|um|uma|primeiro|primeira|dois|duas|segundo|segunda|tres|terceiro|terceira|quatro|cinco|seis|sete|oito|nove|dez|onze|doze)(?:\s+(?:de\s+)?(\d{2,4}))\b/);
+    if(m)return validDateBR(Number(m[1]),monthFromNumericSpeech(m[2]),Number(m[3]));
+    m=n.match(/\bdia\s+(\d{1,2})\s+(\d{1,2})(?:\s+(\d{2,4}))?\b/);
+    if(m){
+      let y=m[3]?Number(m[3]):now.getFullYear();
+      let out=validDateBR(Number(m[1]),Number(m[2]),y);
+      if(out&&!m[3]&&out<todayISO())out=validDateBR(Number(m[1]),Number(m[2]),y+1);
+      return out;
+    }
+    return '';
+  }
   function parseDate(raw){
     const n=norm(raw); const now=new Date(); now.setHours(0,0,0,0);
+    const numericBR=parseBrazilianNumericDate(raw,now);
+    if(numericBR)return numericBR;
     if(/\bhoje\b/.test(n))return iso(now);
     if(/\bamanha\b/.test(n))return iso(addDays(now,1));
     if(/\bdepois de amanha\b/.test(n))return iso(addDays(now,2));
     let m=n.match(/\bdaqui\s+(\d+|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez|quinze|vinte)\s+dias?\b/); if(m){const x=numberFromText(m[1]);if(x)return iso(addDays(now,x))}
     if(/\bdaqui\s+(uma|1)\s+semana\b|\bsemana que vem\b|\bproxima semana\b/.test(n))return iso(addDays(now,7));
     if(/\bmes que vem\b|\bproximo mes\b/.test(n))return iso(addMonths(now,1));
-    m=n.match(/\b(\d{1,2})[\/\-](\d{1,2})(?:[\/\-](\d{2,4}))?\b/); if(m){let y=m[3]?Number(m[3]):now.getFullYear();if(y<100)y+=2000;return iso(new Date(y,Number(m[2])-1,Number(m[1])))}
+    m=n.match(/\b(\d{1,2})[\/\-.](\d{1,2})(?:[\/\-.](\d{2,4}))?\b/); if(m){let y=m[3]?Number(m[3]):now.getFullYear();let out=validDateBR(Number(m[1]),Number(m[2]),y);if(out&&!m[3]&&out<todayISO())out=validDateBR(Number(m[1]),Number(m[2]),y+1);return out}
     const months={janeiro:0,fevereiro:1,marco:2,abril:3,maio:4,junho:5,julho:6,agosto:7,setembro:8,outubro:9,novembro:10,dezembro:11};
     m=n.match(/\b(\d{1,2})\s+de\s+(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)(?:\s+de\s+(\d{4}))?\b/); if(m){return iso(new Date(m[3]?Number(m[3]):now.getFullYear(),months[m[2]],Number(m[1])))}
     m=n.match(/\bdia\s+(\d{1,2})\b/); if(m){let d=new Date(now.getFullYear(),now.getMonth(),Number(m[1]));if(d<now)d=new Date(now.getFullYear(),now.getMonth()+1,Number(m[1]));return iso(d)}
@@ -5822,6 +5909,14 @@ function normalizeText(str) {
     return {title:clean?clean.split(/\s+/).slice(0,7).join(' '):'Nota por voz',text:clean};
   }
 
+  function looksLikeOpenEmptyTaskForm(raw){
+    const clean=stripWake(raw); const n=norm(clean);
+    if(!n)return false;
+    if(/(nota|notas|anotacao|anotacoes|bloco de notas|caderno)/.test(n))return false;
+    return /^(criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|cadastrar|cadastra|registrar|registra|abrir|abre)\s+(uma\s+|um\s+)?(nova\s+|novo\s+)?(tarefa|demanda|item|pendencia)$/.test(n)
+        || /^(nova|novo)\s+(tarefa|demanda|item|pendencia)$/.test(n);
+  }
+
   function nativePlan(raw){
     const clean=stripWake(raw); const n=norm(clean); if(!n)return null;
     let slots={};
@@ -5847,7 +5942,13 @@ function normalizeText(str) {
       const draft=noteDraftFromRaw(raw);
       return makePlan({source:'Nativo protegido',raw,normalized:n,intent:'create_note',action:'CREATE_NOTE',slots:{titulo:draft.title||'',comentario:draft.text||''},confidence:96});
     }
-    if(hasAny(n,'create')){let title=clean.replace(/^(criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|salvar|salva)\s+(tarefa|demanda|item)?\s*/i,'').trim(); if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',prioridade:priority||'',status:status||'',categoria:findCategory(n)||''},confidence:86})}
+    if(looksLikeOpenEmptyTaskForm(raw)){
+      return makePlan({source:'Nativo',raw,normalized:n,intent:'open_task_form',action:'OPEN_TASK_FORM',slots:{},confidence:96});
+    }
+    if(hasAny(n,'create')){
+      let title=clean.replace(/^\s*(?:criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|cadastrar|cadastra|salvar|salva)\s+(?:uma\s+|um\s+)?(?:nova\s+|novo\s+)?(?:tarefa|demanda|item)?\s*/i,'').trim();
+      if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',prioridade:priority||'',status:status||'',categoria:findCategory(n)||''},confidence:86});
+    }
     const visao=parseView(n);
     // Primeiro trata comandos com data explícita/relativa: mostrar amanhã, abrir 25/06, ir para próxima segunda.
     // Só depois interpreta dia/semana/mês/ano como troca de visualização.
@@ -5991,6 +6092,58 @@ function normalizeText(str) {
     const detalhe=base==='TASK_RESCHEDULE'?` para ${formatDateBR(s.data)}`:base==='TASK_SET_STATUS'?` para ${statusLabelSafe(s.status)}`:base==='TASK_SET_PRIORITY'?` para ${s.prioridade}`:'';
     return {ok:true,message:`Ação em lote aplicada: ${ok.length} tarefas ${bulkActionLabel(base)}${detalhe} (${okNums}).`};
   }
+  function createQuickVoiceNoteFromText(raw){
+    const original=String(raw||'').trim();
+    const body=original
+      .replace(/^\s*(?:criar|cria|nova|novo|abrir|abre|salvar|salva|anotar|anota|registrar|registra)\s+(?:uma\s+)?(?:nota|anotacao|anotação)(?:\s+(?:com|sobre|que|de))?\s*/i,'')
+      .replace(/^\s*(?:salvar|salva|guardar|guarda)\s+(?:isso\s+)?(?:nas\s+notas|em\s+nota)\s*/i,'')
+      .replace(/^\s*(?:anotar|anota)\s+(?:nas\s+notas|em\s+nota)\s*(?:que)?\s*/i,'')
+      .trim();
+    const now=new Date().toISOString();
+    const title=(body?body.split(/\s+/).slice(0,8).join(' '):'Nota rápida').trim();
+    const note={
+      id:typeof getNextNoteId==='function'?getNextNoteId():Date.now(),
+      titulo:title,
+      texto:body||'Nota criada pelo Modo Vigia.',
+      criado_em:now,
+      atualizado_em:now,
+      origem:'workspace-jarvis-vigia'
+    };
+    try{
+      const list=Array.isArray(notes)?notes:(Array.isArray(window.notes)?window.notes:[]);
+      list.unshift(note);
+      if(!Array.isArray(notes) && Array.isArray(window.notes)) window.notes=list;
+      if(typeof saveNotesToStorage==='function')saveNotesToStorage();
+      if(typeof setView==='function')setView('notes');
+      if(typeof render==='function')render();
+      if(typeof renderNotes==='function')renderNotes();
+      return {ok:true,message:body?'Nota criada no Modo Vigia.':'Nota rápida criada no Modo Vigia.'};
+    }catch(e){
+      console.error(e);
+      return {ok:false,message:'Entendi que você quer criar uma nota, mas não consegui salvar.'};
+    }
+  }
+
+  function sendUnrecognizedVoiceToSearch(raw){
+    const term=(stripWake(String(raw||'')).trim()||String(raw||'').trim());
+    if(!term)return {ok:false,message:'Não ouvi conteúdo para pesquisar.'};
+    try{
+      if(typeof fallbackVoiceToSearch==='function'){
+        fallbackVoiceToSearch(term);
+        return {ok:true,message:`Pesquisei por: ${term}`};
+      }
+      const searchInput=document.getElementById('searchInput');
+      if(!searchInput)return {ok:false,message:'Não reconheci como comando e não encontrei o campo de busca.'};
+      searchInput.value=term;
+      if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false});
+      if(typeof render==='function')render(); else if(typeof scheduleRender==='function')scheduleRender();
+      return {ok:true,message:`Pesquisei por: ${term}`};
+    }catch(e){
+      console.error(e);
+      return {ok:false,message:'Não reconheci como comando e falhei ao enviar para a busca.'};
+    }
+  }
+
   function executePlan(plan,opts={}){
     if(!plan)return {ok:false,message:'Nenhum plano de execução.'};
     if(plan.action==='COMPOUND'){
@@ -6030,6 +6183,9 @@ function normalizeText(str) {
       if(plan.action==='TASK_RESCHEDULE'){pushUndo('Reagendar tarefa',[task.id]); task.proxima_data=s.data; if(!isDone(task))task.status=task.status||'Pendente'; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Tarefa ${s.numero} reagendada para ${formatDateBR(s.data)}.`}}
       if(plan.action==='TASK_ADD_COMMENT'){pushUndo('Adicionar comentário',[task.id]); task.comentarios=Array.isArray(task.comentarios)?task.comentarios:[]; task.comentarios.push({texto:s.comentario,criado_em:new Date().toISOString()}); task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Comentário registrado na tarefa ${s.numero}.`}}
       if(plan.action==='CREATE_NOTE'){
+        if(activeWatch){
+          return createQuickVoiceNoteFromText(plan.raw||s.comentario||s.titulo||'criar nota');
+        }
         if(typeof handleVoiceNoteCreationCommand==='function'){
           handleVoiceNoteCreationCommand(plan.raw||s.comentario||s.titulo||'criar nota');
           return {ok:true,message:'Criação de nota acionada.'};
@@ -6046,6 +6202,11 @@ function normalizeText(str) {
         if(typeof render==='function')render();
         if(typeof renderNotes==='function')renderNotes();
         return {ok:true,message:'Nota criada.'};
+      }
+      if(plan.action==='OPEN_TASK_FORM'){
+        if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false});
+        if(typeof openModal==='function')openModal({silent:true});
+        return {ok:true,message:'Formulário de nova tarefa aberto.'};
       }
       if(plan.action==='TASK_CREATE'){const list=mutableTasks(); const id=list.length?Math.max(...list.map(t=>Number(t.id)||0))+1:1; const date=s.data||todayISO(); list.push({id,nome:s.titulo||'Nova tarefa',descricao:'',categoria:s.categoria||'',prioridade:s.prioridade||'Normal',status:s.status||'Pendente',comentarios:[],links:[],recorrencia:{ativa:false,tipo:''},proxima_data:date,created_at:new Date().toISOString(),updated_at:new Date().toISOString()}); saveAndRender(); localStorage.setItem(UNDO_KEY,JSON.stringify({time:new Date().toISOString(),label:'Criar tarefa',createdId:id})); return {ok:true,message:`Tarefa criada para ${formatDateBR(date)}.`}}
       if(plan.action==='ANSWER'){return {ok:true,message:String(plan.slots.answer||plan.rule?.answer||plan.rule?.finalCommand||'')}}
@@ -6076,7 +6237,12 @@ function normalizeText(str) {
     if(learningSession)return handleLearningTurn(heard);
     let text=heard; if(activeWatch){if(settings().watchRequiresWake&&!hasWake(text)){scheduleWatch();return true} text=stripWake(text)}
     const a=analyze(text); const plan=a.best;
-    if(!plan){addPending(heard); if(settings().askToLearn){learningSession={step:'menu',original:heard,startedAt:Date.now()}; speakThenListen('Não entendi esse comando com segurança. Você quer ensinar uma frase, abrir o dicionário, criar uma regra ou cancelar?');} else speak('Não entendi esse comando.'); return true}
+    if(!plan){
+      addPending(heard);
+      const fallbackResult=sendUnrecognizedVoiceToSearch(heard);
+      if(!fallbackResult.ok) speak(fallbackResult.message);
+      return true;
+    }
     if(a.compound){const result=executePlan(plan,{plans:a.plans}); speak(result.message); addHistory({heard,interpreted:'comando composto',result:result.ok?'executado':'não executado',confidence:plan.confidence}); return true}
     const result=executePlan(plan);
     if(result.needsConfirm){speakThenListen(result.message); addHistory({heard,interpreted:plan.intent,result:'aguardando confirmação',confidence:plan.confidence}); return true}
@@ -6198,7 +6364,7 @@ function normalizeText(str) {
   function validateCurrentRule(){const r=ruleFromForm(); const problems=validateRule(r); showTestHTML(problems.length?`<div class="j11-bad">${esc(problems.join('\n'))}</div>`:'<div class="j11-good">Regra válida para salvar.</div>')}
 
   function ensureButtons(){if($('btnJarvisBrain'))return; const anchor=$('quickFiltersMenuWrap'); const parent=anchor?.parentElement||document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor?.nextSibling||null); parent.insertBefore(watch,brain.nextSibling)}
-  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 11.7 carregado.','fa-brain')}
+  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 11.10 carregado.','fa-brain')}
   ready(boot); ready(()=>{try{new MutationObserver(()=>ensureButtons()).observe(document.body,{childList:true,subtree:true})}catch(e){}});
   window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,simulateBatch,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
 })();
