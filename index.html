@@ -5,8 +5,8 @@
 <!-- URL GOOGLE SCRIPT ATUALIZADA PARA PLANILHA NOVA -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>TAREFAS — ROBERTO | Workspace Jarvis 11.3 — Lote e Neural Corrigidos</title>
-<meta content="Workspace Roberto Jarvis 11.3 — lote real, aprendizado guiado, variações automáticas, dicionário vivo e conversa neural em etapas." name="description"/>
+<title>TAREFAS — ROBERTO | Workspace Jarvis 15.0</title>
+<meta content="Workspace Roberto Jarvis 15.0 — lote real, aprendizado guiado, variações automáticas, dicionário vivo e conversa neural em etapas." name="description"/>
 <meta content="#05050a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
@@ -200,10 +200,6 @@
         #jarvisSettingsBelowChart { margin-top: .85rem; display: flex; justify-content: center; align-items: center; gap: .5rem; }
         #btnVoiceSettings { width: 2.45rem; height: 2.45rem; border-radius: 999px; background: rgba(2,10,20,.66) !important; border-color: rgba(24,232,255,.18) !important; color: rgba(125, 249, 255, .72) !important; box-shadow: inset 0 0 16px rgba(24,232,255,.05), 0 0 18px rgba(24,232,255,.08) !important; }
         #btnVoiceSettings:hover { color: #b9fbff !important; border-color: rgba(24,232,255,.42) !important; background: rgba(6,26,48,.82) !important; transform: translateY(-1px); }
-        #quickFiltersMenuWrap { z-index: 90; }
-        #btnQuickFilters { min-height: 44px; border-radius: .9rem; }
-
-
         /* ==============================================================================================
            WORKSPACE 6.2 — PERFORMANCE CAMADA
            Mantém a aparência HUD, mas reduz trabalho de composição/render em dispositivos fracos.
@@ -307,20 +303,6 @@
                 grid-column: auto;
                 min-width: 0;
             }
-            #mobileJarvisActions button, #quickFiltersMenuWrap { width: 100%; min-width: 0; }
-            #mobileJarvisActions button, #btnQuickFilters { height: 44px !important; min-height: 44px !important; padding: 0 !important; border-radius: .9rem !important; }
-            #quickFiltersMenu {
-                position: fixed !important;
-                left: max(.75rem, env(safe-area-inset-left)) !important;
-                right: max(.75rem, env(safe-area-inset-right)) !important;
-                top: auto !important;
-                bottom: max(.75rem, env(safe-area-inset-bottom)) !important;
-                width: auto !important;
-                max-height: min(70svh, 520px);
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-
             #viewSwitcher {
                 grid-column: 1 / -1;
                 order: 30;
@@ -561,142 +543,7 @@
             .glass-header > div:nth-child(2) > * {
                 min-width: 0 !important;
             }
-            #quickFiltersMenuWrap {
-                width: 100% !important;
-                min-width: 0 !important;
-                height: 44px !important;
-                display: flex !important;
-                align-items: stretch !important;
-            }
-            #btnQuickFilters {
-                width: 100% !important;
-                min-width: 0 !important;
-                height: 44px !important;
-                min-height: 44px !important;
-                padding: 0 !important;
-                flex: 1 1 auto !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                border-radius: .9rem !important;
-            }
-            #btnQuickFilters i {
-                margin: 0 !important;
-                font-size: .95rem !important;
-            }
-            #quickFiltersMenu {
-                position: fixed !important;
-                left: max(.75rem, env(safe-area-inset-left)) !important;
-                right: max(.75rem, env(safe-area-inset-right)) !important;
-                top: auto !important;
-                bottom: max(.75rem, env(safe-area-inset-bottom)) !important;
-                width: auto !important;
-                max-height: min(70svh, 520px) !important;
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch;
-                z-index: 9999 !important;
-                box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 38px rgba(24,232,255,.20) !important;
-            }
-            #quickFiltersMenu.hidden {
-                display: none !important;
-            }
-            #quickFiltersMenu:not(.hidden) {
-                display: block !important;
-            }
-        }
-        #quickFiltersMobileBackdrop,
-        #quickFiltersMobileSheet { display: none; }
-
         @media (max-width: 767px) {
-            #quickFiltersMenu {
-                display: none !important;
-            }
-            #quickFiltersMobileBackdrop:not(.hidden),
-            #quickFiltersMobileSheet:not(.hidden) {
-                display: block !important;
-            }
-            #quickFiltersMobileBackdrop {
-                position: fixed !important;
-                inset: 0 !important;
-                background: rgba(0, 0, 0, .64) !important;
-                backdrop-filter: blur(8px) !important;
-                -webkit-backdrop-filter: blur(8px) !important;
-                z-index: 99996 !important;
-            }
-            #quickFiltersMobileSheet {
-                position: fixed !important;
-                left: max(.75rem, env(safe-area-inset-left)) !important;
-                right: max(.75rem, env(safe-area-inset-right)) !important;
-                bottom: max(.75rem, env(safe-area-inset-bottom)) !important;
-                width: auto !important;
-                max-height: min(72svh, 520px) !important;
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-                border-radius: 1.35rem !important;
-                border: 1px solid rgba(24,232,255,.30) !important;
-                background: linear-gradient(145deg, rgba(5,18,32,.98), rgba(3,10,22,.98)) !important;
-                box-shadow: 0 24px 90px rgba(0,0,0,.78), 0 0 44px rgba(24,232,255,.24) !important;
-                z-index: 99997 !important;
-                padding: .85rem !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-header {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                gap: .75rem !important;
-                padding: .2rem .15rem .85rem !important;
-                border-bottom: 1px solid rgba(255,255,255,.08) !important;
-                margin-bottom: .55rem !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-title {
-                color: #dffcff !important;
-                font-size: .78rem !important;
-                font-weight: 800 !important;
-                letter-spacing: .16em !important;
-                text-transform: uppercase !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-close {
-                width: 42px !important;
-                height: 42px !important;
-                min-width: 42px !important;
-                min-height: 42px !important;
-                display: inline-flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                border-radius: 999px !important;
-                background: rgba(255,255,255,.06) !important;
-                border: 1px solid rgba(255,255,255,.10) !important;
-                color: rgba(226,232,240,.90) !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-action {
-                width: 100% !important;
-                min-height: 58px !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: .85rem !important;
-                padding: .75rem .8rem !important;
-                border-radius: 1rem !important;
-                text-align: left !important;
-                transition: background .18s ease, border-color .18s ease, transform .18s ease !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-action:active {
-                transform: scale(.985) !important;
-            }
-            #quickFiltersMobileSheet .mobile-filter-divider {
-                height: 1px !important;
-                margin: .55rem 0 !important;
-                background: rgba(255,255,255,.10) !important;
-            }
-            #btnQuickFilters[aria-expanded="true"] {
-                border-color: rgba(24,232,255,.60) !important;
-                color: #cffafe !important;
-                box-shadow: 0 0 24px rgba(24,232,255,.18), inset 0 0 18px rgba(24,232,255,.08) !important;
-            }
-        }
-
-        @media (min-width: 768px) {
-            #quickFiltersMobileBackdrop,
-            #quickFiltersMobileSheet { display: none !important; }
         }
         @media (max-width: 1279px) {
             #notesView {
@@ -807,17 +654,18 @@
   .glass-header>div:first-child{display:flex!important;align-items:center!important;gap:.75rem!important;width:100%!important;min-width:0!important;max-width:none!important;flex:initial!important}
   #searchContainer{min-width:220px!important;width:100%!important;flex:1 1 auto!important}#searchInput{height:46px!important;min-height:46px!important;font-size:14px!important}#btnVoice{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;padding:0!important;flex:0 0 52px!important}
   .glass-header>div:nth-child(2){display:flex!important;align-items:center!important;justify-content:flex-end!important;flex-wrap:wrap!important;gap:var(--top-gap)!important;width:auto!important;max-width:100%!important;min-width:0!important;overflow:visible!important}
-  #btnAutoSync,#btnDailyPanel,#btnFocusMode,#btnTaskModels,#btnProductivityDashboard,#btnQuickFilters,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header>div:nth-child(2)>button:not(.view-btn),.glass-header button[onclick="openModal()"]{width:var(--top-btn)!important;min-width:var(--top-btn)!important;height:var(--top-btn)!important;min-height:var(--top-btn)!important;padding:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 var(--top-btn)!important;border-radius:.95rem!important;overflow:hidden!important;white-space:nowrap!important;gap:0!important}
-  #btnAutoSync span,#btnDailyPanel span,#btnFocusMode span,#btnTaskModels span,#btnProductivityDashboard span,#btnQuickFilters span,#btnJarvisBrain span,#btnJarvisWatch span,#installAppBtn span,.ws10-top-action span,.glass-header button[onclick="openModal()"] span,.glass-header .view-btn span{display:none!important}
-  #btnAutoSync i,#syncIcon,#btnDailyPanel i,#btnFocusMode i,#btnTaskModels i,#btnProductivityDashboard i,#btnQuickFilters i,#btnJarvisBrain i,#btnJarvisWatch i,#btnMobileVoiceSettings i,.ws10-top-action i,.glass-header>div:nth-child(2)>button i{margin:0!important;flex:0 0 auto!important;font-size:.95rem!important}
-  #quickFiltersMenuWrap{width:var(--top-btn)!important;min-width:var(--top-btn)!important;height:var(--top-btn)!important;flex:0 0 var(--top-btn)!important}#quickFiltersMenu{right:0!important}#mobileJarvisActions{display:flex!important;gap:var(--top-gap)!important;flex:0 0 auto!important}.glass-header>div:nth-child(2)>.h-5{flex:0 0 1px!important;margin:0 .2rem!important}
+  #btnAutoSync,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header>div:nth-child(2)>button:not(.view-btn),.glass-header button[onclick="openModal()"]{width:var(--top-btn)!important;min-width:var(--top-btn)!important;height:var(--top-btn)!important;min-height:var(--top-btn)!important;padding:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 var(--top-btn)!important;border:1px solid rgba(255,255,255,0.08)!important;border-radius:.95rem!important;overflow:hidden!important;white-space:nowrap!important;gap:0!important;box-shadow:0 1px 3px rgba(0,0,0,.25)!important}
+  #btnAutoSync span,#btnJarvisBrain span,#btnJarvisWatch span,#installAppBtn span,.ws10-top-action span,.glass-header button[onclick="openModal()"] span,.glass-header .view-btn span{display:none!important}
+  #btnAutoSync i,#syncIcon,#btnJarvisBrain i,#btnJarvisWatch i,#btnMobileVoiceSettings i,.ws10-top-action i,.glass-header>div:nth-child(2)>button i{margin:0!important;flex:0 0 auto!important;font-size:.95rem!important}
+#mobileJarvisActions{display:flex!important;gap:var(--top-gap)!important;flex:0 0 auto!important}.glass-header>div:nth-child(2)>.h-5{flex:0 0 1px!important;margin:0 .2rem!important}
   #viewSwitcher{display:grid!important;grid-template-columns:repeat(5,minmax(38px,42px))!important;gap:.25rem!important;width:auto!important;min-width:0!important;max-width:none!important;overflow:visible!important;flex:0 0 auto!important}#viewSwitcher .view-btn{width:100%!important;min-width:38px!important;height:40px!important;min-height:40px!important;padding:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important}#viewSwitcher .view-btn i{margin:0!important}
   #plannerView article,.hud-card{min-width:0!important;overflow:hidden!important}#plannerView article h3,.hud-card h4{overflow-wrap:anywhere!important;word-break:normal!important}#plannerView article .flex,.hud-card .flex{min-width:0!important}.hud-chip,#plannerView span,.hud-card span{max-width:100%!important}
   @media(max-width:1780px){.glass-header{grid-template-columns:minmax(0,1fr)!important;align-items:stretch!important}.glass-header>div:nth-child(2){justify-content:flex-start!important;width:100%!important}#viewSwitcher{margin-left:auto!important}}
   @media(max-width:1280px){aside.glass-panel{display:none!important}main#reportContainer{padding:1rem!important}}
   @media(max-width:1023px){.glass-header{position:sticky!important;top:0!important;border-radius:0 0 1.1rem 1.1rem!important}#viewSwitcher{margin-left:0!important}}
-  @media(max-width:767px){:root{--top-btn:44px;--top-gap:.42rem}.glass-header{grid-template-columns:minmax(0,1fr)!important;gap:.58rem!important;padding:calc(.72rem + env(safe-area-inset-top)) .72rem .72rem!important;max-width:100vw!important}.glass-header>div:first-child{display:grid!important;grid-template-columns:minmax(0,1fr) 52px!important;gap:.55rem!important}#searchContainer{min-width:0!important}#searchInput{height:48px!important;min-height:48px!important;font-size:16px!important;border-radius:1rem!important}#btnVoice{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;border-radius:1rem!important}#voiceFilterBadge{grid-column:1/-1!important;width:100%!important;min-width:0!important;justify-content:space-between!important}#voiceFilterText{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}.glass-header>div:nth-child(2){display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:.42rem!important;width:100%!important;overflow:visible!important}.glass-header>div:nth-child(2)>button,#btnAutoSync,#btnDailyPanel,#btnFocusMode,#btnTaskModels,#btnProductivityDashboard,#btnQuickFilters,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header button[onclick="openModal()"],#quickFiltersMenuWrap,#mobileJarvisActions{width:100%!important;min-width:0!important;height:44px!important;min-height:44px!important;flex:initial!important}#mobileJarvisActions{display:contents!important}.glass-header>div:nth-child(2)>.h-5{display:none!important}#viewSwitcher{grid-column:1/-1!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%!important;margin-left:0!important;padding:.25rem!important;border-radius:1rem!important}#viewSwitcher .view-btn{min-width:0!important;height:42px!important}main#reportContainer{padding:.8rem!important;gap:.85rem!important;max-width:100vw!important;overflow-x:hidden!important}.planner-toolbar{padding:.9rem!important;border-radius:1rem!important}#plannerView article,.hud-card,.hud-column{border-radius:1rem!important;padding:.88rem!important}#plannerView article [onclick*="toggleTaskStatus"],#plannerView article [onclick*="deleteTaskById"],.hud-card [onclick*="toggleTaskStatus"],.hud-card [onclick*="deleteTaskById"]{min-width:40px!important;min-height:40px!important}}
-  @media(max-width:420px){.glass-header{padding-left:.55rem!important;padding-right:.55rem!important}.glass-header>div:nth-child(2){grid-template-columns:repeat(4,minmax(0,1fr))!important}#searchInput{font-size:15px!important}}
+  @media(min-width:768px)and (max-width:1023px){.glass-header{grid-template-columns:minmax(260px,1fr) auto!important;align-items:center!important}.glass-header>div:nth-child(2){justify-content:flex-end!important;width:auto!important;max-width:100%!important;flex-wrap:nowrap!important;overflow-x:auto!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important}.glass-header>div:nth-child(2)::-webkit-scrollbar{display:none!important}.glass-header>div:nth-child(2)>.h-5{display:none!important}}
+  @media(max-width:767px){:root{--top-btn:44px;--top-gap:.42rem}.glass-header{grid-template-columns:minmax(0,1fr)!important;gap:.58rem!important;padding:calc(.72rem + env(safe-area-inset-top)) .72rem .72rem!important;max-width:100vw!important}.glass-header>div:first-child{display:grid!important;grid-template-columns:minmax(0,1fr) 52px!important;gap:.55rem!important}#searchContainer{min-width:0!important}#searchInput{height:48px!important;min-height:48px!important;font-size:16px!important;border-radius:1rem!important}#btnVoice{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;border-radius:1rem!important}#voiceFilterBadge{grid-column:1/-1!important;width:100%!important;min-width:0!important;justify-content:space-between!important}#voiceFilterText{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}.glass-header>div:nth-child(2){display:grid!important;grid-template-columns:repeat(auto-fit,minmax(44px,1fr))!important;justify-content:center!important;gap:.42rem!important;width:100%!important;overflow:visible!important}.glass-header>div:nth-child(2)>button,#btnAutoSync,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header button[onclick="openModal()"],#mobileJarvisActions{width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;flex:0 0 44px!important;justify-self:center!important}#mobileJarvisActions{display:contents!important}.glass-header>div:nth-child(2)>.h-5{display:none!important}#viewSwitcher{grid-column:1/-1!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%!important;margin-left:0!important;padding:.25rem!important;border-radius:1rem!important}#viewSwitcher .view-btn{min-width:0!important;height:42px!important}main#reportContainer{padding:.8rem!important;gap:.85rem!important;max-width:100vw!important;overflow-x:hidden!important}.planner-toolbar{padding:.9rem!important;border-radius:1rem!important}#plannerView article,.hud-card,.hud-column{border-radius:1rem!important;padding:.88rem!important}#plannerView article [onclick*="toggleTaskStatus"],#plannerView article [onclick*="deleteTaskById"],.hud-card [onclick*="toggleTaskStatus"],.hud-card [onclick*="deleteTaskById"]{min-width:40px!important;min-height:40px!important}}
+  @media(max-width:420px){.glass-header{padding-left:.55rem!important;padding-right:.55rem!important}#searchInput{font-size:15px!important}}
 </style>
 </head>
 <body class="min-h-screen flex antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
@@ -905,10 +753,10 @@
 <aside class="w-64 glass-panel p-6 flex flex-col justify-between hidden lg:flex shrink-0 z-10 shadow-[4px_0_24px_rgba(0,0,0,0.5)]">
 <div class="space-y-6">
 <div class="flex items-center gap-3 pb-4 border-b border-white/10">
-<img alt="Logo" class="w-10 h-10 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] ring-2 ring-white/10" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%2318e8ff'/%3E%3Cstop offset='1' stop-color='%232d7dff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='96' height='96' rx='22' fill='%2302040a'/%3E%3Ccircle cx='48' cy='48' r='31' fill='none' stroke='url(%23g)' stroke-width='5'/%3E%3Cpath d='M33 55c7 9 23 9 30 0M34 39h8M54 39h8' stroke='%2318e8ff' stroke-width='5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E"/>
+<img alt="Jarvis Core" class="w-10 h-10 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] ring-2 ring-white/10" src="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2096%2096'%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D'g'%20x1%3D'0'%20x2%3D'1'%20y1%3D'0'%20y2%3D'1'%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D'%2318e8ff'%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D'1'%20stop-color%3D'%232d7dff'%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20width%3D'96'%20height%3D'96'%20rx%3D'22'%20fill%3D'%2302040a'%2F%3E%0A%20%20%3Cpath%20d%3D'M28%2030%20L68%2030%20L74%2048%20L62%2068%20L34%2068%20L22%2048%20Z'%20fill%3D'none'%20stroke%3D'url(%23g)'%20stroke-width%3D'4'%20stroke-linejoin%3D'round'%2F%3E%0A%20%20%3Cpath%20d%3D'M30%2038%20L42%2044%20M66%2038%20L54%2044'%20stroke%3D'%2318e8ff'%20stroke-width%3D'4'%20stroke-linecap%3D'round'%2F%3E%0A%3C%2Fsvg%3E"/>
 <div>
 <h2 class="text-sm font-bold text-white tracking-wide uppercase">ROBERTO</h2>
-<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 11.8</p>
+<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 15.0</p>
 </div>
 </div>
 <div class="space-y-2">
@@ -974,39 +822,19 @@
 </button>
 </div>
 <div class="flex items-center gap-2 sm:gap-3">
-<button aria-label="Status da Nuvem" class="flex items-center bg-[#131c2f] rounded-lg border border-white/5 px-3 py-2 shadow-inner gap-2 text-slate-400 hover:text-white transition text-xs font-semibold" id="btnAutoSync" onclick="manualSync()" title="Sincronização segura e Google Sheets">
+<button aria-label="Status da Nuvem" class="flex items-center bg-[#131c2f] px-3 py-2 text-slate-400 hover:text-white transition text-xs font-semibold" id="btnAutoSync" onclick="manualSync()" title="Sincronização segura e Google Sheets">
 <i class="fas fa-shield-halved text-slate-400" id="syncIcon"></i> <span class="hidden" id="syncText">Sync seguro</span>
 </button>
-<div class="relative shrink-0" id="quickFiltersMenuWrap">
-<button aria-label="Filtros de tarefas" class="flex items-center justify-center gap-2 bg-[#131c2f] border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-100 rounded-xl transition-all shadow-inner px-4 py-2 text-xs font-bold uppercase tracking-wide" id="btnQuickFilters" onclick="toggleQuickFiltersMenu(event)" title="Filtros de tarefas" type="button">
-<i class="fas fa-filter text-cyan-400"></i>
-</button>
-<div class="hidden absolute right-0 top-full mt-2 w-72 rounded-2xl border border-white/10 bg-[#07111f]/95 backdrop-blur-xl shadow-2xl p-2 z-[80]" id="quickFiltersMenu">
-<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ overdueOnly: true, label: 'Atrasadas' })" type="button">
-<i class="fas fa-triangle-exclamation w-4 text-center text-rose-400"></i>
-<span><span class="block">Atrasadas</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Tarefas vencidas</span></span>
-</button>
-<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-fuchsia-200 hover:bg-fuchsia-500/10 transition" onclick="applyQuickTaskFilter({ recurringOnly: true, label: 'Recorrentes' })" type="button">
-<i class="fas fa-rotate w-4 text-center text-fuchsia-400"></i>
-<span><span class="block">Recorrentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Automações ativas</span></span>
-</button>
-<div class="my-2 border-t border-white/10"></div>
-<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:bg-white/5 transition" onclick="clearAllQuickTaskFilters()" type="button">
-<i class="fas fa-filter-circle-xmark w-4 text-center text-slate-400"></i>
-<span><span class="block">Limpar filtros</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Voltar à visão atual</span></span>
-</button>
-</div>
-</div>
 <div class="lg:hidden flex items-center gap-2" id="mobileJarvisActions">
-<button aria-label="Configurações de voz do Jarvis" class="bg-[#101827]/90 border border-white/10 hover:border-cyan-500/40 text-cyan-300 hover:text-cyan-100 rounded-xl transition-all shadow-sm flex items-center justify-center" id="btnMobileVoiceSettings" onclick="openJarvisVoiceSettings()" title="Configurações de voz" type="button">
+<button aria-label="Configurações de voz do Jarvis" class="bg-[#101827]/90 hover:border-cyan-500/40 text-cyan-300 hover:text-cyan-100" id="btnMobileVoiceSettings" onclick="openJarvisVoiceSettings()" title="Configurações de voz" type="button">
 <i class="fas fa-gear"></i>
 </button>
 </div>
-<button aria-label="Exportar backup JSON" class="p-2 text-slate-400 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition text-xs font-semibold flex items-center gap-1.5" onclick="exportBackupJSON()" title="Exportar backup JSON">
-<i class="fas fa-download text-cyan-500"></i>
+<button aria-label="Exportar backup JSON" class="ws10-top-action bg-[#131c2f] hover:border-cyan-500/40 text-cyan-400 hover:text-cyan-100" onclick="exportBackupJSON()" title="Exportar backup JSON">
+<i class="fas fa-download text-cyan-400"></i>
 </button>
-<button aria-label="Importar backup JSON" class="p-2 text-slate-400 hover:text-fuchsia-400 hover:bg-fuchsia-500/10 rounded-lg transition text-xs font-semibold flex items-center gap-1.5" onclick="document.getElementById('backupFileInput').click()" title="Importar backup JSON">
-<i class="fas fa-upload text-fuchsia-500"></i>
+<button aria-label="Importar backup JSON" class="ws10-top-action bg-[#131c2f] hover:border-fuchsia-500/40 text-fuchsia-400 hover:text-fuchsia-200" onclick="document.getElementById('backupFileInput').click()" title="Importar backup JSON">
+<i class="fas fa-upload text-fuchsia-400"></i>
 </button>
 <div class="h-5 w-px bg-white/10 mx-1"></div>
 <div class="bg-[#131c2f] p-1 rounded-xl flex border border-white/5 shadow-inner overflow-x-auto max-w-full scrollbar-none" id="viewSwitcher">
@@ -1016,10 +844,10 @@
 <button aria-label="Ano" class="view-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition text-slate-500 hover:text-slate-300 border border-transparent" id="btnViewYear" onclick="setView('year')" title="Ano"><i class="fas fa-calendar sm:mr-1.5"></i></button>
 <button aria-label="Notas" class="view-btn px-3 py-1.5 rounded-lg text-[11px] font-bold transition text-slate-500 hover:text-slate-300 border border-transparent" id="btnNotes" onclick="setView('notes')" title="Notas"><i class="fas fa-note-sticky sm:mr-1.5"></i></button>
 </div>
-<button class="hidden ml-1 bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(192,38,211,0.3)] flex items-center gap-2" id="installAppBtn" onclick="installPWA()">
+<button class="hidden bg-gradient-to-r from-fuchsia-600 to-purple-600 hover:from-fuchsia-500 hover:to-purple-500 text-white text-xs font-bold" id="installAppBtn" onclick="installPWA()">
 <i class="fas fa-download"></i>
 </button>
-<button class="ml-1 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] flex items-center gap-2" onclick="openModal()">
+<button class="ws10-top-action bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-bold" onclick="openModal()">
 <i class="fas fa-plus"></i>
 </button>
 </div>
@@ -3949,43 +3777,6 @@
             if (opts.renderNow) render();
         }
 
-        function toggleQuickFiltersMenu(event) {
-            if (event) event.stopPropagation();
-            const isMobileTrigger = !!event?.target?.closest?.('#mobileQuickFiltersMenuWrap');
-            const desktopMenu = document.getElementById('quickFiltersMenu');
-            const mobileMenu = document.getElementById('mobileQuickFiltersMenu');
-            const activeMenu = isMobileTrigger ? mobileMenu : desktopMenu;
-            const inactiveMenu = isMobileTrigger ? desktopMenu : mobileMenu;
-            if (!activeMenu) return;
-            if (inactiveMenu) inactiveMenu.classList.add('hidden');
-            activeMenu.classList.toggle('hidden');
-        }
-
-        function closeQuickFiltersMenu() {
-            const menus = [document.getElementById('quickFiltersMenu'), document.getElementById('mobileQuickFiltersMenu')];
-            menus.forEach(menu => menu?.classList.add('hidden'));
-        }
-
-        function applyQuickTaskFilter(filter) {
-            closeQuickFiltersMenu();
-            applyVoiceFilter(filter);
-        }
-
-        function clearAllQuickTaskFilters() {
-            closeQuickFiltersMenu();
-            clearVoiceFilter();
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput) searchInput.value = '';
-            const categoryFilter = document.getElementById('filterCategory');
-            if (categoryFilter) categoryFilter.value = '';
-            render();
-        }
-
-        document.addEventListener('click', (event) => {
-            if (!event.target.closest('#quickFiltersMenuWrap') && !event.target.closest('#mobileQuickFiltersMenuWrap')) closeQuickFiltersMenu();
-        });
-
-        
         // Exportação Excel/PDF desativada conforme configuração atual.
 function normalizeText(str) {
             return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
@@ -5159,19 +4950,9 @@ function normalizeText(str) {
 <script id="workspace10-core">
 (function(){
   'use strict';
-  const VERSION='10.0-condominial-clean';
+  const VERSION='15.0';
   const STATUS_ADVANCED=['Pendente','Em andamento','Aguardando retorno','Aguardando orçamento','Aguardando pagamento','Concluido','Cancelado'];
   const PRIORITIES=['Baixa','Normal','Alta','Urgente'];
-  const TASK_MODELS=[
-    {id:'nf',name:'Cobrar nota fiscal',icon:'fa-file-invoice-dollar',priority:'Alta',status:'Aguardando pagamento',title:'Cobrar posicionamento sobre nota fiscal em aberto',desc:'Solicitar parecer sobre pagamento, motivo do atraso e comprovante se já houver liquidação.'},
-    {id:'orcamento',name:'Solicitar orçamento',icon:'fa-file-signature',priority:'Normal',status:'Aguardando orçamento',title:'Solicitar orçamento',desc:'Solicitar proposta com escopo completo, prazo, condição de pagamento e dados da empresa.'},
-    {id:'comunicado',name:'Enviar comunicado',icon:'fa-bullhorn',priority:'Normal',status:'Pendente',title:'Preparar e enviar comunicado aos moradores',desc:'Elaborar comunicado claro, objetivo e dentro do padrão visual do condomínio.'},
-    {id:'retorno',name:'Cobrar retorno de fornecedor',icon:'fa-phone-volume',priority:'Alta',status:'Aguardando retorno',title:'Cobrar retorno do fornecedor',desc:'Cobrar atualização, prazo de atendimento e confirmação do próximo passo.'},
-    {id:'manutencao',name:'Agendar manutenção',icon:'fa-screwdriver-wrench',priority:'Alta',status:'Em andamento',title:'Agendar manutenção',desc:'Confirmar disponibilidade, acesso, responsável no local e previsão de execução.'},
-    {id:'pagamento',name:'Confirmar pagamento',icon:'fa-money-check-dollar',priority:'Alta',status:'Aguardando pagamento',title:'Confirmar pagamento',desc:'Verificar se o pagamento foi programado, liquidado ou se há comprovante disponível.'},
-    {id:'adequacao',name:'Pedir adequação de proposta',icon:'fa-pen-ruler',priority:'Normal',status:'Aguardando retorno',title:'Solicitar adequação de proposta',desc:'Pedir ajuste da proposta conforme escopo correto, quantidades e condições solicitadas.'}
-  ];
-
   function $id(id){return document.getElementById(id)}
   function esc(v){return typeof escapeHtml==='function'?escapeHtml(v):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
   function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
@@ -5272,7 +5053,6 @@ function normalizeText(str) {
       if(chartStatusInstance){const afazer=filtered.filter(isTaskOpen).length;const concluido=filtered.filter(isTaskDone).length;onIdle(()=>chartStatusInstance?.updateSeries([afazer,concluido]),500)}
       if(signature===lastRenderSignature)return;lastRenderSignature=signature;
       if(jarvisActive)renderJarvisFilteredResultsPanel();else if(globalSearchActive)renderGlobalSearchResults(filtered);else if(currentView==='notes')renderNotes();else renderPlannerView(filtered);
-      refreshWorkspacePanels();
     }catch(e){console.error('Erro no render Workspace 10',e)}
   };
 
@@ -5361,45 +5141,11 @@ function normalizeText(str) {
     saveToStorage();render();
   };
 
-  function refreshWorkspacePanels(){
-    const openDaily=$id('ws10DailyBody');if(openDaily)renderDailyBody();
-    const focus=$id('ws10FocusBody');if(focus)renderFocusBody();
-    const dash=$id('ws10DashboardBody');if(dash)renderDashboardBody();
-  }
-  function actionableTasks(){return sortTasksForSchedule((Array.isArray(tasks)?tasks:[]).filter(isTaskOpen)).sort((a,b)=>priorityRank(a.prioridade)-priorityRank(b.prioridade)||compareTasksByScheduledDateAndNumber(a,b))}
-  function dailyTasks(){return actionableTasks().filter(t=>isOverdue(t)||isDueToday(t)||['Urgente','Alta'].includes(normalizePriority(t.prioridade)))}
-  function openModalShell(id,title,subtitle,bodyId){
-    let modal=$id(id);if(!modal){modal=document.createElement('div');modal.id=id;modal.className='ws10-modal fixed inset-0 z-[118] bg-[#05050a]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200';modal.onclick=e=>{if(e.target===modal)closeModalShell(id)};modal.innerHTML=`<div class="ws10-modal-content w-full max-w-6xl max-h-[92vh] overflow-hidden rounded-3xl flex flex-col transform scale-95 transition-transform duration-200"><div class="px-5 py-4 border-b border-cyan-500/10 flex items-center justify-between bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white">${title}</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">${subtitle||''}</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="closeModalShell('${id}')"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto" id="${bodyId}"></div></div>`;document.body.appendChild(modal)}
-    modal.classList.replace('hidden','flex');setTimeout(()=>{modal.classList.add('opacity-100');modal.firstElementChild?.classList.remove('scale-95')},10);return $id(bodyId)
-  }
-  window.closeModalShell=function(id){const modal=$id(id);if(!modal)return;modal.classList.remove('opacity-100');modal.firstElementChild?.classList.add('scale-95');setTimeout(()=>modal.classList.replace('flex','hidden'),220)};
-  function taskRow(t){return `<div class="ws10-card hover:border-cyan-300/30 transition"><div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3"><div class="min-w-0"><div class="flex flex-wrap gap-2 mb-2"><span class="ws10-chip">#${getTaskVoiceNumber(t.id)||t.id}</span>${t.categoria?`<span class="ws10-chip"><i class="fas fa-building"></i>${esc(t.categoria)}</span>`:''}<span class="ws10-chip ${getPriorityClass(t.prioridade)}"><i class="fas fa-flag"></i>${esc(normalizePriority(t.prioridade))}</span><span class="ws10-chip"><i class="fas fa-layer-group"></i>${esc(statusLabel(t.status))}</span></div><b class="text-sm text-white">${esc(t.nome)}</b>${t.descricao?`<p class="text-xs text-slate-400 mt-1">${esc(t.descricao)}</p>`:''}</div><div class="flex gap-2 shrink-0"><button class="ws10-btn" onclick="editTask(${t.id})"><i class="fas fa-pen"></i><span>Editar</span></button><button class="ws10-btn" onclick="toggleTaskStatus(${t.id})"><i class="fas fa-check"></i><span>Concluir</span></button></div></div></div>`}
-  window.openDailyPanel=function(){openModalShell('ws10DailyModal','Painel do Dia','Atrasadas, vencem hoje e prioridades altas','ws10DailyBody');renderDailyBody()};
-  function renderDailyBody(){const body=$id('ws10DailyBody');if(!body)return;const list=dailyTasks();body.innerHTML=`<div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-5"><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Atrasadas</div><div class="text-2xl font-black text-rose-300 mt-1">${tasks.filter(isOverdue).length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Hoje</div><div class="text-2xl font-black text-amber-300 mt-1">${tasks.filter(isDueToday).length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Urgentes</div><div class="text-2xl font-black text-rose-300 mt-1">${tasks.filter(t=>isTaskOpen(t)&&normalizePriority(t.prioridade)==='Urgente').length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Abertas</div><div class="text-2xl font-black text-cyan-300 mt-1">${tasks.filter(isTaskOpen).length}</div></div></div><div class="space-y-3">${list.length?list.map(taskRow).join(''):'<div class="ws10-card text-center text-xs text-slate-500 font-bold uppercase tracking-widest py-12">Nada crítico para agora.</div>'}</div>`}
-  let focusIndex=0;
-  window.openFocusMode=function(){focusIndex=0;openModalShell('ws10FocusModal','Modo Foco','Resolva uma demanda por vez','ws10FocusBody');renderFocusBody()};
-  window.nextFocusTask=function(){const list=actionableTasks();focusIndex=Math.min(list.length-1,focusIndex+1);renderFocusBody()};
-  window.prevFocusTask=function(){focusIndex=Math.max(0,focusIndex-1);renderFocusBody()};
-  window.completeFocusTask=function(id){toggleTaskStatus(id);setTimeout(renderFocusBody,100)};
-  function renderFocusBody(){const body=$id('ws10FocusBody');if(!body)return;const list=actionableTasks();const t=list[focusIndex];body.innerHTML=t?`<div class="max-w-3xl mx-auto ws10-card p-6 space-y-5"><div class="flex items-center justify-between gap-3"><span class="ws10-chip">${focusIndex+1} de ${list.length}</span><div class="flex gap-2"><button class="ws10-btn" onclick="prevFocusTask()"><i class="fas fa-chevron-left"></i><span>Anterior</span></button><button class="ws10-btn" onclick="nextFocusTask()"><i class="fas fa-chevron-right"></i><span>Próxima</span></button></div></div><div><div class="flex flex-wrap gap-2 mb-3">${t.categoria?`<span class="ws10-chip"><i class="fas fa-building"></i>${esc(t.categoria)}</span>`:''}<span class="ws10-chip ${getPriorityClass(t.prioridade)}"><i class="fas fa-flag"></i>${esc(normalizePriority(t.prioridade))}</span><span class="ws10-chip"><i class="fas fa-layer-group"></i>${esc(statusLabel(t.status))}</span>${t.proxima_data?`<span class="ws10-chip"><i class="far fa-clock"></i>${formatarDataBR(t.proxima_data)}</span>`:''}</div><h3 class="text-2xl font-black text-white leading-tight">${esc(t.nome)}</h3>${t.descricao?`<p class="text-sm text-slate-300 leading-7 mt-3">${esc(t.descricao)}</p>`:''}</div><div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><button class="ws10-btn" onclick="editTask(${t.id})"><i class="fas fa-pen"></i><span>Editar</span></button><button class="ws10-btn" onclick="completeFocusTask(${t.id})"><i class="fas fa-check"></i><span>Concluir</span></button><button class="ws10-btn" onclick="nextFocusTask()"><i class="fas fa-forward"></i><span>Pular</span></button></div></div>`:'<div class="ws10-card text-center text-xs text-slate-500 font-bold uppercase tracking-widest py-12">Nenhuma demanda aberta.</div>'}
-  window.openTaskModelsPanel=function(){openModalShell('ws10ModelsModal','Modelos rápidos','Demandas recorrentes em um clique','ws10ModelsBody');const body=$id('ws10ModelsBody');body.innerHTML=`<div class="ws10-grid">${TASK_MODELS.map(m=>`<button class="ws10-card text-left hover:border-cyan-300/30 transition" onclick="applyTaskModel('${m.id}')"><div class="text-cyan-300 text-xl mb-3"><i class="fas ${m.icon}"></i></div><b class="text-white text-sm">${esc(m.name)}</b><p class="text-xs text-slate-400 mt-2 leading-6">${esc(m.desc)}</p><div class="flex flex-wrap gap-2 mt-3"><span class="ws10-chip ${getPriorityClass(m.priority)}">${m.priority}</span><span class="ws10-chip">${statusLabel(m.status)}</span></div></button>`).join('')}</div>`};
-  window.applyTaskModel=function(id){const m=TASK_MODELS.find(x=>x.id===id);if(!m)return;closeModalShell('ws10ModelsModal');openModal({silent:true});$id('taskName').value=m.title;$id('taskDesc').value=m.desc;$id('taskPriority').value=m.priority;$id('taskStatus').value=m.status;$id('taskCategory').focus();toast('Modelo aplicado. Informe o condomínio/categoria e grave.','fa-bolt')};
-  window.openProductivityDashboard=function(){openModalShell('ws10DashboardModal','Dashboard de Produtividade','Resumo simples das demandas','ws10DashboardBody');renderDashboardBody()};
-  function renderDashboardBody(){const body=$id('ws10DashboardBody');if(!body)return;const open=tasks.filter(isTaskOpen),byCat={};open.forEach(t=>{const k=t.categoria||'Sem condomínio';byCat[k]=(byCat[k]||0)+1});const byStatus={};tasks.forEach(t=>{const k=statusLabel(t.status);byStatus[k]=(byStatus[k]||0)+1});body.innerHTML=`<div class="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-5"><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Abertas</div><div class="text-2xl font-black text-cyan-300">${open.length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Atrasadas</div><div class="text-2xl font-black text-rose-300">${tasks.filter(isOverdue).length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Hoje</div><div class="text-2xl font-black text-amber-300">${tasks.filter(isDueToday).length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Urgentes</div><div class="text-2xl font-black text-rose-300">${open.filter(t=>normalizePriority(t.prioridade)==='Urgente').length}</div></div><div class="ws10-card"><div class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Concluídas</div><div class="text-2xl font-black text-emerald-300">${tasks.filter(isTaskDone).length}</div></div></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-4"><div class="ws10-card"><div class="ws10-title mb-3"><i class="fas fa-building"></i> Por condomínio/categoria</div>${Object.entries(byCat).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<div class="flex justify-between gap-3 border-b border-white/5 py-2 text-xs"><span class="text-slate-300">${esc(k)}</span><b class="text-cyan-300">${v}</b></div>`).join('')||'<div class="text-xs text-slate-500">Sem demandas abertas.</div>'}</div><div class="ws10-card"><div class="ws10-title mb-3"><i class="fas fa-layer-group"></i> Por status</div>${Object.entries(byStatus).map(([k,v])=>`<div class="flex justify-between gap-3 border-b border-white/5 py-2 text-xs"><span class="text-slate-300">${esc(k)}</span><b class="text-cyan-300">${v}</b></div>`).join('')}</div></div>`}
+  function refreshWorkspacePanels(){}
 
-  function ensureWorkspaceButtons(){
-    if($id('btnDailyPanel'))return;
-    const anchor=$id('quickFiltersMenuWrap');const parent=anchor?.parentElement||document.querySelector('header .flex.items-center.gap-2');if(!parent)return;
-    const buttons=[['btnDailyPanel','fa-sun','Hoje','Painel do Dia',()=>openDailyPanel()],['btnFocusMode','fa-bullseye','Foco','Modo Foco',()=>openFocusMode()],['btnTaskModels','fa-bolt','Modelos','Modelos rápidos',()=>openTaskModelsPanel()],['btnProductivityDashboard','fa-chart-simple','Dash','Dashboard',()=>openProductivityDashboard()]];
-    buttons.reverse().forEach(([id,icon,text,title,fn])=>{const b=document.createElement('button');b.id=id;b.type='button';b.className='ws10-top-action';b.title=title;b.innerHTML=`<i class="fas ${icon} text-cyan-300"></i><span>${text}</span>`;b.onclick=fn;parent.insertBefore(b,anchor)});
-  }
-  function improveQuickFilters(){
-    const menu=$id('quickFiltersMenu');if(!menu||menu.dataset.ws10)return;menu.dataset.ws10='1';
-    menu.innerHTML=`<button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-amber-200 hover:bg-amber-500/10 transition" onclick="applyQuickTaskFilter({ todayOnly: true, label: 'Hoje' })" type="button"><i class="fas fa-sun w-4 text-center text-amber-400"></i><span><span class="block">Hoje</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Demandas do dia</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ overdueOnly: true, label: 'Atrasadas' })" type="button"><i class="fas fa-triangle-exclamation w-4 text-center text-rose-400"></i><span><span class="block">Atrasadas</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Vencidas</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-rose-200 hover:bg-rose-500/10 transition" onclick="applyQuickTaskFilter({ priority: 'Urgente', label: 'Urgentes' })" type="button"><i class="fas fa-fire w-4 text-center text-rose-400"></i><span><span class="block">Urgentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Prioridade urgente</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-cyan-200 hover:bg-cyan-500/10 transition" onclick="applyQuickTaskFilter({ status: 'Aguardando orçamento', label: 'Aguardando orçamento' })" type="button"><i class="fas fa-file-signature w-4 text-center text-cyan-400"></i><span><span class="block">Aguardando orçamento</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Propostas pendentes</span></span></button><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-fuchsia-200 hover:bg-fuchsia-500/10 transition" onclick="applyQuickTaskFilter({ recurringOnly: true, label: 'Recorrentes' })" type="button"><i class="fas fa-repeat w-4 text-center text-fuchsia-400"></i><span><span class="block">Recorrentes</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Automações ativas</span></span></button><div class="my-2 border-t border-white/10"></div><button class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-slate-300 hover:bg-white/5 transition" onclick="clearAllQuickTaskFilters()" type="button"><i class="fas fa-eraser w-4 text-center text-slate-400"></i><span><span class="block">Limpar filtros</span><span class="block text-[10px] font-medium text-slate-500 mt-0.5">Voltar à visão atual</span></span></button>`;
-  }
-  function bootWorkspace(){ensureWorkspaceButtons();improveQuickFilters();if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 11.12 — Data Numérica BR';}
+  function bootWorkspace(){if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 15.0';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
-  Object.assign(window,{workspace10:{version:VERSION,openDailyPanel,openFocusMode,openTaskModelsPanel,openProductivityDashboard,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone,taskModels:TASK_MODELS}});
+  Object.assign(window,{workspace10:{version:VERSION,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone}});
 })();
 </script>
 <style id="jarvis10-style">
@@ -5419,8 +5165,8 @@ function normalizeText(str) {
 <script id="jarvis11-mega-brain">
 (function(){
   'use strict';
-  const VERSION='11.9-create-note-protegido';
-  const RULE_KEY='jarvisBrain.rules.v11';
+  const VERSION='15.0';
+  const RULE_KEY='jarvisBrain.rules.v15';
   const LEGACY_RULE_KEY='jarvisBrain.rules.v10';
   const HISTORY_KEY='jarvisBrain.history.v11';
   const PENDING_KEY='jarvisBrain.pending.v11';
@@ -6221,7 +5967,7 @@ function normalizeText(str) {
     if(Array.isArray(u.before)){u.before.forEach(prev=>{const list=mutableTasks(); const i=list.findIndex(t=>Number(t.id)===Number(prev.id)); if(i>=0)list[i]=prev}); saveAndRender(); localStorage.removeItem(UNDO_KEY); return {ok:true,message:'Última ação desfeita.'}}
     return {ok:false,message:'Não consegui desfazer a última ação.'};
   }
-  function openSummary(){if(typeof openDailyPanel==='function')openDailyPanel();else toast('Resumo do dia aberto.','fa-chart-line')}
+  function openSummary(){toast('Resumo do dia aberto.','fa-chart-line')}
 
   function shouldContinueListening(){return settings().conversationContinuity && !activeWatch && typeof startJarvisCommandListening==='function'}
   function reopenNeuralForAnswer(){
@@ -6301,7 +6047,7 @@ function normalizeText(str) {
     return `<div class="j11-diag"><b>Frase original:</b> ${esc(a.raw)}<br><b>Frase normalizada:</b> ${esc(a.normalized)}<br><b>Origem:</b> ${esc(p.source)}${p.trigger?` • <b>Regra:</b> ${esc(p.trigger)}`:''}<br><b>Intenção:</b> ${esc(intent.name)}<br><b>Ação real:</b> ${esc(p.action)}<br><b>Variáveis extraídas:</b><div class="mt-2 mb-2 flex flex-wrap gap-2">${vars}</div><b>Tarefa localizada:</b> ${task}<br><b>Confiança:</b> ${p.confidence}%<br><b>Risco:</b> ${esc(p.risk)}<br><b>Resultado:</b> ${result}${p.errors.length?`<br><b>Motivo:</b> ${esc(p.errors.join(' | '))}`:''}${p.warnings.length?`<br><b>Avisos:</b> ${esc(p.warnings.join(' | '))}`:''}</div>`;
   }
   function simulateBatch(){const lines=splitLines($('j11Batch')?.value||''); const box=$('j11BatchResult'); if(!box)return; if(!lines.length){box.innerHTML='<div class="j11-warn">Cole frases para testar.</div>';return} let ok=0,ask=0,fail=0; const rows=lines.map(line=>{const a=analyze(line),p=a.best; let status='Falhou'; if(p&&!p.errors.length&&p.confidence>=settings().minAutoConfidence){ok++;status='Executaria'} else if(p&&!p.errors.length){ask++;status='Perguntaria'} else fail++; return `<tr><td>${esc(line)}</td><td>${esc(p?intentById(p.intent).name:'Não identificado')}</td><td>${p?p.confidence:0}%</td><td>${status}</td><td>${esc(p?.errors?.[0]||p?.warnings?.[0]||'')}</td></tr>`}).join(''); box.innerHTML=`<div class="j11-diag mb-3">${lines.length} testes • ${ok} executariam • ${ask} perguntariam • ${fail} falharam</div><table class="j11-table"><thead><tr><th>Frase</th><th>Intenção</th><th>Conf.</th><th>Resultado</th><th>Observação</th></tr></thead><tbody>${rows}</tbody></table>`}
-  function exportRules(){const blob=new Blob([JSON.stringify({version:VERSION,rules:getRules(),dictionary:customDictionary(),settings:settings()},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='jarvis_mega_brain_v11.json'; a.click()}
+  function exportRules(){const blob=new Blob([JSON.stringify({version:VERSION,rules:getRules(),dictionary:customDictionary(),settings:settings()},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='jarvis_mega_brain_v15.json'; a.click()}
   function importRules(){const input=$('j11Import'); if(input)input.click()}
   function handleImport(e){const f=e.target.files?.[0]; if(!f)return; const r=new FileReader(); r.onload=()=>{try{const data=JSON.parse(r.result); const incoming=Array.isArray(data)?data:(Array.isArray(data.rules)?data.rules:[]); if(data.dictionary)localStorage.setItem(DICT_KEY,JSON.stringify(data.dictionary)); if(data.settings)localStorage.setItem(SETTINGS_KEY,JSON.stringify(Object.assign(settings(),data.settings))); setRules(incoming.concat(getRules())); toast('Inteligência importada.','fa-upload')}catch(err){toast('Arquivo inválido.','fa-triangle-exclamation')}}; r.readAsText(f); e.target.value=''}
 
@@ -6314,7 +6060,7 @@ function normalizeText(str) {
     .j11-card{background:rgba(15,23,42,.72);border:1px solid rgba(255,255,255,.075);border-radius:1.1rem;padding:1rem}.j11-soft{background:rgba(255,255,255,.035)}.j11-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:1000;color:#e2e8f0;display:flex;gap:.5rem;align-items:center}.j11-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#64748b;margin-bottom:.35rem;display:block}.j11-input,.j11-select,.j11-textarea{width:100%;background:#060b14;border:1px solid rgba(255,255,255,.09);border-radius:.85rem;color:#e2e8f0;padding:.78rem .85rem;font-size:.82rem;outline:none}.j11-textarea{min-height:140px;resize:vertical}.j11-input:focus,.j11-select:focus,.j11-textarea:focus{border-color:rgba(34,211,238,.45);box-shadow:0 0 0 3px rgba(34,211,238,.08)}
     .j11-btn{border-radius:.85rem;padding:.75rem .95rem;font-size:.72rem;font-weight:1000;text-transform:uppercase;letter-spacing:.08em;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.055);color:#e2e8f0}.j11-btn-primary{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.35);color:#cffafe}.j11-btn-green{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.28);color:#bbf7d0}.j11-btn-red{background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.28);color:#fecdd3}.j11-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.08);color:#a5f3fc;border-radius:999px;padding:.25rem .55rem;font-size:.68rem;font-weight:800}.j11-diag{background:#050a12;border:1px solid rgba(34,211,238,.16);border-radius:.9rem;padding:.9rem;font-size:.78rem;line-height:1.75;color:#cbd5e1;white-space:normal}.j11-good{color:#86efac;font-weight:900}.j11-warn{color:#fcd34d;font-weight:900}.j11-bad{color:#fda4af;font-weight:900;white-space:pre-wrap}.j11-hidden{display:none!important}.j11-table{width:100%;border-collapse:separate;border-spacing:0 .4rem;font-size:.75rem}.j11-table th{text-align:left;color:#64748b;text-transform:uppercase;font-size:.62rem;letter-spacing:.1em}.j11-table td{background:rgba(255,255,255,.035);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:.65rem}.j11-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}@media(max-width:767px){#jarvisBrainModal{align-items:flex-end!important;padding:.5rem!important}#jarvisBrainContent{max-height:calc(100svh - 1rem)!important;border-radius:1.25rem!important}.j11-table,.j11-table tbody,.j11-table tr,.j11-table td{display:block;width:100%}.j11-table thead{display:none}.j11-tabs{padding:.2rem}.j11-tab{font-size:.62rem;padding:.65rem .75rem}}
   `; document.head.appendChild(st)}
-  function buildModal(){if($('jarvisBrainModal'))return; injectStyle(); const modal=document.createElement('div'); modal.id='jarvisBrainModal'; modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200'; modal.onclick=e=>{if(e.target===modal)closePanel()}; modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300"><div class="px-5 sm:px-6 py-4 border-b border-cyan-500/10 flex justify-between items-center bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white"><i class="fas fa-brain text-cyan-300 mr-2"></i>Jarvis Mega Brain 11.6</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">central de intenções, regras, simulação, conflitos e execução segura</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto space-y-5"><div class="j11-tabs"><button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')">Criar regra</button><button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')">Intenções</button><button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')">Modelos</button><button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')">Dicionário</button><button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')">Variáveis</button><button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')">Simulador</button><button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')">Conflitos</button><button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')">Regras</button><button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')">Histórico</button><button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')">Segurança</button></div>
+  function buildModal(){if($('jarvisBrainModal'))return; injectStyle(); const modal=document.createElement('div'); modal.id='jarvisBrainModal'; modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200'; modal.onclick=e=>{if(e.target===modal)closePanel()}; modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300"><div class="px-5 sm:px-6 py-4 border-b border-cyan-500/10 flex justify-between items-center bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white"><i class="fas fa-brain text-cyan-300 mr-2"></i>Jarvis Mega Brain 15.0</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">central de intenções, regras, simulação, conflitos e execução segura</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto space-y-5"><div class="j11-tabs"><button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')">Criar regra</button><button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')">Intenções</button><button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')">Modelos</button><button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')">Dicionário</button><button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')">Variáveis</button><button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')">Simulador</button><button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')">Conflitos</button><button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')">Regras</button><button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')">Histórico</button><button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')">Segurança</button></div>
     <section data-j11-panel="learn" class="space-y-4"><div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(330px,.95fr)] gap-5"><div class="j11-card space-y-4"><div class="j11-title"><i class="fas fa-wand-magic-sparkles text-cyan-300"></i> Criador de regra inteligente</div><input type="hidden" id="j11Id"><div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="j11-label">Nome da regra</label><input id="j11Name" class="j11-input" placeholder="Ex.: Concluir tarefa"></div><div><label class="j11-label">Tipo</label><select id="j11Kind" class="j11-select" onchange="jarvisBrain.updateIntentHelp()"><option value="action">Ação estruturada</option><option value="answer">Resposta personalizada</option></select></div><div><label class="j11-label">Intenção</label><select id="j11Intent" class="j11-select" onchange="jarvisBrain.updateIntentHelp()">${INTENTS.map(i=>`<option value="${i.id}">${i.group} — ${i.name}</option>`).join('')}</select></div><div><label class="j11-label">Ação real</label><input id="j11ActionView" class="j11-input" readonly></div></div><div id="j11IntentHelp" class="j11-diag"></div><div><label class="j11-label">Frases que o Jarvis deve entender — uma por linha</label><textarea id="j11Triggers" class="j11-textarea" placeholder="concluir tarefa {numero}\ndar baixa na tarefa {numero}\nfinalizar item {numero}"></textarea></div><div><label class="j11-label">Comando / resposta final opcional</label><textarea id="j11Final" class="j11-textarea" style="min-height:80px" placeholder="Para resposta personalizada, escreva a resposta aqui. Para ação estruturada, pode deixar em branco."></textarea></div><div class="grid grid-cols-1 sm:grid-cols-4 gap-3"><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Enabled" type="checkbox" checked class="accent-cyan-500"><span class="text-xs text-slate-300 font-bold">Ativa</span></label><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Auto" type="checkbox" checked class="accent-emerald-500"><span class="text-xs text-slate-300 font-bold">Executar se seguro</span></label><div><label class="j11-label">Executa com</label><input id="j11MinConfidence" class="j11-input" type="number" min="50" max="100" value="90"></div><div><label class="j11-label">Pergunta abaixo</label><input id="j11AskBelow" class="j11-input" type="number" min="30" max="99" value="70"></div></div><div class="flex flex-wrap gap-2"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.saveRule()"><i class="fas fa-save mr-2"></i>Salvar regra</button><button class="j11-btn" onclick="jarvisBrain.validateCurrentRule()"><i class="fas fa-shield-halved mr-2"></i>Validar</button><button class="j11-btn" onclick="jarvisBrain.clearForm()">Limpar</button></div></div><div class="space-y-4"><div class="j11-card space-y-3"><div class="j11-title"><i class="fas fa-vial text-emerald-300"></i> Testador Mega Brain</div><input id="j11Test" class="j11-input" placeholder="Ex.: Jarvis, dá baixa na tarefa três"><button class="j11-btn j11-btn-green w-full" onclick="jarvisBrain.testRule()"><i class="fas fa-play mr-2"></i>Testar comando</button><div id="j11TestResult"></div></div><div class="j11-card"><div class="j11-title mb-3"><i class="fas fa-bolt text-amber-300"></i> Atalhos de modelos</div><div id="j11QuickModels" class="j11-grid"></div></div></div></div></section>
     <section data-j11-panel="intents" class="j11-hidden"><div id="j11Intents" class="j11-grid"></div></section><section data-j11-panel="models" class="j11-hidden"><div class="j11-card mb-4 flex flex-wrap justify-between gap-3"><div><div class="j11-title">Biblioteca pronta</div><p class="text-xs text-slate-500 mt-2">Carregue um modelo no formulário ou instale o pacote seguro como camada auxiliar, sem sobrescrever comandos nativos.</p></div><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.installAllModels()">Instalar pacote seguro</button><button class="j11-btn j11-btn-red" onclick="jarvisBrain.uninstallModelRules()">Remover pacote</button></div><div id="j11Models" class="j11-grid"></div></section><section data-j11-panel="dictionary" class="j11-hidden"><div class="j11-card mb-4"><div class="j11-title">Dicionário vivo</div><p class="text-xs text-slate-500 mt-2">Adicione sinônimos sem mexer no código. Um por linha.</p></div><div id="j11Dictionary" class="j11-grid"></div></section><section data-j11-panel="variables" class="j11-hidden"><div id="j11Variables" class="j11-grid"></div></section><section data-j11-panel="simulator" class="j11-hidden"><div class="j11-card space-y-3"><div class="j11-title">Simulador em lote</div><textarea id="j11Batch" class="j11-textarea" placeholder="dar baixa na tarefa 3\nfinaliza o item três\ncoloca tarefa 2 como urgente\njoga tarefa 4 para amanhã"></textarea><button class="j11-btn j11-btn-green" onclick="jarvisBrain.simulateBatch()">Simular lote</button><div id="j11BatchResult"></div></div></section><section data-j11-panel="conflicts" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Conflitos e riscos</div><div id="j11Conflicts"></div></div></section><section data-j11-panel="rules" class="j11-hidden"><div class="j11-card"><div class="flex flex-wrap justify-between gap-3 mb-4"><div class="j11-title">Regras aprendidas</div><div class="flex gap-2"><button class="j11-btn" onclick="jarvisBrain.exportRules()">Exportar</button><button class="j11-btn" onclick="jarvisBrain.importRules()">Importar</button><input id="j11Import" type="file" accept="application/json,.json" class="hidden"></div></div><div id="j11Rules" class="space-y-3"></div></div></section><section data-j11-panel="history" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Histórico de decisões</div><div id="j11History" class="space-y-3"></div></div></section><section data-j11-panel="settings" class="j11-hidden"><div id="j11Settings" class="j11-grid"></div></section></div></div>`; document.body.appendChild(modal); bindEvents(); updateIntentHelp()}
 
@@ -6363,8 +6109,8 @@ function normalizeText(str) {
   }
   function validateCurrentRule(){const r=ruleFromForm(); const problems=validateRule(r); showTestHTML(problems.length?`<div class="j11-bad">${esc(problems.join('\n'))}</div>`:'<div class="j11-good">Regra válida para salvar.</div>')}
 
-  function ensureButtons(){if($('btnJarvisBrain'))return; const anchor=$('quickFiltersMenuWrap'); const parent=anchor?.parentElement||document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor?.nextSibling||null); parent.insertBefore(watch,brain.nextSibling)}
-  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 11.10 carregado.','fa-brain')}
+  function ensureButtons(){if($('btnJarvisBrain'))return; const parent=document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const sync=$('btnAutoSync'); const anchor=sync?sync.nextSibling:null; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action bg-[#131c2f] hover:border-cyan-500/40'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action bg-[#131c2f] hover:border-emerald-500/40'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor); parent.insertBefore(watch,brain.nextSibling)}
+  function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 15.0 carregado.','fa-brain')}
   ready(boot); ready(()=>{try{new MutationObserver(()=>ensureButtons()).observe(document.body,{childList:true,subtree:true})}catch(e){}});
   window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,simulateBatch,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
 })();
