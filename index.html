@@ -6,7 +6,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>TAREFAS — ROBERTO | Workspace Jarvis 15.0</title>
-<meta content="Workspace Roberto Jarvis 15.0 — lote real, aprendizado guiado, variações automáticas, dicionário vivo e conversa neural em etapas." name="description"/>
+<meta content="Workspace Roberto Jarvis 15.0 — aprendizado guiado, comandos individuais, dicionário vivo e conversa neural em etapas." name="description"/>
 <meta content="#05050a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
@@ -667,6 +667,237 @@
   @media(max-width:767px){:root{--top-btn:44px;--top-gap:.42rem}.glass-header{grid-template-columns:minmax(0,1fr)!important;gap:.58rem!important;padding:calc(.72rem + env(safe-area-inset-top)) .72rem .72rem!important;max-width:100vw!important}.glass-header>div:first-child{display:grid!important;grid-template-columns:minmax(0,1fr) 52px!important;gap:.55rem!important}#searchContainer{min-width:0!important}#searchInput{height:48px!important;min-height:48px!important;font-size:16px!important;border-radius:1rem!important}#btnVoice{width:52px!important;min-width:52px!important;height:52px!important;min-height:52px!important;border-radius:1rem!important}#voiceFilterBadge{grid-column:1/-1!important;width:100%!important;min-width:0!important;justify-content:space-between!important}#voiceFilterText{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}.glass-header>div:nth-child(2){display:grid!important;grid-template-columns:repeat(auto-fit,minmax(44px,1fr))!important;justify-content:center!important;gap:.42rem!important;width:100%!important;overflow:visible!important}.glass-header>div:nth-child(2)>button,#btnAutoSync,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings,#installAppBtn,.ws10-top-action,.glass-header button[onclick="openModal()"],#mobileJarvisActions{width:44px!important;min-width:44px!important;height:44px!important;min-height:44px!important;flex:0 0 44px!important;justify-self:center!important}#mobileJarvisActions{display:contents!important}.glass-header>div:nth-child(2)>.h-5{display:none!important}#viewSwitcher{grid-column:1/-1!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;width:100%!important;margin-left:0!important;padding:.25rem!important;border-radius:1rem!important}#viewSwitcher .view-btn{min-width:0!important;height:42px!important}main#reportContainer{padding:.8rem!important;gap:.85rem!important;max-width:100vw!important;overflow-x:hidden!important}.planner-toolbar{padding:.9rem!important;border-radius:1rem!important}#plannerView article,.hud-card,.hud-column{border-radius:1rem!important;padding:.88rem!important}#plannerView article [onclick*="toggleTaskStatus"],#plannerView article [onclick*="deleteTaskById"],.hud-card [onclick*="toggleTaskStatus"],.hud-card [onclick*="deleteTaskById"]{min-width:40px!important;min-height:40px!important}}
   @media(max-width:420px){.glass-header{padding-left:.55rem!important;padding-right:.55rem!important}#searchInput{font-size:15px!important}}
 </style>
+
+<style id="jarvis15-mega-brain-premium-cleanup">
+/* CAMADA — JARVIS MEGA BRAIN 15.0 AJUSTES PREMIUM */
+#jarvisBrainContent{background:radial-gradient(circle at top left,rgba(34,211,238,.12),transparent 34%),linear-gradient(145deg,rgba(4,13,26,.98),rgba(3,8,18,.98))!important;border:1px solid rgba(34,211,238,.28)!important;box-shadow:0 36px 130px rgba(0,0,0,.82),0 0 55px rgba(34,211,238,.18)!important}
+#jarvisBrainModal .j15-brain-hero{background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(124,58,237,.08),rgba(16,185,129,.06));border-bottom:1px solid rgba(34,211,238,.14)}
+#jarvisBrainModal .j15-status-pill{display:inline-flex;align-items:center;gap:.45rem;border:1px solid rgba(16,185,129,.28);background:rgba(16,185,129,.10);color:#bbf7d0;border-radius:999px;padding:.45rem .7rem;font-size:.65rem;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+#jarvisBrainModal .j15-panel-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:1rem}
+#jarvisBrainModal .j15-section-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;font-weight:1000;color:#e2faff;display:flex;align-items:center;gap:.55rem}
+#jarvisBrainModal .j15-helper{font-size:.72rem;line-height:1.55;color:#94a3b8}
+#jarvisBrainModal .j11-card{background:linear-gradient(145deg,rgba(15,23,42,.78),rgba(2,10,20,.58))!important;border:1px solid rgba(34,211,238,.13)!important;box-shadow:inset 0 0 24px rgba(34,211,238,.035),0 16px 40px rgba(0,0,0,.24)}
+#jarvisBrainModal .j11-card:hover{border-color:rgba(34,211,238,.28)!important}
+#jarvisBrainModal .j11-btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;text-align:center}
+#jarvisBrainModal .j11-tabs{background:rgba(2,10,20,.72)!important;border-color:rgba(34,211,238,.14)!important}
+#jarvisBrainModal .j11-tab{display:inline-flex;align-items:center;gap:.45rem;min-height:40px}
+#jarvisBrainModal .j11-input,#jarvisBrainModal .j11-select,#jarvisBrainModal .j11-textarea{border-radius:1rem!important}
+#jarvisBrainModal .j11-diag{border-color:rgba(34,211,238,.18)!important;background:rgba(2,8,18,.84)!important}
+#jarvisBrainModal .j11-table td{border-color:rgba(34,211,238,.10)!important}
+#taskModalContent [id="taskPriority"],#taskModalContent [id="taskStatus"],#taskModalContent [id="taskNewComment"]{display:none!important}
+@media(max-width:900px){#jarvisBrainModal .j15-panel-grid{grid-template-columns:minmax(0,1fr)}#jarvisBrainModal .j15-brain-hero{align-items:flex-start!important}}
+@media(max-width:767px){#jarvisBrainModal .j15-brain-hero{padding:1rem!important}#jarvisBrainModal .j11-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible!important}#jarvisBrainModal .j11-tab{justify-content:center;white-space:normal;text-align:center;font-size:.6rem}}
+</style>
+
+
+<style id="jarvis15-ultra-premium-app-polish">
+/* CAMADA — JARVIS 15.0 ULTRA PREMIUM VISUAL */
+:root{--j15-glow-cyan:rgba(34,211,238,.18);--j15-border:rgba(34,211,238,.16);--j15-panel-dark:rgba(3,10,22,.82)}
+.glass-panel,.glass-header,#plannerView article,.hud-card,.hud-column,#notesView,#taskModalContent{border-color:var(--j15-border)!important;box-shadow:0 22px 70px rgba(0,0,0,.34),inset 0 0 24px rgba(34,211,238,.035)!important}
+.glass-header{background:linear-gradient(135deg,rgba(3,10,22,.92),rgba(8,20,38,.82))!important}
+.hud-card,#plannerView article{background:linear-gradient(145deg,rgba(8,23,42,.92),rgba(3,10,22,.82))!important;border-radius:1.15rem!important}
+button{transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease}button:hover{transform:translateY(-1px)}
+input,textarea,select{border-radius:1rem!important}
+#btnJarvisBrain,#btnJarvisWatch,.ws10-top-action{background:linear-gradient(135deg,rgba(8,20,38,.96),rgba(2,8,18,.88))!important;border-color:rgba(34,211,238,.18)!important;box-shadow:inset 0 0 18px rgba(34,211,238,.05),0 10px 26px rgba(0,0,0,.22)!important}
+#btnJarvisBrain:hover,#btnJarvisWatch:hover{border-color:rgba(34,211,238,.48)!important;box-shadow:0 0 26px rgba(34,211,238,.16),inset 0 0 20px rgba(34,211,238,.08)!important}
+@media(max-width:767px){button:hover{transform:none}.glass-panel,.glass-header,#plannerView article,.hud-card,.hud-column{box-shadow:0 12px 34px rgba(0,0,0,.25),inset 0 0 18px rgba(34,211,238,.025)!important}}
+</style>
+
+<style id="jarvis15-ultra-futuristic-theme-pack">
+/* CAMADA — JARVIS 15.0 VISUAL ULTRA FUTURISTA PREMIUM */
+:root{
+  --jarvis-accent:#22d3ee;
+  --jarvis-accent-2:#2563eb;
+  --jarvis-accent-rgb:34,211,238;
+  --jarvis-accent2-rgb:37,99,235;
+  --jarvis-accent-soft:rgba(34,211,238,.145);
+  --jarvis-border:rgba(34,211,238,.23);
+  --jarvis-border-strong:rgba(34,211,238,.46);
+  --jarvis-glow:0 0 34px rgba(34,211,238,.18);
+  --jarvis-panel:rgba(3,10,23,.82);
+  --jarvis-panel-strong:rgba(5,15,32,.94);
+  --jarvis-card:rgba(7,18,38,.84);
+  --jarvis-card-strong:rgba(10,27,52,.92);
+  --jarvis-text:#eafcff;
+  --jarvis-muted:#8aa4b6;
+  --jarvis-radius:1.24rem;
+  --jarvis-radius-lg:1.72rem;
+  --hud-cyan:var(--jarvis-accent);
+  --hud-blue:var(--jarvis-accent-2);
+  --hud-line:var(--jarvis-border);
+  --hud-glow:0 0 26px rgba(var(--jarvis-accent-rgb),.16), inset 0 0 30px rgba(var(--jarvis-accent-rgb),.045);
+}
+html[data-jarvis-theme="neural"]{--jarvis-accent:#22d3ee;--jarvis-accent-2:#2563eb;--jarvis-accent-rgb:34,211,238;--jarvis-accent2-rgb:37,99,235;--jarvis-border:rgba(34,211,238,.24);--jarvis-border-strong:rgba(34,211,238,.52);--jarvis-glow:0 0 34px rgba(34,211,238,.20)}
+html[data-jarvis-theme="quantum"]{--jarvis-accent:#a78bfa;--jarvis-accent-2:#7c3aed;--jarvis-accent-rgb:167,139,250;--jarvis-accent2-rgb:124,58,237;--jarvis-border:rgba(167,139,250,.25);--jarvis-border-strong:rgba(167,139,250,.54);--jarvis-glow:0 0 34px rgba(167,139,250,.20)}
+html[data-jarvis-theme="matrix"]{--jarvis-accent:#34d399;--jarvis-accent-2:#059669;--jarvis-accent-rgb:52,211,153;--jarvis-accent2-rgb:5,150,105;--jarvis-border:rgba(52,211,153,.24);--jarvis-border-strong:rgba(52,211,153,.52);--jarvis-glow:0 0 34px rgba(52,211,153,.18)}
+html[data-jarvis-theme="reactor"]{--jarvis-accent:#fbbf24;--jarvis-accent-2:#f97316;--jarvis-accent-rgb:251,191,36;--jarvis-accent2-rgb:249,115,22;--jarvis-border:rgba(251,191,36,.26);--jarvis-border-strong:rgba(251,191,36,.56);--jarvis-glow:0 0 34px rgba(251,191,36,.18)}
+html[data-jarvis-theme="deepblue"]{--jarvis-accent:#60a5fa;--jarvis-accent-2:#1d4ed8;--jarvis-accent-rgb:96,165,250;--jarvis-accent2-rgb:29,78,216;--jarvis-border:rgba(96,165,250,.25);--jarvis-border-strong:rgba(96,165,250,.54);--jarvis-glow:0 0 34px rgba(96,165,250,.19)}
+html[data-jarvis-theme="neonrose"]{--jarvis-accent:#fb7185;--jarvis-accent-2:#db2777;--jarvis-accent-rgb:251,113,133;--jarvis-accent2-rgb:219,39,119;--jarvis-border:rgba(251,113,133,.24);--jarvis-border-strong:rgba(251,113,133,.52);--jarvis-glow:0 0 34px rgba(251,113,133,.18)}
+html[data-jarvis-theme="crystal"]{--jarvis-accent:#e0f2fe;--jarvis-accent-2:#94a3b8;--jarvis-accent-rgb:224,242,254;--jarvis-accent2-rgb:148,163,184;--jarvis-border:rgba(224,242,254,.25);--jarvis-border-strong:rgba(224,242,254,.52);--jarvis-glow:0 0 32px rgba(224,242,254,.15);--jarvis-text:#f8fafc;--jarvis-muted:#cbd5e1}
+
+html,body{background-color:#02050d!important;}
+body{
+  color:var(--jarvis-text);
+  background-image:
+    radial-gradient(circle at 11% 8%, rgba(var(--jarvis-accent-rgb),.20), transparent 30%),
+    radial-gradient(circle at 88% 10%, rgba(var(--jarvis-accent2-rgb),.16), transparent 30%),
+    radial-gradient(circle at 72% 92%, rgba(var(--jarvis-accent-rgb),.105), transparent 34%),
+    linear-gradient(135deg,#02040b 0%,#061023 42%,#02050d 100%)!important;
+}
+body::before{
+  background-image:
+    linear-gradient(rgba(var(--jarvis-accent-rgb),.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--jarvis-accent-rgb),.052) 1px, transparent 1px),
+    radial-gradient(circle at 50% 20%, rgba(var(--jarvis-accent-rgb),.12), transparent 38%)!important;
+  background-size:48px 48px,48px 48px,100% 100%!important;
+  opacity:.92;
+}
+body::after{opacity:.16!important;background:repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 6px)!important;}
+
+.glass-header,.glass-panel,#notesView,#taskModalContent,#jarvisVoiceSettingsContent,#jarvisBrainContent{
+  border-color:var(--jarvis-border)!important;
+  background:
+    linear-gradient(145deg, rgba(var(--jarvis-accent-rgb),.055), transparent 36%),
+    linear-gradient(145deg, rgba(6,18,38,.92), rgba(2,8,20,.86))!important;
+  box-shadow:0 26px 86px rgba(0,0,0,.48), inset 0 0 30px rgba(var(--jarvis-accent-rgb),.045), var(--jarvis-glow)!important;
+}
+.glass-header{border-bottom-color:var(--jarvis-border-strong)!important;}
+.glass-panel::before,.glass-header::before,#taskModalContent::before,#jarvisBrainContent::before{
+  background:linear-gradient(90deg,transparent,rgba(var(--jarvis-accent-rgb),.18),transparent)!important;
+}
+
+.hud-card,#plannerView article,.hud-column,.metric-card,#notesList article,#jarvisBrainModal .j11-card{
+  position:relative;
+  border-color:var(--jarvis-border)!important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(var(--jarvis-accent-rgb),.105), transparent 34%),
+    linear-gradient(145deg, rgba(11,29,55,.90), rgba(3,10,24,.86))!important;
+  box-shadow:0 20px 58px rgba(0,0,0,.34), inset 0 0 25px rgba(var(--jarvis-accent-rgb),.04)!important;
+  border-radius:var(--jarvis-radius)!important;
+}
+.hud-card::before,#plannerView article::before,#jarvisBrainModal .j11-card::before{
+  background:linear-gradient(180deg,var(--jarvis-accent),rgba(var(--jarvis-accent2-rgb),.72),transparent)!important;
+  box-shadow:0 0 18px rgba(var(--jarvis-accent-rgb),.72)!important;
+}
+.hud-card:hover,#plannerView article:hover,#notesList article:hover,#jarvisBrainModal .j11-card:hover{
+  border-color:var(--jarvis-border-strong)!important;
+  box-shadow:0 26px 70px rgba(0,0,0,.42),0 0 28px rgba(var(--jarvis-accent-rgb),.145),inset 0 0 28px rgba(var(--jarvis-accent-rgb),.055)!important;
+}
+
+button,.j11-btn,.view-btn,.ws10-top-action,#btnAutoSync,#installAppBtn,#btnJarvisBrain,#btnJarvisWatch,#btnMobileVoiceSettings{
+  border-color:rgba(var(--jarvis-accent-rgb),.18)!important;
+  box-shadow:inset 0 0 18px rgba(var(--jarvis-accent-rgb),.045),0 10px 24px rgba(0,0,0,.25)!important;
+}
+button:hover,.j11-btn:hover,.view-btn:hover,.ws10-top-action:hover,#btnAutoSync:hover,#installAppBtn:hover,#btnJarvisBrain:hover,#btnJarvisWatch:hover,#btnMobileVoiceSettings:hover{
+  border-color:var(--jarvis-border-strong)!important;
+  box-shadow:0 0 26px rgba(var(--jarvis-accent-rgb),.16),inset 0 0 22px rgba(var(--jarvis-accent-rgb),.075)!important;
+}
+.j11-btn-primary,.glass-header button[onclick="openModal()"]{
+  background:linear-gradient(135deg,rgba(var(--jarvis-accent-rgb),.26),rgba(var(--jarvis-accent2-rgb),.18))!important;
+  border-color:var(--jarvis-border-strong)!important;
+  color:var(--jarvis-text)!important;
+}
+.j11-btn-green{background:linear-gradient(135deg,rgba(16,185,129,.22),rgba(var(--jarvis-accent-rgb),.12))!important;border-color:rgba(52,211,153,.42)!important;}
+.j11-btn-red{background:linear-gradient(135deg,rgba(244,63,94,.18),rgba(219,39,119,.10))!important;border-color:rgba(251,113,133,.38)!important;}
+
+input,textarea,select,.j11-input,.j11-select,.j11-textarea{
+  background:linear-gradient(145deg,rgba(2,8,20,.92),rgba(7,18,34,.82))!important;
+  border-color:rgba(var(--jarvis-accent-rgb),.20)!important;
+  color:var(--jarvis-text)!important;
+  box-shadow:inset 0 0 22px rgba(var(--jarvis-accent-rgb),.04)!important;
+}
+input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-textarea:focus{
+  border-color:var(--jarvis-border-strong)!important;
+  box-shadow:0 0 0 3px rgba(var(--jarvis-accent-rgb),.10),0 0 26px rgba(var(--jarvis-accent-rgb),.12),inset 0 0 18px rgba(var(--jarvis-accent-rgb),.055)!important;
+}
+::placeholder{color:rgba(178,205,222,.45)!important;}
+
+#jarvisBrainModal .j15-brain-hero{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(var(--jarvis-accent-rgb),.28),transparent 36%),
+    radial-gradient(circle at 92% 16%,rgba(var(--jarvis-accent2-rgb),.22),transparent 34%),
+    linear-gradient(135deg,rgba(8,20,40,.96),rgba(2,7,18,.98))!important;
+}
+#jarvisBrainModal .j15-brain-hero::after{
+  content:"";position:absolute;left:-20%;right:-20%;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--jarvis-accent),var(--jarvis-accent-2),transparent);
+  box-shadow:0 0 22px rgba(var(--jarvis-accent-rgb),.46);opacity:.85;
+}
+#jarvisBrainModal .j15-status-pill{
+  color:var(--jarvis-text)!important;
+  border-color:var(--jarvis-border-strong)!important;
+  background:linear-gradient(135deg,rgba(var(--jarvis-accent-rgb),.14),rgba(var(--jarvis-accent2-rgb),.08))!important;
+}
+#jarvisBrainModal .j15-section-title,.j11-title{color:var(--jarvis-text)!important;text-shadow:0 0 18px rgba(var(--jarvis-accent-rgb),.22);}
+#jarvisBrainModal .j15-section-title i,.j11-title i,.j11-tab.active i,#btnJarvisBrain i{color:var(--jarvis-accent)!important;}
+#jarvisBrainModal .j15-helper{color:var(--jarvis-muted)!important;}
+#jarvisBrainModal .j11-tabs{
+  background:linear-gradient(135deg,rgba(2,8,20,.84),rgba(var(--jarvis-accent-rgb),.055))!important;
+  border-color:rgba(var(--jarvis-accent-rgb),.18)!important;
+}
+#jarvisBrainModal .j11-tab.active{
+  background:linear-gradient(135deg,rgba(var(--jarvis-accent-rgb),.22),rgba(var(--jarvis-accent2-rgb),.12))!important;
+  border-color:var(--jarvis-border-strong)!important;
+  box-shadow:inset 0 0 18px rgba(var(--jarvis-accent-rgb),.08)!important;
+}
+.j11-chip,.hud-chip{
+  color:var(--jarvis-text)!important;
+  border-color:rgba(var(--jarvis-accent-rgb),.28)!important;
+  background:rgba(var(--jarvis-accent-rgb),.085)!important;
+}
+.j11-diag{
+  border-color:rgba(var(--jarvis-accent-rgb),.24)!important;
+  background:radial-gradient(circle at 100% 0%,rgba(var(--jarvis-accent-rgb),.10),transparent 32%),linear-gradient(145deg,rgba(2,8,20,.94),rgba(7,20,38,.78))!important;
+}
+
+.j15-theme-console{
+  min-width:min(100%,18.5rem);
+  max-width:24rem;
+  padding:.62rem;
+  border:1px solid rgba(var(--jarvis-accent-rgb),.20);
+  border-radius:1.15rem;
+  background:linear-gradient(145deg,rgba(2,8,20,.78),rgba(8,19,37,.62));
+  box-shadow:inset 0 0 22px rgba(var(--jarvis-accent-rgb),.045),0 12px 30px rgba(0,0,0,.26);
+}
+.j15-theme-console-title{
+  display:flex;align-items:center;gap:.45rem;margin:0 0 .45rem;color:var(--jarvis-muted);font-size:.56rem;font-weight:1000;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+}
+.j15-theme-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.34rem;}
+.j15-theme-chip{
+  position:relative;width:100%;min-width:0;height:2.15rem;min-height:2.15rem;border-radius:.82rem!important;padding:0!important;
+  background:linear-gradient(135deg,var(--chip),var(--chip2))!important;
+  border:1px solid rgba(255,255,255,.18)!important;
+  box-shadow:inset 0 0 10px rgba(255,255,255,.10),0 8px 20px rgba(0,0,0,.18)!important;
+}
+.j15-theme-chip::after{content:"";position:absolute;inset:5px;border-radius:.58rem;border:1px solid rgba(255,255,255,.20);opacity:.6;}
+.j15-theme-chip.is-active{outline:2px solid var(--jarvis-accent);outline-offset:2px;box-shadow:0 0 24px rgba(var(--jarvis-accent-rgb),.32),inset 0 0 12px rgba(255,255,255,.16)!important;}
+.j15-theme-card{
+  grid-column:1/-1;
+  border-color:var(--jarvis-border)!important;
+  background:radial-gradient(circle at 100% 0%,rgba(var(--jarvis-accent-rgb),.11),transparent 36%),linear-gradient(145deg,rgba(8,20,38,.90),rgba(3,10,22,.82))!important;
+}
+.j15-diagnostic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.65rem;margin-top:.75rem;}
+.j15-diagnostic-cell{border:1px solid rgba(var(--jarvis-accent-rgb),.16);border-radius:1rem;padding:.75rem;background:rgba(2,8,20,.62);}
+.j15-diagnostic-cell b{display:block;color:var(--jarvis-muted);font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:.3rem;}
+
+#btnVoice{border-color:var(--jarvis-border-strong)!important;box-shadow:0 0 32px rgba(var(--jarvis-accent-rgb),.28),inset 0 0 24px rgba(var(--jarvis-accent-rgb),.10)!important;}
+#toast{border-color:var(--jarvis-border-strong)!important;box-shadow:0 0 36px rgba(var(--jarvis-accent-rgb),.20),0 18px 42px rgba(0,0,0,.55)!important;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--jarvis-accent),var(--jarvis-accent-2))!important;}
+
+@media(max-width:900px){.j15-theme-console{max-width:none;width:100%;}.j15-theme-grid{grid-template-columns:repeat(7,minmax(28px,1fr));}}
+@media(max-width:767px){
+  #jarvisBrainModal .j15-brain-hero .shrink-0{width:100%;align-items:stretch!important;flex-wrap:wrap;}
+  .j15-theme-console{order:5;width:100%;}
+  .j15-theme-grid{grid-template-columns:repeat(7,minmax(0,1fr));}
+  .j15-theme-chip{height:2rem;min-height:2rem;border-radius:.7rem!important;}
+  .hud-card:hover,#plannerView article:hover,#notesList article:hover,#jarvisBrainModal .j11-card:hover,button:hover{transform:none!important;}
+}
+@media(max-width:420px){.j15-theme-console-title{white-space:normal}.j15-theme-grid{gap:.25rem}.j15-theme-chip{height:1.8rem;min-height:1.8rem;}}
+@media(prefers-reduced-motion:reduce){.j15-theme-chip,.hud-card,#plannerView article,#jarvisBrainModal .j11-card,button{transition:none!important;}}
+</style>
+
 </head>
 <body class="min-h-screen flex antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
 <!-- OVERLAY DO NÚCLEO JARVIS 3D -->
@@ -917,38 +1148,14 @@
 <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Categoria / Condomínio</label>
 <input class="w-full bg-[#0b101a] border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 outline-none transition shadow-inner" id="taskCategory" placeholder="Ex.: Mont Pellier, Today Pompeia, Lina Jardins" type="text"/>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-<div>
-<label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Prioridade</label>
-<select class="w-full bg-[#0b101a] border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3 text-xs text-white outline-none transition shadow-inner" id="taskPriority">
-<option value="Baixa">Baixa</option>
-<option selected="" value="Normal">Normal</option>
-<option value="Alta">Alta</option>
-<option value="Urgente">Urgente</option>
-</select>
-</div>
-<div>
-<label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Status</label>
-<select class="w-full bg-[#0b101a] border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3 text-xs text-white outline-none transition shadow-inner" id="taskStatus">
-<option selected="" value="Pendente">Pendente</option>
-<option value="Em andamento">Em andamento</option>
-<option value="Aguardando retorno">Aguardando retorno</option>
-<option value="Aguardando orçamento">Aguardando orçamento</option>
-<option value="Aguardando pagamento">Aguardando pagamento</option>
-<option value="Concluido">Concluído</option>
-<option value="Cancelado">Cancelado</option>
-</select>
-</div>
-</div>
+<input id="taskPriority" type="hidden" value="Normal"/>
+<input id="taskStatus" type="hidden" value="Pendente"/>
 <div>
 <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Links / Referências</label>
 <input class="w-full bg-[#0b101a] border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 outline-none transition shadow-inner" id="taskLinks" placeholder="Cole links de orçamento, e-mail, PDF ou referência" type="text"/>
 </div>
-<div>
-<label class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Novo comentário</label>
-<textarea class="w-full bg-[#0b101a] border border-white/10 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 outline-none transition shadow-inner leading-relaxed" id="taskNewComment" placeholder="Ex.: Fornecedor ficou de retornar amanhã." rows="2"></textarea>
-<div class="mt-3 hidden rounded-xl border border-white/10 bg-[#07111f]/75 p-3 space-y-2" id="taskCommentsBox"></div>
-</div>
+<input id="taskNewComment" type="hidden" value=""/>
+<div id="taskCommentsBox" class="hidden"></div>
 <div class="bg-[#131c2f] border border-white/5 p-5 rounded-xl space-y-4" id="recorrenciaPanel">
 <h4 class="text-[10px] font-bold text-fuchsia-400 uppercase tracking-widest flex items-center gap-2"><i class="fas fa-redo-alt"></i> Automação de Ciclo</h4>
 <div class="grid grid-cols-3 gap-2 recorrencia-grid">
@@ -5011,7 +5218,7 @@ function normalizeText(str) {
     return tasks.filter(t=>{
       const comments=getTaskComments(t).map(c=>c.texto).join(' ');
       const links=getTaskLinks(t).join(' ');
-      const haystack=normalizeText([t.nome,t.descricao,t.categoria,statusLabel(t.status),t.prioridade,comments,links,t.proxima_data?formatarDataBR(t.proxima_data):''].join(' '));
+      const haystack=normalizeText([t.nome,t.descricao,t.categoria,links,t.proxima_data?formatarDataBR(t.proxima_data):''].join(' '));
       const textMatch=!search||haystack.includes(search);
       const catMatch=!category||t.categoria===category;
       let voiceMatch=true;
@@ -5021,11 +5228,9 @@ function normalizeText(str) {
         else if(voiceFilter.date)voiceMatch=isTaskScheduledForDate(t,voiceFilter.date);
         else if(voiceFilter.overdueOnly)voiceMatch=isOverdue(t);
         else if(voiceFilter.todayOnly)voiceMatch=isDueToday(t);
-        else if(voiceFilter.status)voiceMatch=normalizeTaskStatus(t.status)===normalizeTaskStatus(voiceFilter.status);
-        else if(voiceFilter.priority)voiceMatch=normalizePriority(t.prioridade)===normalizePriority(voiceFilter.priority);
       }
       return textMatch&&catMatch&&voiceMatch;
-    }).sort((a,b)=>priorityRank(a.prioridade)-priorityRank(b.prioridade)||compareTasksByScheduledDateAndNumber(a,b));
+    }).sort((a,b)=>compareTasksByScheduledDateAndNumber(a,b));
   };
 
   window.render=function(){
@@ -5059,11 +5264,11 @@ function normalizeText(str) {
   window.createPlannerTaskCard=function(task,compact=false){
     const isDone=isTaskDone(task),isCanceled=isTaskCanceled(task),scheduledDate=getTaskScheduledDate(task),voiceNumber=getTaskVoiceNumber(task.id);
     const numberBadge=voiceNumber?`<span class="inline-flex items-center justify-center min-w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-[10px] font-black">#${voiceNumber}</span>`:'';
-    const comments=getTaskComments(task),links=getTaskLinks(task),priority=normalizePriority(task.prioridade),status=statusLabel(task.status);
+    const links=getTaskLinks(task);
     return `<article onclick="editTask(${task.id})" class="group cursor-pointer rounded-2xl border ${isDone?'border-emerald-500/15 bg-emerald-500/5':isCanceled?'border-slate-500/15 bg-slate-500/5':'border-white/8 bg-[#101827]/86'} hover:border-cyan-500/35 transition p-3 ${compact?'space-y-2':'space-y-3'} shadow-sm">
       <div class="flex items-start justify-between gap-3"><div class="flex items-start gap-2 min-w-0">${numberBadge}<div class="min-w-0"><h3 class="${compact?'text-xs':'text-sm'} font-bold leading-snug ${isDone?'line-through text-slate-500':isCanceled?'text-slate-500':'text-slate-100'}">${esc(task.nome)}</h3>${!compact&&task.descricao?`<p class="text-[11px] text-slate-400 mt-1 line-clamp-2">${esc(task.descricao)}</p>`:''}</div></div>
       <div class="flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" onclick="event.stopPropagation()"><button onclick="toggleTaskStatus(${task.id})" class="w-8 h-8 rounded-lg bg-[#0b101a] border border-white/10 ${isDone?'text-amber-400':'text-emerald-400'} hover:bg-white/10" title="${isDone?'Restaurar':'Concluir'}"><i class="fas ${isDone?'fa-undo':'fa-check'}"></i></button><button onclick="deleteTaskById(${task.id})" class="w-8 h-8 rounded-lg bg-[#0b101a] border border-white/10 text-rose-400 hover:bg-rose-500/10" title="Excluir"><i class="fas fa-trash"></i></button></div></div>
-      <div class="flex flex-wrap gap-2">${scheduledDate?`<span class="ws10-chip ${isOverdue(task)?'priority-urgente':isDueToday(task)?'priority-alta':''}"><i class="far fa-clock"></i>${formatarDataBR(scheduledDate)}${isOverdue(task)?' • ATRASADA':isDueToday(task)?' • HOJE':''}</span>`:''}${task.categoria?`<span class="ws10-chip"><i class="fas fa-building"></i>${esc(task.categoria)}</span>`:''}<span class="ws10-chip ${getPriorityClass(priority)}"><i class="fas fa-flag"></i>${esc(priority)}</span><span class="ws10-chip"><i class="fas fa-layer-group"></i>${esc(status)}</span>${comments.length?`<span class="ws10-chip"><i class="fas fa-comment"></i>${comments.length}</span>`:''}${links.length?`<span class="ws10-chip"><i class="fas fa-link"></i>${links.length}</span>`:''}${task.recorrencia?.ativa?`<span class="ws10-chip"><i class="fas fa-infinity"></i>${esc(getRecorrenciaLabel(task.recorrencia.tipo))}</span>`:''}</div>
+      <div class="flex flex-wrap gap-2">${scheduledDate?`<span class="ws10-chip ${isOverdue(task)?'priority-urgente':isDueToday(task)?'priority-alta':''}"><i class="far fa-clock"></i>${formatarDataBR(scheduledDate)}${isOverdue(task)?' • ATRASADA':isDueToday(task)?' • HOJE':''}</span>`:''}${task.categoria?`<span class="ws10-chip"><i class="fas fa-building"></i>${esc(task.categoria)}</span>`:''}${links.length?`<span class="ws10-chip"><i class="fas fa-link"></i>${links.length}</span>`:''}${task.recorrencia?.ativa?`<span class="ws10-chip"><i class="fas fa-infinity"></i>${esc(getRecorrenciaLabel(task.recorrencia.tipo))}</span>`:''}</div>
     </article>`;
   };
 
@@ -5102,7 +5307,6 @@ function normalizeText(str) {
     if(task.proxima_data)$id('taskDataFixa').value=task.proxima_data;
     setRecorrencia(task.recorrencia?.tipo||'');
     $id('modalTitle').textContent='Edição da Demanda';$id('btnDelete').classList.remove('hidden');
-    renderTaskCommentsBox(task);
   };
 
   window.saveTask=function(btn){
@@ -5111,21 +5315,21 @@ function normalizeText(str) {
       const id=$id('taskId').value;
       const taskNameInput=$id('taskName');
       const nome=taskNameInput.value.trim(),descricao=$id('taskDesc').value.trim(),categoria=$id('taskCategory').value.trim();
-      const prioridade=normalizePriority($id('taskPriority')?.value||'Normal');
-      const status=normalizeTaskStatus($id('taskStatus')?.value||'Pendente');
+      const prioridade='Normal';
+      const status=id?(tasks.find(t=>Number(t.id)===Number(id))?.status||'Pendente'):'Pendente';
       const recTipo=normalizarTipoRecorrencia($id('recorrenciaTipo').value);
       const proxData=$id('taskDataFixa').value||hojeISO();
       const links=normalizeLinks($id('taskLinks')?.value||'');
-      const comment=String($id('taskNewComment')?.value||'').trim();
+      const comment='';
       if(!nome){toast('Erro: dê um nome para a tarefa.','fa-exclamation-circle');taskNameInput.focus();return}
       saveHistory();
       const base={nome,descricao,categoria,prioridade,status,links,recorrencia:{ativa:!!recTipo,tipo:recTipo},proxima_data:proxData,updated_at:nowISO(),data_atualizacao:nowISO()};
       if(id){
         const idx=tasks.findIndex(t=>Number(t.id)===Number(id));
-        if(idx!==-1){const comentarios=getTaskComments(tasks[idx]).slice();if(comment)comentarios.push({texto:comment,criado_em:nowISO()});tasks[idx]={...tasks[idx],...base,comentarios}}
+        if(idx!==-1){const comentarios=getTaskComments(tasks[idx]).slice();tasks[idx]={...tasks[idx],...base,comentarios}}
       }else{
         const newId=tasks.length>0?Math.max(...tasks.map(t=>Number(t.id)||0))+1:1;
-        const comentarios=comment?[{texto:comment,criado_em:nowISO()}]:[];
+        const comentarios=[];
         tasks.push({id:newId,...base,comentarios,created_at:nowISO(),data_criacao:nowISO()});
       }
       if(btn){const originalHtml=btn.innerHTML;btn.innerHTML='<i class="fas fa-spinner fa-spin text-white"></i>';setTimeout(()=>{btn.innerHTML=originalHtml},500)}
@@ -5194,28 +5398,13 @@ function normalizeText(str) {
 
   const DEFAULT_DICTIONARY={
     task:['tarefa','item','demanda','pendencia','pendência','atividade','assunto','servico','serviço','lembrete','compromisso'],
-    complete:['concluir','conclui','finalizar','finaliza','dar baixa','da baixa','baixar','baixa','resolver','resolve','encerrar','encerra','fechar','fecha','liquidar','matar','mata','marcar como feito','marcar como feita','marcar como concluido','marcar como concluida'],
+    complete:['concluir','conclui','finalizar','finaliza','dar baixa','da baixa','baixar','baixa','resolver','resolve','encerrar','encerra','fechar','fecha','marcar como feito','marcar como feita','marcar como concluido','marcar como concluida'],
     reschedule:['reagendar','remarcar','jogar','passar','mover','transferir','empurrar','adiar','antecipar','colocar para','levar para','trocar para'],
-    setStatus:['alterar status','mudar status','trocar status','colocar como','deixar como','marcar como','passar para','mudar para','atualizar para'],
-    setPriority:['alterar prioridade','mudar prioridade','trocar prioridade','prioridade','colocar como prioridade','deixar urgente','marcar como prioridade','tornar prioridade'],
     create:['criar','cria','crie','nova','novo','adicionar','adiciona','incluir','inclui','registrar','registra','salvar','salva'],
     createNote:['criar nota','cria nota','crie nota','nova nota','adicionar nota','adiciona nota','incluir nota','registra nota','registrar nota','salvar nota','salva nota','anotar nas notas','anota nas notas','salvar nas notas','salva nas notas','guardar nas notas','guarda nas notas','ditar nota','nota por voz','criar anotacao','criar anotação','nova anotacao','nova anotação','bloco de notas'],
-    comment:['comentario','comentário','comentar','anotar','nota','observacao','observação','registrar comentario','registrar comentário','adicionar comentario','adicionar comentário'],
     delete:['excluir','apagar','remover','deletar'],
-    show:['mostrar','mostra','ver','listar','exibir','abrir','filtrar','trazer','consultar'],
+    show:['mostrar','mostra','ver','listar','exibir','abrir','filtrar','trazer','consultar','pesquisar','buscar','procurar'],
     undo:['desfazer','voltar ultima acao','voltar última ação','reverter','desfazer ultima acao','desfazer última ação'],
-    status_pendente:['pendente','a fazer','aberta','aberto','em aberto','nao iniciada','não iniciada','nao iniciado','não iniciado'],
-    status_andamento:['em andamento','andamento','iniciada','iniciado','comecada','começada','comecado','começado','em execucao','em execução','tocando'],
-    status_retorno:['aguardando retorno','esperando retorno','aguardando resposta','esperando resposta','pendente de retorno','pendente de resposta'],
-    status_orcamento:['aguardando orcamento','aguardando orçamento','esperando orcamento','esperando orçamento','pendente de orcamento','pendente de orçamento','cotacao pendente','cotação pendente'],
-    status_pagamento:['aguardando pagamento','esperando pagamento','pendente de pagamento','aguardando quitacao','aguardando quitação'],
-    status_concluido:['concluido','concluído','concluida','concluída','feito','feita','finalizado','finalizada','resolvido','resolvida','baixado','baixada','ok','encerrado','encerrada'],
-    status_cancelado:['cancelado','cancelada','sem efeito','descartado','descartada','anulado','anulada'],
-    priority_baixa:['baixa','baixo','sem urgencia','sem urgência','pouca prioridade','tranquila','tranquilo'],
-    priority_normal:['normal','media','média','medio','médio','padrao','padrão','comum'],
-    priority_alta:['alta','alto','importante','prioridade alta','atenção','atencao'],
-    priority_urgente:['urgente','urgencia','urgência','muito urgente','prioridade maxima','prioridade máxima','pra ontem','para ontem','emergencial','critico','crítico','critica','crítica'],
-    bulk:['tarefas','itens','demandas','pendencias','pendências','varias','várias','em lote','lista'],
     view_day:['dia','hoje','diaria','diário','agenda do dia','visao dia','visão dia'],
     view_week:['semana','semanal','esta semana','agenda semanal','agenda da semana','visao semana','visão semana'],
     view_month:['mes','mês','mensal','este mes','este mês','agenda mensal','agenda do mes','agenda do mês','visao mes','visão mês'],
@@ -5227,73 +5416,55 @@ function normalizeText(str) {
 
   const SLOT_DEFS=[
     ['numero','Tarefa visível','3, 03, três, número 3, tarefa três, item 03','Só executa se existir na visualização atual.'],
-    ['numeros','Várias tarefas visíveis','2, 4 e 7; tarefas dois, quatro e sete; tarefas 3 a 6','Resolve cada número pela numeração visual atual e executa uma ação em lote com confirmação.'],
-    ['status','Status','pendente, em andamento, aguardando retorno, aguardando orçamento, aguardando pagamento, concluído, cancelado','Normaliza sinônimos para status reais.'],
-    ['prioridade','Prioridade','baixa, normal, alta, urgente, prioridade máxima, pra ontem','Normaliza sinônimos para prioridades reais.'],
     ['data','Data natural','hoje, amanhã, sexta, próxima segunda, 20/06, dia 20, daqui 3 dias','Converte para data real antes de executar.'],
-    ['data_origem','Data de origem','quinta, hoje, 20/06','Usada para localizar tarefas por data quando existir ação de lote por data.'],
-    ['data_destino','Data de destino','sexta, amanhã, 21/06','Usada como nova data em ações de lote por data.'],
-    ['hora','Horário','14h, 14:30, duas da tarde','Valida formato de hora quando usado.'],
     ['categoria','Categoria / condomínio','nome total ou parcial do condomínio','Categoria continua sendo o condomínio.'],
-    ['titulo','Título','texto livre','Usado para criar ou editar tarefa.'],
-    ['comentario','Comentário','texto livre','Usado para observações da tarefa.'],
+    ['titulo','Título','texto livre','Usado para criar tarefa ou nota.'],
+    ['texto','Texto','texto livre','Usado para resposta rápida, busca e nota.'],
     ['visao','Visualização','dia, hoje, semana, mês, ano, notas','Muda a visualização da agenda sem depender de intenção fixa.'],
-    ['periodo','Período','hoje, semana, mês, ano, atrasadas, urgentes','Usado para filtros e resumos.'],
-    ['recorrencia','Recorrência','diária, semanal, mensal, anual, todo mês','Usado para rotinas.']
+    ['recorrencia','Recorrência','diária, semanal, mensal, anual, todo mês','Usado para rotinas individuais.']
   ];
 
   const INTENTS=[
-    {id:'complete_task',name:'Concluir tarefa',group:'Tarefas',action:'TASK_COMPLETE',risk:'baixo',slots:['numero'],desc:'Concluir, dar baixa, finalizar ou resolver uma tarefa visível.'},
-    {id:'set_status',name:'Alterar status',group:'Status',action:'TASK_SET_STATUS',risk:'baixo',slots:['numero','status'],desc:'Alterar status da tarefa para pendente, andamento, aguardando etc.'},
-    {id:'set_priority',name:'Alterar prioridade',group:'Prioridade',action:'TASK_SET_PRIORITY',risk:'baixo',slots:['numero','prioridade'],desc:'Alterar prioridade da tarefa para baixa, normal, alta ou urgente.'},
-    {id:'reschedule_task',name:'Reagendar tarefa',group:'Data',action:'TASK_RESCHEDULE',risk:'medio',slots:['numero','data'],desc:'Mover tarefa para outra data usando linguagem natural.'},
-    {id:'bulk_reschedule',name:'Reagendar tarefas em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros','data'],desc:'Mover várias tarefas visíveis para uma data, usando {numeros} como lista.'},
-    {id:'bulk_complete',name:'Concluir tarefas em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros'],desc:'Concluir várias tarefas visíveis em uma única ordem.'},
-    {id:'bulk_status',name:'Alterar status em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros','status'],desc:'Alterar status de várias tarefas visíveis.'},
-    {id:'bulk_priority',name:'Alterar prioridade em lote',group:'Lote',action:'BULK_ACTION',risk:'alto',slots:['numeros','prioridade'],desc:'Alterar prioridade de várias tarefas visíveis.'},
-    {id:'add_comment',name:'Adicionar comentário',group:'Tarefas',action:'TASK_ADD_COMMENT',risk:'baixo',slots:['numero','comentario'],desc:'Adicionar observação/comentário em uma tarefa.'},
-    {id:'create_task',name:'Criar tarefa',group:'Tarefas',action:'TASK_CREATE',risk:'baixo',slots:['titulo'],desc:'Criar uma nova tarefa, com data/categoria/prioridade opcionais.'},
-    {id:'open_task_form',name:'Abrir formulário de tarefa',group:'Tarefas',action:'OPEN_TASK_FORM',risk:'baixo',slots:[],desc:'Abrir o formulário de nova tarefa vazio para preenchimento manual.'},
+    {id:'complete_task',name:'Concluir tarefa',group:'Tarefas',action:'TASK_COMPLETE',risk:'baixo',slots:['numero'],desc:'Concluir, dar baixa, finalizar ou resolver uma tarefa visível individual.'},
+    {id:'reschedule_task',name:'Reagendar tarefa',group:'Agenda',action:'TASK_RESCHEDULE',risk:'medio',slots:['numero','data'],desc:'Mover uma tarefa específica para outra data usando linguagem natural.'},
+    {id:'create_task',name:'Criar tarefa',group:'Tarefas',action:'TASK_CREATE',risk:'baixo',slots:['titulo'],desc:'Criar uma nova tarefa individual com data e categoria opcionais.'},
+    {id:'open_task_form',name:'Abrir nova tarefa',group:'Tarefas',action:'OPEN_TASK_FORM',risk:'baixo',slots:[],desc:'Abrir o formulário de nova tarefa vazio para preenchimento manual.'},
     {id:'create_note',name:'Criar nota',group:'Notas',action:'CREATE_NOTE',risk:'baixo',slots:[],desc:'Criar uma nota por voz sem cair como tarefa.'},
     {id:'show_date',name:'Mostrar data',group:'Visualização',action:'SHOW_DATE',risk:'baixo',slots:['data'],desc:'Abrir agenda de uma data específica.'},
     {id:'set_view',name:'Mudar visualização',group:'Visualização',action:'SET_VIEW',risk:'baixo',slots:['visao'],desc:'Alternar entre dia, semana, mês, ano ou notas por comando de voz.'},
-    {id:'filter_status',name:'Filtrar status',group:'Visualização',action:'FILTER_STATUS',risk:'baixo',slots:['status'],desc:'Mostrar tarefas por status.'},
-    {id:'filter_priority',name:'Filtrar prioridade',group:'Visualização',action:'FILTER_PRIORITY',risk:'baixo',slots:['prioridade'],desc:'Mostrar tarefas por prioridade.'},
-    {id:'filter_category',name:'Filtrar categoria/condomínio',group:'Visualização',action:'FILTER_CATEGORY',risk:'baixo',slots:['categoria'],desc:'Mostrar tarefas de uma categoria/condomínio.'},
-    {id:'summary_day',name:'Resumo do dia',group:'Produtividade',action:'SUMMARY_DAY',risk:'baixo',slots:[],desc:'Abrir painel/resumo do dia.'},
+    {id:'filter_category',name:'Filtrar condomínio',group:'Visualização',action:'FILTER_CATEGORY',risk:'baixo',slots:['categoria'],desc:'Mostrar tarefas de uma categoria ou condomínio.'},
+    {id:'search_term',name:'Buscar termo',group:'Busca',action:'SEARCH_TERM',risk:'baixo',slots:['texto'],desc:'Enviar uma frase para o campo de busca geral.'},
+    {id:'summary_day',name:'Resumo do dia',group:'Produtividade',action:'SUMMARY_DAY',risk:'baixo',slots:[],desc:'Abrir painel ou resumo do dia.'},
     {id:'undo_last',name:'Desfazer última ação',group:'Segurança',action:'UNDO_LAST_ACTION',risk:'medio',slots:[],desc:'Reverter a última alteração feita pelo Mega Brain.'},
-    {id:'answer',name:'Resposta personalizada',group:'Jarvis',action:'ANSWER',risk:'baixo',slots:[],desc:'Responder um texto ensinado, sem alterar tarefas.'}
+    {id:'answer',name:'Resposta rápida',group:'Jarvis',action:'ANSWER',risk:'baixo',slots:[],desc:'Responder um texto ensinado, sem alterar tarefas.'}
   ];
 
   const MODEL_TRIGGERS={
-    complete_task:['concluir tarefa {numero}','concluir a tarefa {numero}','finalizar tarefa {numero}','finalizar a tarefa {numero}','dar baixa na tarefa {numero}','baixar tarefa {numero}','baixar a tarefa {numero}','resolver tarefa {numero}','resolver a tarefa {numero}','encerrar tarefa {numero}','fechar tarefa {numero}','matar tarefa {numero}','marcar tarefa {numero} como feita','marcar tarefa {numero} como concluida'],
-    set_status:['alterar status da tarefa {numero} para {status}','mudar status da tarefa {numero} para {status}','colocar tarefa {numero} como {status}','colocar a tarefa {numero} como {status}','marcar tarefa {numero} como {status}','passar tarefa {numero} para {status}','atualizar tarefa {numero} para {status}','deixar tarefa {numero} em {status}'],
-    set_priority:['alterar prioridade da tarefa {numero} para {prioridade}','mudar prioridade da tarefa {numero} para {prioridade}','colocar tarefa {numero} como prioridade {prioridade}','marcar tarefa {numero} como prioridade {prioridade}','deixar tarefa {numero} urgente','tornar tarefa {numero} prioridade {prioridade}','colocar prioridade {prioridade} na tarefa {numero}'],
+    complete_task:['concluir tarefa {numero}','concluir a tarefa {numero}','finalizar tarefa {numero}','finalizar a tarefa {numero}','dar baixa na tarefa {numero}','baixar tarefa {numero}','baixar a tarefa {numero}','resolver tarefa {numero}','resolver a tarefa {numero}','encerrar tarefa {numero}','fechar tarefa {numero}','marcar tarefa {numero} como feita','marcar tarefa {numero} como concluida'],
     reschedule_task:['reagendar tarefa {numero} para {data}','reagendar a tarefa {numero} para {data}','jogar tarefa {numero} para {data}','jogar a tarefa {numero} para {data}','passar tarefa {numero} para {data}','mover tarefa {numero} para {data}','transferir tarefa {numero} para {data}','colocar tarefa {numero} para {data}','adiar tarefa {numero} para {data}'],
-    bulk_reschedule:['reagendar tarefas {numeros} para {data}','reagendar as tarefas {numeros} para {data}','jogar tarefas {numeros} para {data}','jogar as tarefas {numeros} para {data}','passar tarefas {numeros} para {data}','mover tarefas {numeros} para {data}','transferir tarefas {numeros} para {data}','colocar tarefas {numeros} para {data}','levar tarefas {numeros} para {data}'],
-    bulk_complete:['concluir tarefas {numeros}','concluir as tarefas {numeros}','finalizar tarefas {numeros}','dar baixa nas tarefas {numeros}','baixar tarefas {numeros}','resolver tarefas {numeros}'],
-    bulk_status:['alterar status das tarefas {numeros} para {status}','mudar tarefas {numeros} para {status}','colocar tarefas {numeros} como {status}','passar tarefas {numeros} para {status}','marcar tarefas {numeros} como {status}'],
-    bulk_priority:['alterar prioridade das tarefas {numeros} para {prioridade}','colocar tarefas {numeros} como prioridade {prioridade}','marcar tarefas {numeros} como prioridade {prioridade}','tornar tarefas {numeros} prioridade {prioridade}','deixar tarefas {numeros} como {prioridade}'],
-    add_comment:['adicionar comentario na tarefa {numero} {comentario}','anotar na tarefa {numero} {comentario}','registrar comentario na tarefa {numero} {comentario}','colocar observacao na tarefa {numero} {comentario}','comentar tarefa {numero} {comentario}'],
     create_task:['criar tarefa {titulo}','nova tarefa {titulo}','adicionar tarefa {titulo}','registrar demanda {titulo}','criar demanda {titulo}'],
-    create_note:['criar nota','nova nota','criar nota {titulo}','nova nota {titulo}','criar nota com texto {comentario}','salvar nota {comentario}','salvar isso nas notas {comentario}','anotar nas notas {comentario}','ditar nota','nota por voz'],
+    open_task_form:['abrir nova tarefa','nova tarefa','criar tarefa','abrir formulário de tarefa'],
+    create_note:['criar nota','nova nota','criar nota {titulo}','nova nota {titulo}','salvar nota {texto}','salvar isso nas notas {texto}','anotar nas notas {texto}','ditar nota','nota por voz'],
     show_date:['mostrar {data}','abrir {data}','ver tarefas de {data}','o que tem {data}','agenda de {data}'],
-    filter_status:['mostrar {status}','listar {status}','filtrar {status}','mostrar tarefas {status}'],
-    filter_priority:['mostrar prioridade {prioridade}','mostrar tarefas {prioridade}','listar prioridade {prioridade}','filtrar prioridade {prioridade}'],
+    set_view:['mostrar {visao}','abrir {visao}','ver {visao}','ir para {visao}','mudar para {visao}','mostrar agenda da {visao}','abrir agenda da {visao}','visualizar {visao}'],
     filter_category:['mostrar {categoria}','tarefas do {categoria}','abrir {categoria}','filtrar {categoria}'],
+    search_term:['buscar {texto}','pesquisar {texto}','procurar {texto}','localizar {texto}'],
     summary_day:['resumo do dia','resumo de hoje','meu dia','painel do dia','hoje eu preciso resolver'],
     undo_last:['desfazer ultima acao','desfazer última ação','desfazer','voltar ultima acao','reverter ultima acao']
   };
 
 
-  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY','FILTER_CATEGORY','SUMMARY_DAY','UNDO_LAST_ACTION']);
+
+  const PROTECTED_NATIVE_ACTIONS=new Set(['SET_VIEW','SHOW_DATE','TASK_RESCHEDULE','TASK_COMPLETE','FILTER_CATEGORY','SEARCH_TERM','SUMMARY_DAY','UNDO_LAST_ACTION']);
   function isPackageRule(rule){return /^(model|package|pacote)$/i.test(String(rule?.source||'')) || String(rule?.name||'').toLowerCase().startsWith('pacote') || !!rule?.packageId || rule?.auxiliary===true}
   function isProtectedPlan(plan){return !!plan && PROTECTED_NATIVE_ACTIONS.has(String(plan.action||''))}
   function candidatePriority(plan){
     if(!plan)return 0;
+    if(plan.rule && isUserRule(plan.rule))return 900;
+    if(/^Resposta rápida aprendida|^Comando treinado|^Regra aprendida/.test(String(plan.source||'')))return 880;
     if(/^Nativo/.test(String(plan.source||'')))return 400;
     if(plan.source==='Inferência')return 120;
-    if(isPackageRule(plan.rule))return 20;
+    if(isPackageRule(plan.rule))return 35;
     if(plan.rule)return 220;
     return 100;
   }
@@ -5330,6 +5501,33 @@ function normalizeText(str) {
       .trim();
   }
   const norm=normalizeText;
+  function canonicalJarvisPhrase(value){
+    return norm(value)
+      .replace(/\b(?:jarvis|javis|jarves|jervis|jarbas)\b/g,' ')
+      .replace(/\b(?:ok|okay|oquei|okey|ei|hey|ola|alo|alô|oi|por favor|pfv|por gentileza)\b/g,' ')
+      .replace(/\b(?:me responde|responde|me diga|diga|fala|fale)\b/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+  function tokenList(value){return canonicalJarvisPhrase(value).split(/\s+/).map(s=>s.trim()).filter(Boolean)}
+  function phraseScore(a,b){
+    const ca=canonicalJarvisPhrase(a), cb=canonicalJarvisPhrase(b);
+    if(!ca||!cb)return 0;
+    if(ca===cb)return 100;
+    const aw=tokenList(ca), bw=tokenList(cb);
+    if(!aw.length||!bw.length)return 0;
+    const A=new Set(aw), B=new Set(bw);
+    const inter=[...A].filter(x=>B.has(x)).length;
+    const union=new Set([...aw,...bw]).size||1;
+    const coverageA=inter/(A.size||1), coverageB=inter/(B.size||1);
+    let score=Math.round((inter/union)*70 + Math.min(coverageA,coverageB)*30);
+    if((ca.includes(cb)||cb.includes(ca)) && Math.min(aw.length,bw.length)>=2) score=Math.max(score,92);
+    if(inter>=2 && Math.abs(aw.length-bw.length)<=2) score=Math.max(score,88);
+    return Math.min(100,score);
+  }
+  function isUserRule(rule){return !!rule && !isPackageRule(rule) && String(rule.source||'user')!=='package'}
+  function isQuickAnswerRule(rule){return String(rule?.kind||'').toLowerCase()==='answer' || String(rule?.action||'')==='ANSWER' || String(rule?.intent||'')==='answer'}
+  function answerForRule(rule){return String(rule?.answer||rule?.finalCommand||rule?.slots?.answer||'').trim()}
   function words(list){return list.map(norm).filter(Boolean)}
   function settings(){try{return Object.assign({},DEFAULT_SETTINGS,JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}'))}catch(e){return Object.assign({},DEFAULT_SETTINGS)}}
   function setSettings(p){localStorage.setItem(SETTINGS_KEY,JSON.stringify(Object.assign(settings(),p)));renderSettings()}
@@ -5533,7 +5731,15 @@ function normalizeText(str) {
   function getRules(){
     let list=[]; try{list=JSON.parse(localStorage.getItem(RULE_KEY)||'[]')}catch(e){list=[]}
     if(!list.length){try{const legacy=JSON.parse(localStorage.getItem(LEGACY_RULE_KEY)||'[]'); if(Array.isArray(legacy)&&legacy.length)list=legacy.map(migrateRule)}catch(e){}}
-    return Array.isArray(list)?list:[];
+    const bannedActions=new Set(['TASK_SET_STATUS','TASK_SET_PRIORITY','TASK_ADD_COMMENT','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY']);
+    const bannedIntent=/^(set_status|set_priority|add_comment|bulk_|filter_status|filter_priority)/i;
+    let changed=false;
+    const safe=(Array.isArray(list)?list:[]).filter(r=>!bannedActions.has(String(r?.action||''))&&!bannedIntent.test(String(r?.intent||''))).map(r=>{
+      if(r && r.source==='user' && r.enabled===false && r.manuallyDisabled!==true){changed=true; return Object.assign({},r,{enabled:true,migrated_hidden_enabled:true});}
+      return r;
+    });
+    if(changed){try{localStorage.setItem(RULE_KEY,JSON.stringify(safe))}catch(e){}}
+    return safe;
   }
   function migrateRule(r){const intent=guessIntentFromFinal(r.finalCommand||r.trigger||'');return {id:r.id||uid('r'),name:r.name||'Regra importada',kind:r.kind||'action',intent:intent.id,action:intent.action,triggers:r.triggers||splitLines(r.trigger||''),finalCommand:r.finalCommand||'',enabled:r.enabled!==false,auto:r.auto!==false,minConfidence:90,askBelow:70,risk:intent.risk,created_at:r.created_at||new Date().toISOString(),source:'legacy'}}
   function setRules(list){localStorage.setItem(RULE_KEY,JSON.stringify(list));renderAll()}
@@ -5544,7 +5750,7 @@ function normalizeText(str) {
   function addPending(heard){const n=norm(heard);const list=pendingList().filter(p=>norm(p.heard)!==n);list.unshift({id:uid('p'),heard,created_at:new Date().toISOString()});setPending(list.slice(0,50))}
   function uid(prefix){return prefix+Date.now().toString(36)+Math.floor(Math.random()*9999).toString(36)}
 
-  function guessIntentFromFinal(text){const n=norm(text);if(parsePriority(n))return intentById('set_priority');if(parseStatus(n))return intentById('set_status');if(hasAny(n,'complete'))return intentById('complete_task');if(hasAny(n,'reschedule')||parseDate(n))return intentById('reschedule_task');if(hasAny(n,'comment'))return intentById('add_comment');if(hasAny(n,'create'))return intentById('create_task');return intentById('complete_task')}
+  function guessIntentFromFinal(text){const n=norm(text);if(hasAny(n,'complete'))return intentById('complete_task');if(hasAny(n,'reschedule')||parseDate(n))return intentById('reschedule_task');if(hasAny(n,'create'))return intentById('create_task');return intentById('answer')}
 
   function visibleTasks(){
     refreshVisualNumberMap();
@@ -5595,21 +5801,15 @@ function normalizeText(str) {
 
   function slotValue(slot,raw){
     if(slot==='numero')return numberFromText(raw)||'';
-    if(slot==='numeros')return numbersFromText(raw);
-    if(slot==='status')return parseStatus(raw);
-    if(slot==='prioridade')return parsePriority(raw);
     if(slot==='data')return parseDate(raw);
     if(slot==='visao')return parseView(raw);
     if(slot==='categoria')return findCategory(raw)||String(raw||'').trim();
-    if(slot==='titulo'||slot==='comentario'||slot==='texto')return String(raw||'').trim();
+    if(slot==='titulo'||slot==='texto')return String(raw||'').trim();
     return String(raw||'').trim();
   }
   function patternForSlot(slot){
     if(slot==='numero')return '((?:numero\s*)?\d{1,4}|um|uma|primeiro|primeira|dois|duas|segundo|segunda|tres|terceiro|terceira|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|catorze|quatorze|quinze|dezesseis|dezessete|dezoito|dezenove|vinte(?:\s+e\s+(?:um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove))?)';
-    if(slot==='numeros')return '(.+?)';
     if(slot==='visao')return '(dia|hoje|semana|semanal|mes|mês|mensal|ano|anual|notas|bloco de notas|agenda do dia|agenda da semana|agenda do mes|agenda do mês|agenda do ano|agenda semanal|agenda mensal|agenda anual)';
-    if(slot==='status')return '(.+?)';
-    if(slot==='prioridade')return '(.+?)';
     if(slot==='data')return '(.+?)';
     return '(.+?)';
   }
@@ -5623,15 +5823,38 @@ function normalizeText(str) {
     return {regex:new RegExp('^\\s*'+t+'\\s*$','i'),vars};
   }
   function matchRule(rule,raw){
-    const clean=stripWake(raw); const normalized=norm(clean);
+    const clean=stripWake(raw);
+    const normalized=norm(clean);
     const triggers=Array.isArray(rule.triggers)?rule.triggers:splitLines(rule.trigger||'');
+    const intent=intentById(rule.intent||'answer');
+
+    // 1) Correspondência estruturada para comandos com variáveis, como {numero} e {data}.
     for(const trigger of triggers){
       const c=compileTrigger(trigger); if(!c)continue;
       const m=normalized.match(c.regex); if(!m)continue;
-      const slots={}; c.vars.forEach((v,i)=>{slots[v]=slotValue(v,m[i+1]||'')});
-      const missing=(intentById(rule.intent).slots||[]).filter(s=>!slots[s] && s!=='titulo' && s!=='comentario');
+      const slots=Object.assign({},rule.fixedSlots||{});
+      c.vars.forEach((v,i)=>{slots[v]=slotValue(v,m[i+1]||'')});
+      if(isQuickAnswerRule(rule)){slots.answer=answerForRule(rule)}
+      const missing=(intent.slots||[]).filter(s=>!slots[s] && s!=='titulo' && s!=='texto');
       const fromPackage=isPackageRule(rule);
-      return makePlan({source:fromPackage?'Pacote auxiliar':'Regra aprendida',rule,trigger,raw,normalized,intent:rule.intent||guessIntentFromFinal(rule.finalCommand).id,action:rule.action||intentById(rule.intent).action,slots,confidence:missing.length?68:(fromPackage?72:96),missing});
+      const source=fromPackage?'Pacote auxiliar':(isQuickAnswerRule(rule)?'Resposta rápida aprendida':'Comando treinado');
+      return makePlan({source,rule,trigger,raw,normalized,intent:rule.intent||intent.id,action:rule.action||intent.action,slots,confidence:missing.length?68:(fromPackage?72:98),missing});
+    }
+
+    // 2) Correspondência flexível para respostas rápidas e ações ensinadas pelo usuário.
+    // Resolve casos como: "bom dia Jarvis" x "Jarvis, bom dia" x "oi Jarvis bom dia".
+    if(isUserRule(rule)){
+      const candidates=triggers
+        .filter(t=>t && !/\{[^{}]+\}/.test(t))
+        .map(t=>({trigger:t,score:phraseScore(raw,t)}))
+        .sort((a,b)=>b.score-a.score);
+      const best=candidates[0];
+      if(best && best.score>=86){
+        const slots=Object.assign({},rule.fixedSlots||{});
+        if(isQuickAnswerRule(rule)){slots.answer=answerForRule(rule)}
+        const source=isQuickAnswerRule(rule)?'Resposta rápida aprendida':'Comando treinado';
+        return makePlan({source,rule,trigger:best.trigger,raw,normalized:canonicalJarvisPhrase(raw),intent:rule.intent||intent.id,action:rule.action||intent.action,slots,confidence:Math.max(90,best.score),missing:[]});
+      }
     }
     return null;
   }
@@ -5665,52 +5888,41 @@ function normalizeText(str) {
 
   function nativePlan(raw){
     const clean=stripWake(raw); const n=norm(clean); if(!n)return null;
+    if(/\b(tarefas?|itens?|demandas?)\s+(?:\d|um|uma|dois|duas|tres|três|quatro|cinco|seis|sete|oito|nove|dez)\s*(?:,| e | ate | até | a )/i.test(clean) || /\b(todas|todos|varias|várias|lote|em lote|selecionados|selecionadas|finalizar tudo|concluir tudo|reagendar todas|mover todas)\b/.test(n)){
+      return makePlan({source:'Segurança',raw,normalized:n,intent:'answer',action:'ANSWER',slots:{answer:'Esse tipo de comando múltiplo foi desativado. Informe apenas uma tarefa por vez.'},confidence:99});
+    }
+    if(/\b(prioridade|urgente|status|pendente|andamento|aguardando|comentario|comentário)\b/.test(n) && /\b(tarefa|item|demanda)\b/.test(n)){
+      return makePlan({source:'Segurança',raw,normalized:n,intent:'answer',action:'ANSWER',slots:{answer:'Esse campo não faz parte do painel de tarefas. Posso concluir, reagendar, criar, buscar ou abrir uma tarefa individual.'},confidence:96});
+    }
     let slots={};
     if(hasAny(n,'undo'))return makePlan({source:'Nativo',raw,normalized:n,intent:'undo_last',action:'UNDO_LAST_ACTION',slots:{},confidence:96});
     if(/\b(resumo do dia|resumo de hoje|meu dia|painel do dia)\b/.test(n))return makePlan({source:'Nativo',raw,normalized:n,intent:'summary_day',action:'SUMMARY_DAY',slots:{},confidence:94});
     if(/\b(ativar|ligar|abrir)\s+modo\s+vigia\b/.test(n))return makePlan({source:'Nativo',raw,normalized:n,intent:'watch_on',action:'WATCH_ON',slots:{},confidence:98});
     if(/\b(desligar|parar|encerrar)\s+modo\s+vigia\b/.test(n))return makePlan({source:'Nativo',raw,normalized:n,intent:'watch_off',action:'WATCH_OFF',slots:{},confidence:98});
-
-    const num=numberFromText(n); const nums=numbersFromText(n); const status=parseStatus(n); const priority=parsePriority(n); const date=parseDate(n);
-    if(nums.length>1){
-      if(date && hasAny(n,'reschedule'))return makePlan({source:'Nativo em lote',raw,normalized:n,intent:'bulk_reschedule',action:'BULK_ACTION',slots:{numeros:nums,data:date,baseAction:'TASK_RESCHEDULE'},confidence:93});
-      if((hasAny(n,'complete') || /\b(feitas|feitos|feito|feita|ok)\b/.test(n)))return makePlan({source:'Nativo em lote',raw,normalized:n,intent:'bulk_complete',action:'BULK_ACTION',slots:{numeros:nums,baseAction:'TASK_COMPLETE'},confidence:93});
-      if(priority && (hasAny(n,'setPriority') || /\bprioridade\b|\burgente\b|\bimportante\b/.test(n)))return makePlan({source:'Nativo em lote',raw,normalized:n,intent:'bulk_priority',action:'BULK_ACTION',slots:{numeros:nums,prioridade:priority,baseAction:'TASK_SET_PRIORITY'},confidence:92});
-      if(status && (hasAny(n,'setStatus') || /\bstatus\b|\baguardando\b|\bandamento\b|\bpendente\b|\bcancelad/.test(n)))return makePlan({source:'Nativo em lote',raw,normalized:n,intent:'bulk_status',action:'BULK_ACTION',slots:{numeros:nums,status,baseAction:'TASK_SET_STATUS'},confidence:92});
-    }
+    const num=numberFromText(n); const date=parseDate(n);
     if((hasAny(n,'complete') || /\b(feita|feito|ok)\b/.test(n)) && num){return makePlan({source:'Nativo',raw,normalized:n,intent:'complete_task',action:'TASK_COMPLETE',slots:{numero:num},confidence:94})}
-    if(priority && num && (hasAny(n,'setPriority') || /\bprioridade\b|\burgente\b|\bimportante\b/.test(n))){return makePlan({source:'Nativo',raw,normalized:n,intent:'set_priority',action:'TASK_SET_PRIORITY',slots:{numero:num,prioridade:priority},confidence:93})}
-    if(status && num && (hasAny(n,'setStatus') || /\bstatus\b|\baguardando\b|\bandamento\b|\bpendente\b|\bcancelad/.test(n))){return makePlan({source:'Nativo',raw,normalized:n,intent:'set_status',action:'TASK_SET_STATUS',slots:{numero:num,status},confidence:92})}
     if(date && num && hasAny(n,'reschedule')){return makePlan({source:'Nativo',raw,normalized:n,intent:'reschedule_task',action:'TASK_RESCHEDULE',slots:{numero:num,data:date},confidence:92})}
-    if(hasAny(n,'comment') && num){let c=n.replace(/^.*?(?:tarefa|item|demanda|pendencia)?\s*(?:numero\s*)?\d+\s*/,'').trim(); if(c)return makePlan({source:'Nativo',raw,normalized:n,intent:'add_comment',action:'TASK_ADD_COMMENT',slots:{numero:num,comentario:c},confidence:89})}
-    // Rota nativa protegida: nota sempre vence tarefa.
     if(looksLikeMegaCreateNote(raw)){
       const draft=noteDraftFromRaw(raw);
-      return makePlan({source:'Nativo protegido',raw,normalized:n,intent:'create_note',action:'CREATE_NOTE',slots:{titulo:draft.title||'',comentario:draft.text||''},confidence:96});
+      return makePlan({source:'Nativo protegido',raw,normalized:n,intent:'create_note',action:'CREATE_NOTE',slots:{titulo:draft.title||'',texto:draft.text||''},confidence:96});
     }
-    if(looksLikeOpenEmptyTaskForm(raw)){
-      return makePlan({source:'Nativo',raw,normalized:n,intent:'open_task_form',action:'OPEN_TASK_FORM',slots:{},confidence:96});
-    }
+    if(looksLikeOpenEmptyTaskForm(raw))return makePlan({source:'Nativo',raw,normalized:n,intent:'open_task_form',action:'OPEN_TASK_FORM',slots:{},confidence:96});
     if(hasAny(n,'create')){
       let title=clean.replace(/^\s*(?:criar|cria|crie|nova|novo|adicionar|adiciona|incluir|inclui|registrar|registra|cadastrar|cadastra|salvar|salva)\s+(?:uma\s+|um\s+)?(?:nova\s+|novo\s+)?(?:tarefa|demanda|item)?\s*/i,'').trim();
-      if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',prioridade:priority||'',status:status||'',categoria:findCategory(n)||''},confidence:86});
+      if(title)return makePlan({source:'Nativo',raw,normalized:n,intent:'create_task',action:'TASK_CREATE',slots:{titulo:title,data:date||'',categoria:findCategory(n)||''},confidence:86});
     }
     const visao=parseView(n);
-    // Primeiro trata comandos com data explícita/relativa: mostrar amanhã, abrir 25/06, ir para próxima segunda.
-    // Só depois interpreta dia/semana/mês/ano como troca de visualização.
     if(date && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'show_date',action:'SHOW_DATE',slots:{data:date},confidence:94});
     if(visao && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'set_view',action:'SET_VIEW',slots:{visao},confidence:94});
-    if(priority && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_priority',action:'FILTER_PRIORITY',slots:{prioridade:priority},confidence:88});
-    if(status && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_status',action:'FILTER_STATUS',slots:{status},confidence:88});
     const category=findCategory(n); if(category && hasAny(n,'show'))return makePlan({source:'Nativo',raw,normalized:n,intent:'filter_category',action:'FILTER_CATEGORY',slots:{categoria:category},confidence:86});
-
-    if(num && (priority||status||date)){
-      if(priority)return makePlan({source:'Inferência',raw,normalized:n,intent:'set_priority',action:'TASK_SET_PRIORITY',slots:{numero:num,prioridade:priority},confidence:76});
-      if(status)return makePlan({source:'Inferência',raw,normalized:n,intent:'set_status',action:'TASK_SET_STATUS',slots:{numero:num,status},confidence:76});
-      if(date)return makePlan({source:'Inferência',raw,normalized:n,intent:'reschedule_task',action:'TASK_RESCHEDULE',slots:{numero:num,data:date},confidence:74});
+    if(/\b(buscar|pesquisar|procurar|localizar)\b/.test(n)){
+      const texto=clean.replace(/^\s*(?:jarvis\s*)?(?:buscar|pesquisar|procurar|localizar)\s*/i,'').trim();
+      if(texto)return makePlan({source:'Nativo',raw,normalized:n,intent:'search_term',action:'SEARCH_TERM',slots:{texto},confidence:86});
     }
+    if(num && date)return makePlan({source:'Inferência',raw,normalized:n,intent:'reschedule_task',action:'TASK_RESCHEDULE',slots:{numero:num,data:date},confidence:74});
     return null;
   }
+
   function makePlan(p){
     const intent=intentById(p.intent); const slots=Object.assign({},p.slots||{}); const missing=[...(intent.slots||[])].filter(s=>!slots[s]);
     let confidence=Number(p.confidence||70); if(missing.length)confidence=Math.min(confidence,62);
@@ -5724,9 +5936,13 @@ function normalizeText(str) {
     const text=String(raw||'').trim(); const clean=stripWake(text); const pieces=splitCompound(clean);
     if(pieces.length>1){const plans=pieces.map(p=>analyze(p).best).filter(Boolean); if(plans.length===pieces.length){return {raw:text,normalized:norm(clean),compound:true,plans,best:{action:'COMPOUND',intent:'compound',confidence:Math.min(...plans.map(p=>p.confidence)),errors:plans.flatMap(p=>p.errors),warnings:plans.flatMap(p=>p.warnings),slots:{},source:'Composto'}}}}
     const candidates=[];
+    const rules=getRules().filter(r=>r.enabled!==false);
+    const userRules=rules.filter(r=>!isPackageRule(r));
+    const packageRules=rules.filter(r=>isPackageRule(r));
+    userRules.forEach(r=>{const m=matchRule(r,text); if(m)candidates.push(m)});
     const n=nativePlan(text); if(n)candidates.push(n);
-    getRules().filter(r=>r.enabled!==false).forEach(r=>{
-      if(isPackageRule(r) && isProtectedPlan(n))return;
+    packageRules.forEach(r=>{
+      if(isProtectedPlan(n))return;
       const m=matchRule(r,text); if(m)candidates.push(m)
     });
     candidates.sort((a,b)=>candidatePriority(b)-candidatePriority(a) || b.confidence-a.confidence);
@@ -5740,7 +5956,7 @@ function normalizeText(str) {
     if(!/\s+(e|depois|tambem|também)\s+/i.test(n))return [n];
     const parts=n.split(/\s+(?:e depois|depois|tambem|também| e )\s+/i).map(x=>x.trim()).filter(Boolean);
     if(parts.length<2)return [n];
-    const actionish=parts.filter(p=>hasAny(p,'complete')||hasAny(p,'reschedule')||hasAny(p,'setPriority')||hasAny(p,'setStatus')||hasAny(p,'comment')||parsePriority(p)||parseStatus(p)||parseDate(p));
+    const actionish=parts.filter(p=>hasAny(p,'complete')||hasAny(p,'reschedule')||parseDate(p));
     return actionish.length>=2?parts:[n];
   }
 
@@ -5762,82 +5978,12 @@ function normalizeText(str) {
   function saveAndRender(){if(typeof saveToStorage==='function')saveToStorage(); if(typeof updateCategoryFilter==='function')updateCategoryFilter(); if(typeof render==='function')render()}
   function statusLabelSafe(s){return typeof statusLabel==='function'?statusLabel(s):s}
   function isDone(t){const s=norm(t?.status);return /conclu|feito|finaliz|baixad/.test(s)}
-  function bulkBaseAction(plan){
-    if(plan?.slots?.baseAction)return plan.slots.baseAction;
-    const id=plan?.intent||'';
-    if(id==='bulk_reschedule')return 'TASK_RESCHEDULE';
-    if(id==='bulk_complete')return 'TASK_COMPLETE';
-    if(id==='bulk_status')return 'TASK_SET_STATUS';
-    if(id==='bulk_priority')return 'TASK_SET_PRIORITY';
-    return plan?.rule?.baseAction || '';
-  }
-  function bulkActionLabel(base){
-    return {TASK_RESCHEDULE:'reagendadas',TASK_COMPLETE:'concluídas',TASK_SET_STATUS:'atualizadas',TASK_SET_PRIORITY:'atualizadas'}[base]||'processadas';
-  }
-  function verifyBulkSingle(task,base,slots){
-    if(!task)return false;
-    if(base==='TASK_RESCHEDULE')return String(task.proxima_data||'')===String(slots.data||'');
-    if(base==='TASK_SET_STATUS')return String(task.status||'')===String(slots.status||'');
-    if(base==='TASK_SET_PRIORITY')return String(task.prioridade||'')===String(slots.prioridade||'');
-    if(base==='TASK_COMPLETE')return isDone(task);
-    return false;
-  }
-  function childIntentForBulk(base){
-    if(base==='TASK_RESCHEDULE')return 'reschedule_task';
-    if(base==='TASK_COMPLETE')return 'complete_task';
-    if(base==='TASK_SET_STATUS')return 'set_status';
-    if(base==='TASK_SET_PRIORITY')return 'set_priority';
-    return 'complete_task';
-  }
-  function executeBulkAction(plan){
-    const s=plan.slots||{};
-    const base=bulkBaseAction(plan);
-    if(!base)return {ok:false,message:'Entendi o lote, mas a ação-base não foi definida.'};
-    if(!['TASK_RESCHEDULE','TASK_COMPLETE','TASK_SET_STATUS','TASK_SET_PRIORITY'].includes(base))return {ok:false,message:'Entendi o lote, mas essa ação-base ainda não executa em várias tarefas.'};
-    if(base==='TASK_RESCHEDULE'&&!s.data)return {ok:false,message:'Entendi o lote, mas falta a data de destino.'};
-    if(base==='TASK_SET_STATUS'&&!s.status)return {ok:false,message:'Entendi o lote, mas falta o status.'};
-    if(base==='TASK_SET_PRIORITY'&&!s.prioridade)return {ok:false,message:'Entendi o lote, mas falta a prioridade.'};
+  function bulkBaseAction(plan){return ''}
+  function bulkActionLabel(base){return 'processadas'}
+  function verifyBulkSingle(task,base,slots){return false}
+  function childIntentForBulk(base){return 'complete_task'}
+  function executeBulkAction(plan){return {ok:false,message:'Esse recurso foi removido. Informe apenas uma tarefa por vez.'}}
 
-    const nums=Array.isArray(s.numeros)?s.numeros.map(Number).filter(Boolean):numbersFromText(s.numeros||plan.raw||'');
-    if(!nums.length)return {ok:false,message:'Entendi que é uma ação em lote, mas não identifiquei os números das tarefas.'};
-
-    const resolved=[], missing=[];
-    for(const num of nums){
-      const direct=resolveTaskByNumber(num);
-      if(direct&&direct.task)resolved.push({number:num,task:direct.task,id:direct.task.id});
-      else missing.push(num);
-    }
-    if(!resolved.length){
-      const disponiveis=visualTaskMap().map(x=>`#${x.number}`).slice(0,30).join(', ');
-      return {ok:false,message:`Entendi o lote, mas não encontrei as tarefas ${nums.join(', ')} na visualização atual.${disponiveis?` Números visíveis: ${disponiveis}.`:''}`};
-    }
-
-    const ids=resolved.map(x=>Number(x.task.id)).filter(Boolean);
-    pushUndo('Ação em lote',ids);
-    const ok=[], failed=[];
-    for(const item of resolved){
-      const childSlots=Object.assign({},s,{numero:item.number});
-      delete childSlots.numeros;
-      delete childSlots.baseAction;
-      const before=clone(item.task);
-      const childPlan={source:'Executor de lote',raw:`${bulkActionLabel(base)} tarefa ${item.number}`,normalized:plan.normalized,intent:childIntentForBulk(base),action:base,slots:childSlots,task:item.task,confidence:99,risk:'baixo',errors:[]};
-      const result=executePlan(childPlan,{confirmed:true,bulkChild:true});
-      const after=allTasks().find(t=>Number(t.id)===Number(item.task.id))||item.task;
-      const verified=result&&result.ok&&verifyBulkSingle(after,base,childSlots);
-      if(verified)ok.push(item);
-      else { Object.assign(item.task,before); failed.push({item,result}); }
-    }
-    try{if(typeof saveToStorage==='function')saveToStorage()}catch(e){}
-    try{if(typeof updateCategoryFilter==='function')updateCategoryFilter()}catch(e){}
-    try{if(typeof render==='function')render()}catch(e){}
-
-    const okNums=ok.map(x=>'#'+x.number).join(', ');
-    const failNums=[...new Set([...failed.map(x=>'#'+x.item.number),...missing.map(x=>'#'+x)])].join(', ');
-    if(!ok.length)return {ok:false,message:`Entendi o lote, mas nenhuma tarefa foi alterada${failNums?` (${failNums})`:''}.`};
-    if(failed.length||missing.length)return {ok:false,message:`Ação em lote aplicada parcialmente: ${okNums}. Não consegui alterar/localizar: ${failNums}.`};
-    const detalhe=base==='TASK_RESCHEDULE'?` para ${formatDateBR(s.data)}`:base==='TASK_SET_STATUS'?` para ${statusLabelSafe(s.status)}`:base==='TASK_SET_PRIORITY'?` para ${s.prioridade}`:'';
-    return {ok:true,message:`Ação em lote aplicada: ${ok.length} tarefas ${bulkActionLabel(base)}${detalhe} (${okNums}).`};
-  }
   function createQuickVoiceNoteFromText(raw){
     const original=String(raw||'').trim();
     const body=original
@@ -5892,6 +6038,7 @@ function normalizeText(str) {
 
   function executePlan(plan,opts={}){
     if(!plan)return {ok:false,message:'Nenhum plano de execução.'};
+    if(['TASK_SET_STATUS','TASK_SET_PRIORITY','TASK_ADD_COMMENT','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY'].includes(String(plan.action||'')))return {ok:false,message:'Esse comando foi desativado. Use apenas ações individuais seguras.'};
     if(plan.action==='COMPOUND'){
       if(plan.errors&&plan.errors.length)return {ok:false,message:plan.errors[0]};
       const results=[]; for(const p of opts.plans||[]){const r=executePlan(p,Object.assign({},opts,{skipConfirm:true})); if(!r.ok)return r; results.push(r.message)}
@@ -5910,7 +6057,6 @@ function normalizeText(str) {
       if(plan.action==='WATCH_OFF'){toggleWatchMode(false);return {ok:true,message:'Modo vigia desativado.'}}
       if(plan.action==='SUMMARY_DAY'){openSummary();return {ok:true,message:'Resumo do dia aberto.'}}
       if(plan.action==='UNDO_LAST_ACTION'){return undoLastAction()}
-      if(plan.action==='BULK_ACTION'){return executeBulkAction(plan)}
       if(plan.action==='SHOW_DATE'){
         const targetDate=s.data||parseDate(plan.raw);
         if(!targetDate)return {ok:false,message:'Entendi que deseja abrir uma data, mas não identifiquei qual data.'};
@@ -5919,15 +6065,12 @@ function normalizeText(str) {
         else {plannerDate=targetDate; currentView='day'; if(typeof updateViewButtons==='function')updateViewButtons(); if(typeof render==='function')render();}
         return {ok:true,message:`Visualização de ${formatDateBR(targetDate)} ativada.`}
       }
+      if(plan.action==='OPEN_KANBAN'){try{if(typeof setView==='function')setView('kanban'); const planner=document.getElementById('plannerView'), kanban=document.getElementById('kanbanView'), notesView=document.getElementById('notesView'); if(planner)planner.style.display='none'; if(kanban){kanban.classList.remove('hidden');kanban.style.display='block';kanban.setAttribute('aria-hidden','false')} if(notesView)notesView.style.display='none'; if(typeof renderKanban==='function')renderKanban(typeof getFilteredTasks==='function'?getFilteredTasks():allTasks());}catch(e){} return {ok:true,message:'Kanban aberto.'}}
       if(plan.action==='SET_VIEW'){const view=s.visao||parseView(plan.raw); if(view==='notes'){if(typeof setView==='function')setView('notes'); else {window.currentView='notes'; if(typeof render==='function')render();} return {ok:true,message:'Visualização de notas ativada.'}} if(!['day','week','month','year'].includes(view))return {ok:false,message:'Entendi que deseja mudar a visualização, mas não identifiquei dia, semana, mês ou ano.'}; if(typeof setView==='function')setView(view); else {window.currentView=view; if(typeof render==='function')render();} if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false}); if(typeof render==='function')render(); return {ok:true,message:`Visualização de ${viewLabel(view)} ativada.`}}
-      if(plan.action==='FILTER_STATUS'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({status:s.status,label:statusLabelSafe(s.status)}); else {window.voiceFilter={status:s.status,label:statusLabelSafe(s.status)}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando ${statusLabelSafe(s.status)}.`}}
-      if(plan.action==='FILTER_PRIORITY'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({priority:s.prioridade,label:`Prioridade ${s.prioridade}`}); else {window.voiceFilter={priority:s.prioridade,label:`Prioridade ${s.prioridade}`}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando prioridade ${s.prioridade}.`}}
       if(plan.action==='FILTER_CATEGORY'){if(typeof applyVoiceFilter==='function')applyVoiceFilter({category:s.categoria,label:s.categoria}); else {window.voiceFilter={category:s.categoria,label:s.categoria}; if(typeof render==='function')render()} return {ok:true,message:`Mostrando ${s.categoria}.`}}
+      if(plan.action==='SEARCH_TERM'){return sendUnrecognizedVoiceToSearch(s.texto||plan.raw||'')}
       if(plan.action==='TASK_COMPLETE'){pushUndo('Concluir tarefa',[task.id]); if(typeof toggleTaskStatus==='function'&&!isDone(task))toggleTaskStatus(task.id); else {task.status='Concluido';task.updated_at=new Date().toISOString();saveAndRender()} msg=`Tarefa ${s.numero||''} concluída.`; return {ok:true,message:msg}}
-      if(plan.action==='TASK_SET_STATUS'){pushUndo('Alterar status',[task.id]); task.status=s.status; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Status da tarefa ${s.numero} atualizado para ${statusLabelSafe(s.status)}.`}}
-      if(plan.action==='TASK_SET_PRIORITY'){pushUndo('Alterar prioridade',[task.id]); task.prioridade=s.prioridade; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Prioridade da tarefa ${s.numero} atualizada para ${s.prioridade}.`}}
       if(plan.action==='TASK_RESCHEDULE'){pushUndo('Reagendar tarefa',[task.id]); task.proxima_data=s.data; if(!isDone(task))task.status=task.status||'Pendente'; task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Tarefa ${s.numero} reagendada para ${formatDateBR(s.data)}.`}}
-      if(plan.action==='TASK_ADD_COMMENT'){pushUndo('Adicionar comentário',[task.id]); task.comentarios=Array.isArray(task.comentarios)?task.comentarios:[]; task.comentarios.push({texto:s.comentario,criado_em:new Date().toISOString()}); task.updated_at=new Date().toISOString(); saveAndRender(); return {ok:true,message:`Comentário registrado na tarefa ${s.numero}.`}}
       if(plan.action==='CREATE_NOTE'){
         if(activeWatch){
           return createQuickVoiceNoteFromText(plan.raw||s.comentario||s.titulo||'criar nota');
@@ -5954,12 +6097,13 @@ function normalizeText(str) {
         if(typeof openModal==='function')openModal({silent:true});
         return {ok:true,message:'Formulário de nova tarefa aberto.'};
       }
-      if(plan.action==='TASK_CREATE'){const list=mutableTasks(); const id=list.length?Math.max(...list.map(t=>Number(t.id)||0))+1:1; const date=s.data||todayISO(); list.push({id,nome:s.titulo||'Nova tarefa',descricao:'',categoria:s.categoria||'',prioridade:s.prioridade||'Normal',status:s.status||'Pendente',comentarios:[],links:[],recorrencia:{ativa:false,tipo:''},proxima_data:date,created_at:new Date().toISOString(),updated_at:new Date().toISOString()}); saveAndRender(); localStorage.setItem(UNDO_KEY,JSON.stringify({time:new Date().toISOString(),label:'Criar tarefa',createdId:id})); return {ok:true,message:`Tarefa criada para ${formatDateBR(date)}.`}}
+      if(plan.action==='TASK_CREATE'){const list=mutableTasks(); const id=list.length?Math.max(...list.map(t=>Number(t.id)||0))+1:1; const date=s.data||todayISO(); list.push({id,nome:s.titulo||'Nova tarefa',descricao:'',categoria:s.categoria||'',prioridade:'Normal',status:'Pendente',comentarios:[],links:[],recorrencia:{ativa:false,tipo:''},proxima_data:date,created_at:new Date().toISOString(),updated_at:new Date().toISOString()}); saveAndRender(); localStorage.setItem(UNDO_KEY,JSON.stringify({time:new Date().toISOString(),label:'Criar tarefa',createdId:id})); return {ok:true,message:`Tarefa criada para ${formatDateBR(date)}.`}}
       if(plan.action==='ANSWER'){return {ok:true,message:String(plan.slots.answer||plan.rule?.answer||plan.rule?.finalCommand||'')}}
       return {ok:false,message:'Ação ainda não registrada no executor.'};
     }catch(e){console.error(e);return {ok:false,message:'Entendi o comando, mas falhei ao executar. Nada foi confirmado.'}}
   }
-  function confirmationText(plan){const intent=intentById(plan.intent); if(plan.action==='BULK_ACTION'){const qtd=(plan.tasks||[]).length; const nums=(plan.slots?.numeros||[]).join(', '); const base=bulkBaseAction(plan); const alvo=base==='TASK_RESCHEDULE'&&plan.slots?.data?` para ${formatDateBR(plan.slots.data)}`:base==='TASK_SET_STATUS'&&plan.slots?.status?` para ${statusLabelSafe(plan.slots.status)}`:base==='TASK_SET_PRIORITY'&&plan.slots?.prioridade?` para ${plan.slots.prioridade}`:''; return `Encontrei ${qtd} tarefa(s) (${nums}). Deseja aplicar ${intent.name}${alvo}?`;} const task=plan.task?` na tarefa “${plan.task.nome}”`:'';return `Entendi: ${intent.name}${task}. Confirma?`}
+  function confirmationText(plan){const intent=intentById(plan.intent); const task=plan.task?` na tarefa “${plan.task.nome}”`:'';return `Entendi: ${intent.name}${task}. Confirma?`}
+
   function undoLastAction(){
     let u=null; try{u=JSON.parse(localStorage.getItem(UNDO_KEY)||'null')}catch(e){}
     if(!u)return {ok:false,message:'Não há ação recente para desfazer.'};
@@ -6015,25 +6159,58 @@ function normalizeText(str) {
   }
 
   function ruleFromForm(){
-    const id=$('j11Id')?.value||''; const intent=intentById($('j11Intent')?.value||'complete_task'); const kind=$('j11Kind')?.value||'action';
-    const triggers=splitLines($('j11Triggers')?.value||''); const finalCommand=($('j11Final')?.value||'').trim();
-    return {id,name:($('j11Name')?.value||intent.name).trim(),kind,intent:intent.id,action:kind==='answer'?'ANSWER':intent.action,triggers,finalCommand,answer:kind==='answer'?finalCommand:'',enabled:$('j11Enabled')?.checked!==false,auto:$('j11Auto')?.checked!==false,minConfidence:Number($('j11MinConfidence')?.value||90),askBelow:Number($('j11AskBelow')?.value||70),risk:intent.risk,created_at:new Date().toISOString(),source:'user'};
+    const id=$('j11Id')?.value||'';
+    const kind=($('j11Kind')?.value||'answer');
+    const intent=intentById($('j11Intent')?.value||(kind==='answer'?'answer':'complete_task'));
+    const triggers=splitLines($('j11Triggers')?.value||'');
+    const finalCommand=($('j11Final')?.value||'').trim();
+    const enabledEl=$('j11Enabled'), autoEl=$('j11Auto');
+    const enabled=!enabledEl || enabledEl.type==='hidden' ? true : enabledEl.checked!==false;
+    const auto=!autoEl || autoEl.type==='hidden' ? true : autoEl.checked!==false;
+    return {id,name:($('j11Name')?.value||intent.name).trim(),kind,intent:intent.id,action:kind==='answer'?'ANSWER':intent.action,triggers,finalCommand,answer:kind==='answer'?finalCommand:'',enabled,auto,minConfidence:Number($('j11MinConfidence')?.value||90),askBelow:Number($('j11AskBelow')?.value||70),risk:intent.risk,created_at:new Date().toISOString(),source:'user'};
   }
   function validateRule(rule){
     const problems=[]; if(!rule.name)problems.push('Informe o nome da regra.'); if(!rule.triggers.length)problems.push('Informe pelo menos uma frase.');
     const needed=rule.kind==='answer'?[]:intentById(rule.intent).slots; const triggerVars=[...new Set(rule.triggers.flatMap(varsIn))];
-    needed.forEach(v=>{if(v==='numero'&&triggerVars.includes('numeros'))return; if(!triggerVars.includes(v) && !['titulo','comentario'].includes(v))problems.push(`A intenção exige {${v}} em pelo menos uma frase.`)}); if(rule.action==='BULK_ACTION' && !triggerVars.includes('numeros'))problems.push('Ação em lote precisa usar {numeros} nas frases.');
+    if(rule.kind==='answer' && !answerForRule(rule))problems.push('Informe a resposta que o Jarvis deve falar.');
+    needed.forEach(v=>{if(!triggerVars.includes(v) && !['titulo','texto'].includes(v) && !(rule.fixedSlots&&rule.fixedSlots[v]))problems.push(`A intenção exige {${v}} em pelo menos uma frase.`)});
+    if(['TASK_SET_STATUS','TASK_SET_PRIORITY','TASK_ADD_COMMENT','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY'].includes(rule.action))problems.push('Essa ação foi removida do Mega Brain.');
     return problems;
   }
-  function saveRule(){const rule=ruleFromForm(); const problems=validateRule(rule); if(problems.length){toast(problems[0],'fa-triangle-exclamation'); showTestHTML(`<div class="j11-bad">${esc(problems.join('\n'))}</div>`); return} const list=getRules(); if(rule.id){const i=list.findIndex(r=>r.id===rule.id); if(i>=0)list[i]=Object.assign(list[i],rule,{updated_at:new Date().toISOString()}); else list.unshift(Object.assign(rule,{id:uid('r')}))} else list.unshift(Object.assign(rule,{id:uid('r')})); setRules(list); clearForm(); activeTab='rules'; renderAll(); toast('Regra inteligente salva.','fa-save')}
+  function saveRule(){const rule=ruleFromForm(); const problems=validateRule(rule); if(problems.length){toast(problems[0],'fa-triangle-exclamation'); showTestHTML(`<div class="j11-bad">${esc(problems.join('\n'))}</div>`); return} const list=getRules(); if(rule.id){const i=list.findIndex(r=>r.id===rule.id); if(i>=0)list[i]=Object.assign(list[i],rule,{created_at:list[i].created_at||rule.created_at,updated_at:new Date().toISOString()}); else list.unshift(Object.assign(rule,{id:uid('r')}))} else list.unshift(Object.assign(rule,{id:uid('r')})); setRules(list); clearForm(); activeTab='rules'; renderAll(); toast(isQuickAnswerRule(rule)?'Resposta rápida salva e ativa na voz.':'Comando de ação salvo e ativo na voz.','fa-save')}
   function clearForm(){fillForm({name:'',kind:'action',intent:'complete_task',action:'TASK_COMPLETE',triggers:[],finalCommand:'',enabled:true,auto:true,minConfidence:90,askBelow:70})}
-  function fillForm(r){buildModal(); const intent=intentById(r.intent||'complete_task'); const values={j11Id:r.id||'',j11Name:r.name||'',j11Kind:r.kind||'action',j11Intent:r.intent||intent.id,j11Triggers:Array.isArray(r.triggers)?r.triggers.join('\n'):(r.trigger||''),j11Final:r.finalCommand||r.answer||'',j11MinConfidence:r.minConfidence||90,j11AskBelow:r.askBelow||70}; Object.entries(values).forEach(([id,val])=>{const el=$(id); if(el)el.value=val}); const en=$('j11Enabled'); if(en)en.checked=r.enabled!==false; const au=$('j11Auto'); if(au)au.checked=r.auto!==false; updateIntentHelp(); activeTab='learn'; renderAll()}
+  function fillForm(r){buildModal(); const intent=intentById(r.intent||(r.kind==='answer'?'answer':'complete_task')); const values={j11Id:r.id||'',j11Name:r.name||'',j11Kind:r.kind||'answer',j11Intent:r.intent||intent.id,j11Triggers:Array.isArray(r.triggers)?r.triggers.join('\n'):(r.trigger||''),j11Final:r.finalCommand||r.answer||'',j11MinConfidence:r.minConfidence||90,j11AskBelow:r.askBelow||70}; Object.entries(values).forEach(([id,val])=>{const el=$(id); if(el)el.value=val}); const en=$('j11Enabled'); if(en&&en.type!=='hidden')en.checked=r.enabled!==false; const au=$('j11Auto'); if(au&&au.type!=='hidden')au.checked=r.auto!==false; updateIntentHelp(); activeTab='learn'; renderAll(); setTimeout(()=>{try{document.querySelector('[data-j11-panel="learn"]')?.scrollIntoView({block:'start'})}catch(e){}},30)}
   function loadModel(intentId){const i=intentById(intentId); fillForm({name:i.name,kind:i.id==='answer'?'answer':'action',intent:i.id,triggers:MODEL_TRIGGERS[i.id]||[],finalCommand:i.action,enabled:true,auto:true,minConfidence:90,askBelow:70})}
   function installAllModels(){const base=cleanPackageRules(getRules()); const pack=INTENTS.filter(i=>MODEL_TRIGGERS[i.id]).map(packageRuleForIntent); setRules([...base,...pack]); activeTab='rules'; renderAll(); toast('Pacote auxiliar instalado sem sobrescrever comandos nativos.','fa-shield-halved')}
   function uninstallModelRules(){const before=getRules(); const after=cleanPackageRules(before); setRules(after); activeTab='rules'; renderAll(); toast(`Removi ${before.length-after.length} regra(s) de pacote.`, 'fa-trash-can')}
+  const ACTION_TRAINING_MAP={
+    open_tasks:{label:'Abrir tarefas / agenda do dia',intent:'set_view',action:'SET_VIEW',fixedSlots:{visao:'day'},hint:'abrir tarefas'},
+    open_notes:{label:'Abrir notas',intent:'set_view',action:'SET_VIEW',fixedSlots:{visao:'notes'},hint:'abrir notas'},
+    open_planner:{label:'Abrir planner',intent:'set_view',action:'SET_VIEW',fixedSlots:{visao:'day'},hint:'abrir planner'},
+    open_kanban:{label:'Abrir kanban',intent:'answer',action:'OPEN_KANBAN',fixedSlots:{},hint:'abrir kanban'},
+    open_task_form:{label:'Criar / abrir nova tarefa',intent:'open_task_form',action:'OPEN_TASK_FORM',fixedSlots:{},hint:'criar tarefa'},
+    create_note:{label:'Criar nota',intent:'create_note',action:'CREATE_NOTE',fixedSlots:{},hint:'criar nota {texto}'},
+    search_term:{label:'Buscar termo',intent:'search_term',action:'SEARCH_TERM',fixedSlots:{},hint:'buscar {texto}'},
+    filter_category:{label:'Filtrar condomínio',intent:'filter_category',action:'FILTER_CATEGORY',fixedSlots:{},hint:'filtrar {categoria}'},
+    complete_task:{label:'Concluir tarefa específica',intent:'complete_task',action:'TASK_COMPLETE',fixedSlots:{},hint:'concluir tarefa {numero}'},
+    reschedule_task:{label:'Reagendar tarefa específica',intent:'reschedule_task',action:'TASK_RESCHEDULE',fixedSlots:{},hint:'reagendar tarefa {numero} para {data}'}
+  };
+  function selectedActionTraining(){return ACTION_TRAINING_MAP[$('j11ActionSelect')?.value||'open_notes']||ACTION_TRAINING_MAP.open_notes}
+  function updateActionTrainingHelp(){const a=selectedActionTraining(); const h=$('j11ActionHint'); if(h)h.innerHTML=`<b>Ação escolhida:</b> ${esc(a.label)}<br><b>Exemplo de frase:</b> ${esc(a.hint)}<br><span class="text-slate-500">Use apenas uma tarefa por comando quando houver número.</span>`; const input=$('j11ActionTrigger'); if(input&&!input.value.trim())input.placeholder=a.hint}
+  function saveActionRule(){
+    const cfg=selectedActionTraining();
+    const triggers=splitLines($('j11ActionTrigger')?.value||'');
+    const name=($('j11ActionName')?.value||cfg.label).trim();
+    const rule={id:'',name,kind:'action',intent:cfg.intent,action:cfg.action,triggers,finalCommand:cfg.action,answer:'',fixedSlots:Object.assign({},cfg.fixedSlots||{}),enabled:true,auto:true,minConfidence:90,askBelow:70,risk:intentById(cfg.intent).risk||'baixo',created_at:new Date().toISOString(),source:'user'};
+    const problems=validateRule(rule);
+    if(problems.length){toast(problems[0],'fa-triangle-exclamation'); showTestHTML(`<div class="j11-bad">${esc(problems.join('\n'))}</div>`);return}
+    setRules([Object.assign(rule,{id:uid('r')}),...getRules()]);
+    ['j11ActionName','j11ActionTrigger'].forEach(id=>{const el=$(id); if(el)el.value=''});
+    activeTab='rules'; renderAll(); toast('Comando de ação salvo e ativo na voz.','fa-bolt');
+  }
   function editRule(id){const r=getRules().find(x=>x.id===id); if(r)fillForm(r)}
   function duplicateRule(id){const r=getRules().find(x=>x.id===id); if(r){const copy=Object.assign({},r,{id:uid('r'),name:(r.name||'Regra')+' — cópia'}); setRules([copy,...getRules()]);}}
-  function toggleRule(id){setRules(getRules().map(r=>r.id===id?Object.assign({},r,{enabled:r.enabled===false}):r))}
+  function toggleRule(id){setRules(getRules().map(r=>r.id===id?Object.assign({},r,{enabled:r.enabled===false,manuallyDisabled:r.enabled!==false}):r))}
   function deleteRule(id){if(confirm('Excluir esta regra inteligente?'))setRules(getRules().filter(r=>r.id!==id))}
   function learnPending(id){const p=pendingList().find(x=>x.id===id); if(p)fillForm({name:'Aprender — '+p.heard,triggers:[p.heard],intent:'complete_task',enabled:true,auto:true})}
   function testOne(text){const a=analyze(text); return diagnosticHTML(a)}
@@ -6044,7 +6221,8 @@ function normalizeText(str) {
     const p=a.best, intent=intentById(p.intent); const task=p.tasks&&p.tasks.length?p.tasks.map(x=>`#${esc(x.number)} — ${esc(x.task.nome)}`).join('<br>'):p.task?`#${esc(p.slots.numero||'')} — ${esc(p.task.nome)}`:(p.taskError||'Não aplicável');
     const vars=Object.entries(p.slots||{}).map(([k,v])=>`<span class="j11-chip">${esc(k)} = ${esc(v)}</span>`).join(' ')||'<span class="text-slate-500">nenhuma</span>';
     const result=p.errors.length?`<span class="j11-bad">Não executaria</span>`:(p.confidence>=settings().minAutoConfidence?'<span class="j11-good">Executaria com segurança</span>':'<span class="j11-warn">Perguntaria antes de executar</span>');
-    return `<div class="j11-diag"><b>Frase original:</b> ${esc(a.raw)}<br><b>Frase normalizada:</b> ${esc(a.normalized)}<br><b>Origem:</b> ${esc(p.source)}${p.trigger?` • <b>Regra:</b> ${esc(p.trigger)}`:''}<br><b>Intenção:</b> ${esc(intent.name)}<br><b>Ação real:</b> ${esc(p.action)}<br><b>Variáveis extraídas:</b><div class="mt-2 mb-2 flex flex-wrap gap-2">${vars}</div><b>Tarefa localizada:</b> ${task}<br><b>Confiança:</b> ${p.confidence}%<br><b>Risco:</b> ${esc(p.risk)}<br><b>Resultado:</b> ${result}${p.errors.length?`<br><b>Motivo:</b> ${esc(p.errors.join(' | '))}`:''}${p.warnings.length?`<br><b>Avisos:</b> ${esc(p.warnings.join(' | '))}`:''}</div>`;
+    const response=p.action==='ANSWER'?String(p.slots.answer||p.rule?.answer||p.rule?.finalCommand||''):'';
+    return `<div class="j11-diag"><b>Frase original:</b> ${esc(a.raw)}<br><b>Frase normalizada:</b> ${esc(a.normalized)}<br><b>Origem:</b> ${esc(p.source)}${p.trigger?` • <b>Regra:</b> ${esc(p.trigger)}`:''}<br><b>Intenção:</b> ${esc(intent.name)}<br><b>Ação real:</b> ${esc(p.action)}${response?`<br><b>Resposta que será falada:</b> ${esc(response)}<br><b>Responder por voz:</b> Sim, pela voz configurada do app.`:''}<br><b>Variáveis extraídas:</b><div class="mt-2 mb-2 flex flex-wrap gap-2">${vars}</div><b>Tarefa localizada:</b> ${task}<br><b>Confiança:</b> ${p.confidence}%<br><b>Risco:</b> ${esc(p.risk)}<br><b>Resultado:</b> ${result}${p.errors.length?`<br><b>Motivo:</b> ${esc(p.errors.join(' | '))}`:''}${p.warnings.length?`<br><b>Avisos:</b> ${esc(p.warnings.join(' | '))}`:''}</div>`;
   }
   function simulateBatch(){const lines=splitLines($('j11Batch')?.value||''); const box=$('j11BatchResult'); if(!box)return; if(!lines.length){box.innerHTML='<div class="j11-warn">Cole frases para testar.</div>';return} let ok=0,ask=0,fail=0; const rows=lines.map(line=>{const a=analyze(line),p=a.best; let status='Falhou'; if(p&&!p.errors.length&&p.confidence>=settings().minAutoConfidence){ok++;status='Executaria'} else if(p&&!p.errors.length){ask++;status='Perguntaria'} else fail++; return `<tr><td>${esc(line)}</td><td>${esc(p?intentById(p.intent).name:'Não identificado')}</td><td>${p?p.confidence:0}%</td><td>${status}</td><td>${esc(p?.errors?.[0]||p?.warnings?.[0]||'')}</td></tr>`}).join(''); box.innerHTML=`<div class="j11-diag mb-3">${lines.length} testes • ${ok} executariam • ${ask} perguntariam • ${fail} falharam</div><table class="j11-table"><thead><tr><th>Frase</th><th>Intenção</th><th>Conf.</th><th>Resultado</th><th>Observação</th></tr></thead><tbody>${rows}</tbody></table>`}
   function exportRules(){const blob=new Blob([JSON.stringify({version:VERSION,rules:getRules(),dictionary:customDictionary(),settings:settings()},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='jarvis_mega_brain_v15.json'; a.click()}
@@ -6058,41 +6236,160 @@ function normalizeText(str) {
     #jarvisBrainContent{background:linear-gradient(145deg,rgba(4,13,26,.98),rgba(3,8,18,.98));border:1px solid rgba(34,211,238,.26);box-shadow:0 35px 130px rgba(0,0,0,.78),0 0 50px rgba(34,211,238,.16)}
     .j11-tabs{display:flex;gap:.45rem;overflow-x:auto;padding:.25rem;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:1rem}.j11-tab{white-space:nowrap;padding:.7rem .9rem;border-radius:.8rem;font-size:.68rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8}.j11-tab.active{background:rgba(34,211,238,.16);color:white;border:1px solid rgba(34,211,238,.32)}
     .j11-card{background:rgba(15,23,42,.72);border:1px solid rgba(255,255,255,.075);border-radius:1.1rem;padding:1rem}.j11-soft{background:rgba(255,255,255,.035)}.j11-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;font-weight:1000;color:#e2e8f0;display:flex;gap:.5rem;align-items:center}.j11-label{font-size:.64rem;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#64748b;margin-bottom:.35rem;display:block}.j11-input,.j11-select,.j11-textarea{width:100%;background:#060b14;border:1px solid rgba(255,255,255,.09);border-radius:.85rem;color:#e2e8f0;padding:.78rem .85rem;font-size:.82rem;outline:none}.j11-textarea{min-height:140px;resize:vertical}.j11-input:focus,.j11-select:focus,.j11-textarea:focus{border-color:rgba(34,211,238,.45);box-shadow:0 0 0 3px rgba(34,211,238,.08)}
-    .j11-btn{border-radius:.85rem;padding:.75rem .95rem;font-size:.72rem;font-weight:1000;text-transform:uppercase;letter-spacing:.08em;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.055);color:#e2e8f0}.j11-btn-primary{background:rgba(34,211,238,.14);border-color:rgba(34,211,238,.35);color:#cffafe}.j11-btn-green{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.28);color:#bbf7d0}.j11-btn-red{background:rgba(244,63,94,.12);border-color:rgba(244,63,94,.28);color:#fecdd3}.j11-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.08);color:#a5f3fc;border-radius:999px;padding:.25rem .55rem;font-size:.68rem;font-weight:800}.j11-diag{background:#050a12;border:1px solid rgba(34,211,238,.16);border-radius:.9rem;padding:.9rem;font-size:.78rem;line-height:1.75;color:#cbd5e1;white-space:normal}.j11-good{color:#86efac;font-weight:900}.j11-warn{color:#fcd34d;font-weight:900}.j11-bad{color:#fda4af;font-weight:900;white-space:pre-wrap}.j11-hidden{display:none!important}.j11-table{width:100%;border-collapse:separate;border-spacing:0 .4rem;font-size:.75rem}.j11-table th{text-align:left;color:#64748b;text-transform:uppercase;font-size:.62rem;letter-spacing:.1em}.j11-table td{background:rgba(255,255,255,.035);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);padding:.65rem}.j11-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}@media(max-width:767px){#jarvisBrainModal{align-items:flex-end!important;padding:.5rem!important}#jarvisBrainContent{max-height:calc(100svh - 1rem)!important;border-radius:1.25rem!important}.j11-table,.j11-table tbody,.j11-table tr,.j11-table td{display:block;width:100%}.j11-table thead{display:none}.j11-tabs{padding:.2rem}.j11-tab{font-size:.62rem;padding:.65rem .75rem}}
+    .j11-btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;border-radius:1rem;padding:.78rem 1rem;font-size:.72rem;font-weight:1000;text-transform:uppercase;letter-spacing:.08em;border:1px solid rgba(255,255,255,.1);background:linear-gradient(135deg,rgba(255,255,255,.065),rgba(255,255,255,.025));color:#e2e8f0;transition:.18s ease}.j11-btn:hover{transform:translateY(-1px);border-color:rgba(34,211,238,.32);box-shadow:0 16px 34px rgba(0,0,0,.28),0 0 20px rgba(34,211,238,.10)}.j11-btn-primary{background:linear-gradient(135deg,rgba(34,211,238,.22),rgba(37,99,235,.16));border-color:rgba(34,211,238,.38);color:#e0fbff}.j11-btn-green{background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(34,211,238,.10));border-color:rgba(16,185,129,.32);color:#d1fae5}.j11-btn-red{background:linear-gradient(135deg,rgba(244,63,94,.16),rgba(127,29,29,.08));border-color:rgba(244,63,94,.28);color:#fecdd3}.j11-chip{display:inline-flex;align-items:center;gap:.3rem;border:1px solid rgba(34,211,238,.22);background:rgba(34,211,238,.08);color:#a5f3fc;border-radius:999px;padding:.25rem .55rem;font-size:.68rem;font-weight:800}.j11-diag{background:linear-gradient(145deg,rgba(2,8,18,.92),rgba(8,18,34,.76));border:1px solid rgba(34,211,238,.18);border-radius:1rem;padding:1rem;font-size:.78rem;line-height:1.75;color:#cbd5e1;white-space:normal;box-shadow:inset 0 0 22px rgba(34,211,238,.035)}.j11-good{color:#86efac;font-weight:900}.j11-warn{color:#fcd34d;font-weight:900}.j11-bad{color:#fda4af;font-weight:900;white-space:pre-wrap}.j11-hidden{display:none!important}.j11-table{width:100%;border-collapse:separate;border-spacing:0 .55rem;font-size:.75rem}.j11-table th{text-align:left;color:#64748b;text-transform:uppercase;font-size:.62rem;letter-spacing:.1em}.j11-table td{background:rgba(255,255,255,.04);border-top:1px solid rgba(34,211,238,.08);border-bottom:1px solid rgba(34,211,238,.08);padding:.72rem}.j11-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}#jarvisBrainModal .j11-card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(8,20,38,.82),rgba(3,9,22,.76))!important;border:1px solid rgba(34,211,238,.14)!important;box-shadow:inset 0 0 22px rgba(34,211,238,.035),0 18px 48px rgba(0,0,0,.26)!important}#jarvisBrainModal .j11-card:before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:2px;background:linear-gradient(180deg,rgba(34,211,238,.85),rgba(124,58,237,.45),transparent);opacity:.9}#jarvisBrainModal .j15-action-trainer{border-color:rgba(245,158,11,.20)!important}#jarvisBrainModal .j15-brain-hero{background:radial-gradient(circle at 10% 0,rgba(34,211,238,.22),transparent 36%),radial-gradient(circle at 80% 0,rgba(124,58,237,.18),transparent 32%),linear-gradient(135deg,rgba(8,20,38,.92),rgba(2,8,18,.96))!important}#jarvisBrainModal .j11-input,#jarvisBrainModal .j11-select,#jarvisBrainModal .j11-textarea{min-height:48px;background:rgba(1,8,18,.86)!important;border-color:rgba(34,211,238,.16)!important;border-radius:1rem!important}#jarvisBrainModal .j11-textarea{min-height:120px}.j15-mini-models .j11-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}@media(max-width:767px){#jarvisBrainModal{align-items:flex-end!important;padding:.5rem!important}#jarvisBrainContent{max-height:calc(100svh - 1rem)!important;border-radius:1.25rem!important}.j11-table,.j11-table tbody,.j11-table tr,.j11-table td{display:block;width:100%}.j11-table thead{display:none}.j11-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));padding:.2rem;overflow:visible}.j11-tab{font-size:.62rem;padding:.65rem .55rem;justify-content:center;text-align:center}.j11-btn{width:100%;}.j15-mini-models .j11-grid{grid-template-columns:minmax(0,1fr)}}
   `; document.head.appendChild(st)}
-  function buildModal(){if($('jarvisBrainModal'))return; injectStyle(); const modal=document.createElement('div'); modal.id='jarvisBrainModal'; modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200'; modal.onclick=e=>{if(e.target===modal)closePanel()}; modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300"><div class="px-5 sm:px-6 py-4 border-b border-cyan-500/10 flex justify-between items-center bg-[#07111f]"><div><h2 class="text-xs font-black uppercase tracking-[.22em] text-white"><i class="fas fa-brain text-cyan-300 mr-2"></i>Jarvis Mega Brain 15.0</h2><p class="text-[10px] text-slate-500 mt-1 uppercase tracking-widest">central de intenções, regras, simulação, conflitos e execução segura</p></div><button class="text-slate-500 hover:text-white text-lg" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div><div class="p-4 sm:p-6 overflow-y-auto space-y-5"><div class="j11-tabs"><button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')">Criar regra</button><button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')">Intenções</button><button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')">Modelos</button><button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')">Dicionário</button><button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')">Variáveis</button><button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')">Simulador</button><button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')">Conflitos</button><button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')">Regras</button><button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')">Histórico</button><button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')">Segurança</button></div>
-    <section data-j11-panel="learn" class="space-y-4"><div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(330px,.95fr)] gap-5"><div class="j11-card space-y-4"><div class="j11-title"><i class="fas fa-wand-magic-sparkles text-cyan-300"></i> Criador de regra inteligente</div><input type="hidden" id="j11Id"><div class="grid grid-cols-1 sm:grid-cols-2 gap-3"><div><label class="j11-label">Nome da regra</label><input id="j11Name" class="j11-input" placeholder="Ex.: Concluir tarefa"></div><div><label class="j11-label">Tipo</label><select id="j11Kind" class="j11-select" onchange="jarvisBrain.updateIntentHelp()"><option value="action">Ação estruturada</option><option value="answer">Resposta personalizada</option></select></div><div><label class="j11-label">Intenção</label><select id="j11Intent" class="j11-select" onchange="jarvisBrain.updateIntentHelp()">${INTENTS.map(i=>`<option value="${i.id}">${i.group} — ${i.name}</option>`).join('')}</select></div><div><label class="j11-label">Ação real</label><input id="j11ActionView" class="j11-input" readonly></div></div><div id="j11IntentHelp" class="j11-diag"></div><div><label class="j11-label">Frases que o Jarvis deve entender — uma por linha</label><textarea id="j11Triggers" class="j11-textarea" placeholder="concluir tarefa {numero}\ndar baixa na tarefa {numero}\nfinalizar item {numero}"></textarea></div><div><label class="j11-label">Comando / resposta final opcional</label><textarea id="j11Final" class="j11-textarea" style="min-height:80px" placeholder="Para resposta personalizada, escreva a resposta aqui. Para ação estruturada, pode deixar em branco."></textarea></div><div class="grid grid-cols-1 sm:grid-cols-4 gap-3"><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Enabled" type="checkbox" checked class="accent-cyan-500"><span class="text-xs text-slate-300 font-bold">Ativa</span></label><label class="j11-card j11-soft flex items-center gap-2"><input id="j11Auto" type="checkbox" checked class="accent-emerald-500"><span class="text-xs text-slate-300 font-bold">Executar se seguro</span></label><div><label class="j11-label">Executa com</label><input id="j11MinConfidence" class="j11-input" type="number" min="50" max="100" value="90"></div><div><label class="j11-label">Pergunta abaixo</label><input id="j11AskBelow" class="j11-input" type="number" min="30" max="99" value="70"></div></div><div class="flex flex-wrap gap-2"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.saveRule()"><i class="fas fa-save mr-2"></i>Salvar regra</button><button class="j11-btn" onclick="jarvisBrain.validateCurrentRule()"><i class="fas fa-shield-halved mr-2"></i>Validar</button><button class="j11-btn" onclick="jarvisBrain.clearForm()">Limpar</button></div></div><div class="space-y-4"><div class="j11-card space-y-3"><div class="j11-title"><i class="fas fa-vial text-emerald-300"></i> Testador Mega Brain</div><input id="j11Test" class="j11-input" placeholder="Ex.: Jarvis, dá baixa na tarefa três"><button class="j11-btn j11-btn-green w-full" onclick="jarvisBrain.testRule()"><i class="fas fa-play mr-2"></i>Testar comando</button><div id="j11TestResult"></div></div><div class="j11-card"><div class="j11-title mb-3"><i class="fas fa-bolt text-amber-300"></i> Atalhos de modelos</div><div id="j11QuickModels" class="j11-grid"></div></div></div></div></section>
-    <section data-j11-panel="intents" class="j11-hidden"><div id="j11Intents" class="j11-grid"></div></section><section data-j11-panel="models" class="j11-hidden"><div class="j11-card mb-4 flex flex-wrap justify-between gap-3"><div><div class="j11-title">Biblioteca pronta</div><p class="text-xs text-slate-500 mt-2">Carregue um modelo no formulário ou instale o pacote seguro como camada auxiliar, sem sobrescrever comandos nativos.</p></div><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.installAllModels()">Instalar pacote seguro</button><button class="j11-btn j11-btn-red" onclick="jarvisBrain.uninstallModelRules()">Remover pacote</button></div><div id="j11Models" class="j11-grid"></div></section><section data-j11-panel="dictionary" class="j11-hidden"><div class="j11-card mb-4"><div class="j11-title">Dicionário vivo</div><p class="text-xs text-slate-500 mt-2">Adicione sinônimos sem mexer no código. Um por linha.</p></div><div id="j11Dictionary" class="j11-grid"></div></section><section data-j11-panel="variables" class="j11-hidden"><div id="j11Variables" class="j11-grid"></div></section><section data-j11-panel="simulator" class="j11-hidden"><div class="j11-card space-y-3"><div class="j11-title">Simulador em lote</div><textarea id="j11Batch" class="j11-textarea" placeholder="dar baixa na tarefa 3\nfinaliza o item três\ncoloca tarefa 2 como urgente\njoga tarefa 4 para amanhã"></textarea><button class="j11-btn j11-btn-green" onclick="jarvisBrain.simulateBatch()">Simular lote</button><div id="j11BatchResult"></div></div></section><section data-j11-panel="conflicts" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Conflitos e riscos</div><div id="j11Conflicts"></div></div></section><section data-j11-panel="rules" class="j11-hidden"><div class="j11-card"><div class="flex flex-wrap justify-between gap-3 mb-4"><div class="j11-title">Regras aprendidas</div><div class="flex gap-2"><button class="j11-btn" onclick="jarvisBrain.exportRules()">Exportar</button><button class="j11-btn" onclick="jarvisBrain.importRules()">Importar</button><input id="j11Import" type="file" accept="application/json,.json" class="hidden"></div></div><div id="j11Rules" class="space-y-3"></div></div></section><section data-j11-panel="history" class="j11-hidden"><div class="j11-card"><div class="j11-title mb-4">Histórico de decisões</div><div id="j11History" class="space-y-3"></div></div></section><section data-j11-panel="settings" class="j11-hidden"><div id="j11Settings" class="j11-grid"></div></section></div></div>`; document.body.appendChild(modal); bindEvents(); updateIntentHelp()}
+  function buildModal(){
+    if($('jarvisBrainModal'))return;
+    injectStyle();
+    const modal=document.createElement('div');
+    modal.id='jarvisBrainModal';
+    modal.className='fixed inset-0 z-[116] bg-[#020617]/85 hidden items-center justify-center p-4 opacity-0 transition-opacity duration-200';
+    modal.onclick=e=>{if(e.target===modal)closePanel()};
+    modal.innerHTML=`<div id="jarvisBrainContent" class="w-full max-w-7xl rounded-3xl overflow-hidden flex flex-col max-h-[94vh] transform scale-95 transition-transform duration-300">
+      <div class="j15-brain-hero px-5 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="min-w-0">
+          <div class="text-[10px] font-black uppercase tracking-[.28em] text-cyan-300 flex items-center gap-2"><i class="fas fa-brain"></i> Central neural premium</div>
+          <h2 class="text-lg sm:text-2xl font-black tracking-tight text-white mt-1">Jarvis Mega Brain 15.0</h2>
+          <p class="text-xs text-slate-400 mt-1 max-w-2xl">Central de treinamento e inteligência do Jarvis. Ensine respostas rápidas, comandos individuais seguros, teste frases e ajuste o Dicionário Vivo sem mexer no código.</p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0"><span class="j15-status-pill"><i class="fas fa-circle-check"></i> Core de aprendizado ativo</span><button class="w-11 h-11 rounded-xl border border-white/10 text-slate-400 hover:text-white hover:border-cyan-400/40" onclick="jarvisBrain.closePanel()"><i class="fas fa-times"></i></button></div>
+      </div>
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-5">
+        <div class="j11-tabs">
+          <button class="j11-tab" data-j11-tab="learn" onclick="jarvisBrain.showTab('learn')"><i class="fas fa-graduation-cap"></i> Treinar</button>
+          <button class="j11-tab" data-j11-tab="rules" onclick="jarvisBrain.showTab('rules')"><i class="fas fa-list-check"></i> Aprendidos</button>
+          <button class="j11-tab" data-j11-tab="dictionary" onclick="jarvisBrain.showTab('dictionary')"><i class="fas fa-book"></i> Dicionário Vivo</button>
+          <button class="j11-tab" data-j11-tab="simulator" onclick="jarvisBrain.showTab('simulator')"><i class="fas fa-magnifying-glass-chart"></i> Testar</button>
+          <button class="j11-tab" data-j11-tab="models" onclick="jarvisBrain.showTab('models')"><i class="fas fa-bolt"></i> Modelos</button>
+          <button class="j11-tab" data-j11-tab="intents" onclick="jarvisBrain.showTab('intents')"><i class="fas fa-route"></i> Ações</button>
+          <button class="j11-tab" data-j11-tab="variables" onclick="jarvisBrain.showTab('variables')"><i class="fas fa-code"></i> Variáveis</button>
+          <button class="j11-tab" data-j11-tab="conflicts" onclick="jarvisBrain.showTab('conflicts')"><i class="fas fa-shield-halved"></i> Segurança</button>
+          <button class="j11-tab" data-j11-tab="history" onclick="jarvisBrain.showTab('history')"><i class="fas fa-clock-rotate-left"></i> Histórico</button>
+          <button class="j11-tab" data-j11-tab="settings" onclick="jarvisBrain.showTab('settings')"><i class="fas fa-gear"></i> Configuração</button>
+        </div>
+        <section data-j11-panel="learn" class="space-y-4">
+          <div class="j15-panel-grid">
+            <div class="space-y-4">
+              <div class="j11-card space-y-4">
+                <div class="j15-section-title"><i class="fas fa-comment-dots text-cyan-300"></i> Treinar resposta rápida</div>
+                <p class="j15-helper">Use esta área para ensinar uma pergunta e a resposta exata que o Jarvis deve falar.</p>
+                <input type="hidden" id="j11Id"><input type="hidden" id="j11Kind" value="answer"><input type="hidden" id="j11Intent" value="answer"><input type="hidden" id="j11ActionView" value="ANSWER"><input type="hidden" id="j11Enabled" value="1"><input type="hidden" id="j11Auto" value="1"><input type="hidden" id="j11MinConfidence" value="90"><input type="hidden" id="j11AskBelow" value="70">
+                <div><label class="j11-label">Nome do treinamento</label><input id="j11Name" class="j11-input" placeholder="Ex.: Segunda via de boleto"></div>
+                <div><label class="j11-label">Quando eu disser...</label><textarea id="j11Triggers" class="j11-textarea" placeholder="Jarvis, qual é o procedimento para segunda via de boleto?"></textarea></div>
+                <div><label class="j11-label">O Jarvis deve responder...</label><textarea id="j11Final" class="j11-textarea" style="min-height:110px" placeholder="Roberto, acesse o sistema, localize a unidade, confirme os dados do morador e envie a segunda via pelo canal oficial."></textarea></div>
+                <div class="j11-card j11-soft flex items-center gap-3"><i class="fas fa-volume-high text-emerald-300"></i><span class="text-xs text-slate-300"><b>Responder por voz:</b> ativo, usando a voz configurada no app.</span></div>
+                <div class="flex flex-wrap gap-2"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.saveRule()"><i class="fas fa-save"></i> Salvar treinamento</button><button class="j11-btn" onclick="jarvisBrain.validateCurrentRule()"><i class="fas fa-shield-halved"></i> Validar</button><button class="j11-btn" onclick="jarvisBrain.clearForm()">Limpar</button></div>
+              </div>
+              <div class="j11-card space-y-4 j15-action-trainer">
+                <div class="j15-section-title"><i class="fas fa-bolt text-amber-300"></i> Treinar comando de ação</div>
+                <p class="j15-helper">Ensine uma frase para executar uma ação individual e segura. Nada de lote, prioridade, status ou comentário de tarefa.</p>
+                <div><label class="j11-label">Nome do comando</label><input id="j11ActionName" class="j11-input" placeholder="Ex.: Abrir minhas notas"></div>
+                <div><label class="j11-label">Quando eu disser...</label><input id="j11ActionTrigger" class="j11-input" placeholder="abrir notas"></div>
+                <div><label class="j11-label">Ação que o Jarvis deve executar</label><select id="j11ActionSelect" class="j11-select" onchange="jarvisBrain.updateActionTrainingHelp()">
+                  <option value="open_tasks">Abrir tarefas / agenda do dia</option>
+                  <option value="open_notes">Abrir notas</option>
+                  <option value="open_planner">Abrir planner</option>
+                  <option value="open_kanban">Abrir kanban</option>
+                  <option value="open_task_form">Criar / abrir nova tarefa</option>
+                  <option value="create_note">Criar nota</option>
+                  <option value="search_term">Buscar termo</option>
+                  <option value="filter_category">Filtrar condomínio</option>
+                  <option value="complete_task">Concluir tarefa específica</option>
+                  <option value="reschedule_task">Reagendar tarefa específica</option>
+                </select></div>
+                <div id="j11ActionHint" class="j11-diag"></div>
+                <div class="flex flex-wrap gap-2"><button class="j11-btn j11-btn-green" onclick="jarvisBrain.saveActionRule()"><i class="fas fa-bolt"></i> Salvar comando de ação</button><button class="j11-btn" onclick="jarvisBrain.updateActionTrainingHelp()"><i class="fas fa-circle-info"></i> Ver exemplo</button></div>
+                <div id="j11IntentHelp" class="j11-diag"></div>
+                <div class="j15-mini-models"><div class="j15-section-title mt-1"><i class="fas fa-wand-magic-sparkles text-purple-300"></i> Atalhos seguros</div><div id="j11QuickModels" class="j11-grid mt-3"></div></div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="j11-card space-y-3">
+                <div class="j15-section-title"><i class="fas fa-magnifying-glass text-emerald-300"></i> Testar comando</div>
+                <p class="j15-helper">Digite uma frase como se tivesse falado. O diagnóstico mostra frase original, frase normalizada, origem, ação e possível conflito.</p>
+                <input id="j11Test" class="j11-input" placeholder="Ex.: Jarvis, dá baixa na tarefa três">
+                <button class="j11-btn j11-btn-green w-full" onclick="jarvisBrain.testRule()"><i class="fas fa-play"></i> Testar comando</button>
+                <div id="j11TestResult"></div>
+              </div>
+              <div class="j11-card">
+                <div class="j15-section-title"><i class="fas fa-shield-halved text-cyan-300"></i> Conflitos e segurança</div>
+                <p class="j15-helper mt-2">Comandos aprendidos prevalecem sobre comandos genéricos quando a frase é igual ou muito parecida. Exclusões e ações perigosas exigem confirmação.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section data-j11-panel="rules" class="j11-hidden"><div class="j11-card"><div class="flex flex-wrap justify-between gap-3 mb-4"><div><div class="j15-section-title"><i class="fas fa-list-check text-cyan-300"></i> Comandos aprendidos</div><p class="j15-helper mt-1">Edite, teste, duplique ou exclua os treinamentos salvos.</p></div><div class="flex gap-2"><button class="j11-btn" onclick="jarvisBrain.exportRules()">Exportar</button><button class="j11-btn" onclick="jarvisBrain.importRules()">Importar</button><input id="j11Import" type="file" accept="application/json,.json" class="hidden"></div></div><div id="j11Rules" class="space-y-3"></div></div></section>
+        <section data-j11-panel="dictionary" class="j11-hidden"><div class="j11-card mb-4"><div class="j15-section-title"><i class="fas fa-book text-cyan-300"></i> Dicionário Vivo</div><p class="j15-helper mt-2">Adicione sinônimos e variações de fala. Um por linha. O dicionário evita falhas por acentos, pontuação ou pequenas mudanças de voz.</p></div><div id="j11Dictionary" class="j11-grid"></div></section>
+        <section data-j11-panel="simulator" class="j11-hidden"><div class="j11-card space-y-3"><div class="j15-section-title"><i class="fas fa-vial text-emerald-300"></i> Central de diagnóstico</div><input id="j11TestSimulator" class="j11-input" placeholder="Ex.: abrir notas"><button class="j11-btn j11-btn-green" onclick="document.getElementById('j11Test').value=document.getElementById('j11TestSimulator').value; jarvisBrain.testRule()">Simular comando</button><div id="j11TestResultMirror" class="text-xs text-slate-500">O resultado aparece no painel de teste principal.</div></div></section>
+        <section data-j11-panel="models" class="j11-hidden"><div class="j11-card mb-4"><div class="j15-section-title"><i class="fas fa-bolt text-amber-300"></i> Modelos seguros</div><p class="j15-helper mt-2">Modelos apenas para ações individuais e respostas rápidas.</p></div><div id="j11Models" class="j11-grid"></div><div class="flex flex-wrap gap-2 mt-4"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.installAllModels()">Instalar modelos seguros</button><button class="j11-btn j11-btn-red" onclick="jarvisBrain.uninstallModelRules()">Remover modelos instalados</button></div></section>
+        <section data-j11-panel="intents" class="j11-hidden"><div id="j11Intents" class="j11-grid"></div></section>
+        <section data-j11-panel="variables" class="j11-hidden"><div id="j11Variables" class="j11-grid"></div></section>
+        <section data-j11-panel="conflicts" class="j11-hidden"><div class="j11-card"><div class="j15-section-title mb-4"><i class="fas fa-shield-halved text-cyan-300"></i> Conflitos e riscos</div><div id="j11Conflicts"></div></div></section>
+        <section data-j11-panel="history" class="j11-hidden"><div class="j11-card"><div class="j15-section-title mb-4"><i class="fas fa-clock-rotate-left text-cyan-300"></i> Histórico de decisões</div><div id="j11History" class="space-y-3"></div></div></section>
+        <section data-j11-panel="settings" class="j11-hidden"><div id="j11Settings" class="j11-grid"></div></section>
+      </div>
+    </div>`;
+    document.body.appendChild(modal);
+    bindEvents();
+    updateIntentHelp();
+  }
 
   function bindEvents(){const imp=$('j11Import'); if(imp&&!imp.__j11){imp.__j11=true;imp.addEventListener('change',handleImport)}}
   function openPanel(tab){buildModal(); activeTab=tab||activeTab||'learn'; const m=$('jarvisBrainModal'),c=$('jarvisBrainContent'); m.classList.replace('hidden','flex'); setTimeout(()=>{m.classList.add('opacity-100'); c?.classList.remove('scale-95')},15); renderAll()}
   function closePanel(){const m=$('jarvisBrainModal'),c=$('jarvisBrainContent'); if(!m)return; m.classList.remove('opacity-100'); c?.classList.add('scale-95'); setTimeout(()=>m.classList.replace('flex','hidden'),220)}
   function showTab(tab){activeTab=tab; renderAll()}
   function renderTabs(){document.querySelectorAll('[data-j11-tab]').forEach(b=>b.classList.toggle('active',b.dataset.j11Tab===activeTab)); document.querySelectorAll('[data-j11-panel]').forEach(p=>p.classList.toggle('j11-hidden',p.dataset.j11Panel!==activeTab))}
-  function renderAll(){renderTabs(); renderQuickModels(); renderIntents(); renderModels(); renderVariables(); renderDictionary(); renderRules(); renderConflicts(); renderHistory(); renderSettings(); bindEvents(); updateIntentHelp(); ensureLearningTools()}
+  function renderAll(){renderTabs(); renderQuickModels(); renderIntents(); renderModels(); renderVariables(); renderDictionary(); renderRules(); renderConflicts(); renderHistory(); renderSettings(); bindEvents(); updateIntentHelp(); updateActionTrainingHelp(); ensureLearningTools()}
   function updateIntentHelp(){const intent=intentById($('j11Intent')?.value||'complete_task'); const action=$('j11ActionView'); if(action)action.value=intent.action; const help=$('j11IntentHelp'); if(help)help.innerHTML=`<b>${esc(intent.name)}</b><br>${esc(intent.desc)}<br><b>Variáveis obrigatórias:</b> ${(intent.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join(' ')||'nenhuma'}<br><b>Risco:</b> ${esc(intent.risk)}`}
-  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','set_status','set_priority','reschedule_task','bulk_reschedule','bulk_complete','bulk_status','bulk_priority','set_view','add_comment','create_task','create_note'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
+  function renderQuickModels(){const box=$('j11QuickModels'); if(!box)return; box.innerHTML=['complete_task','reschedule_task','open_task_form','create_task','create_note','set_view','filter_category','search_term','answer'].map(id=>{const i=intentById(id);return `<button class="j11-card j11-soft text-left hover:border-cyan-400/30" onclick="jarvisBrain.loadModel('${id}')"><div class="font-black text-slate-100 text-sm">${esc(i.name)}</div><div class="text-[11px] text-slate-500 mt-1">${esc(i.desc)}</div></button>`}).join('')}
   function renderIntents(){const box=$('j11Intents'); if(!box)return; box.innerHTML=INTENTS.map(i=>`<div class="j11-card"><div class="j11-title">${esc(i.group)} — ${esc(i.name)}</div><p class="text-xs text-slate-400 mt-2">${esc(i.desc)}</p><div class="mt-3 flex flex-wrap gap-2">${(i.slots||[]).map(s=>`<span class="j11-chip">{${s}}</span>`).join('')||'<span class="text-xs text-slate-500">sem variável obrigatória</span>'}</div><button class="j11-btn j11-btn-primary mt-4" onclick="jarvisBrain.loadModel('${i.id}')">Usar intenção</button></div>`).join('')}
   function renderModels(){const box=$('j11Models'); if(!box)return; box.innerHTML=Object.keys(MODEL_TRIGGERS).map(id=>{const i=intentById(id); return `<div class="j11-card"><div class="j11-title">${esc(i.name)}</div><pre class="j11-diag mt-3" style="max-height:150px;overflow:auto">${esc(MODEL_TRIGGERS[id].join('\n'))}</pre><button class="j11-btn j11-btn-primary mt-3" onclick="jarvisBrain.loadModel('${id}')">Carregar modelo</button></div>`}).join('')}
   function renderVariables(){const box=$('j11Variables'); if(!box)return; box.innerHTML=SLOT_DEFS.map(([id,name,accepts,rule])=>`<div class="j11-card"><div class="j11-title">{${id}} — ${esc(name)}</div><p class="text-xs text-slate-400 mt-3"><b>Aceita:</b> ${esc(accepts)}</p><p class="text-xs text-slate-500 mt-2"><b>Validação:</b> ${esc(rule)}</p></div>`).join('')}
   function renderDictionary(){const box=$('j11Dictionary'); if(!box)return; const custom=customDictionary(); const keys=Object.keys(DEFAULT_DICTIONARY); box.innerHTML=keys.map(k=>`<div class="j11-card"><label class="j11-label">${esc(k)}</label><textarea class="j11-textarea" data-dict-key="${esc(k)}">${esc((custom[k]||DEFAULT_DICTIONARY[k]).join('\n'))}</textarea></div>`).join('')+`<div class="j11-card flex flex-col gap-2"><button class="j11-btn j11-btn-primary" onclick="jarvisBrain.saveDictionary()">Salvar dicionário</button><button class="j11-btn" onclick="jarvisBrain.resetDictionary()">Restaurar padrão</button></div>`}
   function saveDictionary(){const d={}; document.querySelectorAll('[data-dict-key]').forEach(el=>{d[el.dataset.dictKey]=splitLines(el.value)}); setDictionary(d)}
   function resetDictionary(){if(confirm('Restaurar dicionário padrão?')){localStorage.removeItem(DICT_KEY); renderDictionary(); toast('Dicionário restaurado.','fa-rotate-left')}}
-  function renderRules(){const box=$('j11Rules'); if(!box)return; const list=getRules(); box.innerHTML=list.length?list.map(r=>`<div class="j11-card j11-soft ${r.enabled===false?'opacity-50':''}"><div class="flex flex-col lg:flex-row lg:items-start justify-between gap-3"><div><div class="font-black text-white">${esc(r.name||'Regra')}</div><div class="text-xs text-slate-500 mt-1">${esc(intentById(r.intent).name)} • ${esc(r.action||'')} • ${(Array.isArray(r.triggers)?r.triggers:[]).length} frase(s) • confiança ${r.minConfidence||90}%</div><div class="mt-2 flex flex-wrap gap-1">${(Array.isArray(r.triggers)?r.triggers.slice(0,6):[]).map(t=>`<span class="j11-chip">${esc(t)}</span>`).join('')}</div></div><div class="flex flex-wrap gap-2"><button class="j11-btn" onclick="jarvisBrain.editRule('${r.id}')">Editar</button><button class="j11-btn" onclick="jarvisBrain.duplicateRule('${r.id}')">Duplicar</button><button class="j11-btn" onclick="jarvisBrain.toggleRule('${r.id}')">${r.enabled===false?'Ativar':'Desativar'}</button><button class="j11-btn j11-btn-red" onclick="jarvisBrain.deleteRule('${r.id}')">Excluir</button></div></div></div>`).join(''):'<div class="text-sm text-slate-500">Nenhuma regra ensinada ainda.</div>'}
+  function renderRules(){
+    const box=$('j11Rules'); if(!box)return;
+    const list=getRules();
+    box.innerHTML=list.length?list.map(r=>{
+      const triggers=Array.isArray(r.triggers)?r.triggers:[];
+      const first=triggers[0]||'';
+      const created=r.created_at?new Date(r.created_at).toLocaleString('pt-BR'):'não informado';
+      return `<div class="j11-card j11-soft ${r.enabled===false?'opacity-50':''}">
+        <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="font-black text-white">${esc(r.name||'Regra')}</div>
+            <div class="text-xs text-slate-500 mt-1">${esc(intentById(r.intent).name)} • ${esc(r.action||'')} • ${triggers.length} frase(s) • confiança ${r.minConfidence||90}%</div>
+            <div class="text-[11px] text-slate-500 mt-1">Criado em: ${esc(created)}</div>
+            <div class="mt-2 flex flex-wrap gap-1">${triggers.slice(0,6).map(t=>`<span class="j11-chip">${esc(t)}</span>`).join('')}</div>
+            ${r.answer||r.finalCommand?`<div class="j11-diag mt-3"><b>Resposta/ação:</b> ${esc(r.answer||r.finalCommand)}</div>`:''}
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="j11-btn j11-btn-green" data-test="${esc(first)}" onclick="document.getElementById('j11Test').value=this.dataset.test||''; jarvisBrain.testRule()">Testar</button>
+            <button class="j11-btn" onclick="jarvisBrain.editRule('${r.id}')">Editar</button>
+            <button class="j11-btn" onclick="jarvisBrain.toggleRule('${r.id}')">${r.enabled===false?'Ativar':'Desativar'}</button>
+            <button class="j11-btn j11-btn-red" onclick="jarvisBrain.deleteRule('${r.id}')">Excluir</button>
+          </div>
+        </div>
+      </div>`;
+    }).join(''):'<div class="text-sm text-slate-500">Nenhum comando aprendido ainda.</div>'
+  }
   function renderConflicts(){const box=$('j11Conflicts'); if(!box)return; const c=conflicts(); box.innerHTML=c.length?`<table class="j11-table"><thead><tr><th>Regra 1</th><th>Frase 1</th><th>Regra 2</th><th>Frase 2</th></tr></thead><tbody>${c.map(([a,b])=>`<tr><td>${esc(a.rule.name)}</td><td>${esc(a.trigger)}</td><td>${esc(b.rule.name)}</td><td>${esc(b.trigger)}</td></tr>`).join('')}</tbody></table>`:'<div class="j11-good">Nenhum conflito direto encontrado.</div>'}
   function renderHistory(){const box=$('j11History'); if(!box)return; box.innerHTML=history().slice(0,60).map(h=>`<div class="j11-card j11-soft text-xs leading-6"><div class="text-slate-500">${esc(h.time||'')}</div><b class="text-white">Ouvido:</b> ${esc(h.heard||'')}<br><b class="text-white">Intenção:</b> ${esc(h.interpreted||'')}<br><b class="text-white">Resultado:</b> ${esc(h.result||'')} ${h.confidence?`• ${h.confidence}%`:''}${h.detail?`<br><span class="text-slate-400">${esc(h.detail)}</span>`:''}</div>`).join('')||'<div class="text-sm text-slate-500">Sem histórico.</div>'}
   function renderSettings(){const box=$('j11Settings'); if(!box)return; const s=settings(); box.innerHTML=`<div class="j11-card"><label class="j11-label">Executar direto a partir de confiança (%)</label><input class="j11-input" type="number" value="${s.minAutoConfidence}" onchange="jarvisBrain.setSettings({minAutoConfidence:Number(this.value)})"></div><div class="j11-card"><label class="j11-label">Perguntar se confiança for pelo menos (%)</label><input class="j11-input" type="number" value="${s.askConfidence}" onchange="jarvisBrain.setSettings({askConfidence:Number(this.value)})"></div><label class="j11-card flex gap-3 items-center"><input type="checkbox" class="accent-rose-500" ${s.safeMode?'checked':''} onchange="jarvisBrain.setSettings({safeMode:this.checked})"><span class="text-xs text-slate-300"><b>Modo seguro:</b> simular/perguntar antes de executar.</span></label><label class="j11-card flex gap-3 items-center"><input type="checkbox" class="accent-cyan-500" ${s.askToLearn?'checked':''} onchange="jarvisBrain.setSettings({askToLearn:this.checked})"><span class="text-xs text-slate-300"><b>Aprendizado por erro:</b> perguntar se quero ensinar.</span></label><label class="j11-card flex gap-3 items-center"><input type="checkbox" class="accent-emerald-500" ${s.allowTitleSearch?'checked':''} onchange="jarvisBrain.setSettings({allowTitleSearch:this.checked})"><span class="text-xs text-slate-300"><b>Busca por título:</b> aceitar tarefa por nome quando não houver número.</span></label><label class="j11-card flex gap-3 items-center"><input type="checkbox" class="accent-amber-500" ${s.watchRequiresWake?'checked':''} onchange="jarvisBrain.setSettings({watchRequiresWake:this.checked})"><span class="text-xs text-slate-300"><b>Modo vigia exige Jarvis.</b></span></label>`}
   function generatedVariationsForIntent(intentId){
     const base={
-      bulk_reschedule:['reagendar tarefas {numeros} para {data}','jogar tarefas {numeros} para {data}','mover tarefas {numeros} para {data}','passar tarefas {numeros} para {data}','remarcar tarefas {numeros} para {data}','transferir tarefas {numeros} para {data}','colocar tarefas {numeros} para {data}'],
-      set_view:['mostrar {visao}','abrir {visao}','ver {visao}','ir para {visao}','mudar para {visao}','mostrar agenda da {visao}','abrir agenda da {visao}','visualizar {visao}'],
-      create_note:['criar nota','nova nota','criar nota por voz','ditar nota','salvar nota {comentario}','anotar nas notas {comentario}','salvar isso nas notas {comentario}','guardar isso nas notas {comentario}'],
-      bulk_complete:['concluir tarefas {numeros}','finalizar tarefas {numeros}','dar baixa nas tarefas {numeros}','baixar tarefas {numeros}','resolver tarefas {numeros}','encerrar tarefas {numeros}'],
-      bulk_status:['alterar status das tarefas {numeros} para {status}','mudar tarefas {numeros} para {status}','colocar tarefas {numeros} como {status}','passar tarefas {numeros} para {status}','marcar tarefas {numeros} como {status}'],
-      bulk_priority:['alterar prioridade das tarefas {numeros} para {prioridade}','colocar tarefas {numeros} como prioridade {prioridade}','marcar tarefas {numeros} como prioridade {prioridade}','tornar tarefas {numeros} prioridade {prioridade}']
+      complete_task:['concluir tarefa {numero}','finalizar tarefa {numero}','dar baixa na tarefa {numero}','resolver tarefa {numero}','encerrar tarefa {numero}'],
+      reschedule_task:['reagendar tarefa {numero} para {data}','jogar tarefa {numero} para {data}','mover tarefa {numero} para {data}','passar tarefa {numero} para {data}'],
+      set_view:['mostrar {visao}','abrir {visao}','ver {visao}','ir para {visao}','mudar para {visao}'],
+      create_task:['criar tarefa {titulo}','nova tarefa {titulo}','registrar demanda {titulo}'],
+      create_note:['criar nota','nova nota','salvar nota {texto}','anotar nas notas {texto}'],
+      filter_category:['mostrar {categoria}','tarefas do {categoria}','filtrar {categoria}'],
+      search_term:['buscar {texto}','pesquisar {texto}','procurar {texto}']
     };
     return base[intentId]||MODEL_TRIGGERS[intentId]||[];
   }
+
   function generateVariations(){
     const intentId=$('j11Intent')?.value||'complete_task';
     const current=splitLines($('j11Triggers')?.value||'');
@@ -6112,9 +6409,116 @@ function normalizeText(str) {
   function ensureButtons(){if($('btnJarvisBrain'))return; const parent=document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const sync=$('btnAutoSync'); const anchor=sync?sync.nextSibling:null; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action bg-[#131c2f] hover:border-cyan-500/40'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action bg-[#131c2f] hover:border-emerald-500/40'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor); parent.insertBefore(watch,brain.nextSibling)}
   function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 15.0 carregado.','fa-brain')}
   ready(boot); ready(()=>{try{new MutationObserver(()=>ensureButtons()).observe(document.body,{childList:true,subtree:true})}catch(e){}});
-  window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,simulateBatch,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
+  window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,saveActionRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,updateActionTrainingHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
 })();
 
 </script>
+
+<script id="jarvis15-runtime-safety-cleanup">
+(function(){
+  const bannedActions=new Set(['TASK_SET_STATUS','TASK_SET_PRIORITY','TASK_ADD_COMMENT','BULK_ACTION','FILTER_STATUS','FILTER_PRIORITY']);
+  const bannedIntent=/^(set_status|set_priority|add_comment|bulk_|filter_status|filter_priority)/i;
+  function cleanRules(){try{const key='jarvisBrain.rules.v15';const list=JSON.parse(localStorage.getItem(key)||'[]');if(Array.isArray(list)){const safe=list.filter(r=>!bannedActions.has(String(r&&r.action||''))&&!bannedIntent.test(String(r&&r.intent||'')));if(safe.length!==list.length)localStorage.setItem(key,JSON.stringify(safe));}}catch(e){}}
+  function cleanTaskModal(){
+    ['taskPriority','taskStatus','taskNewComment'].forEach(id=>{const el=document.getElementById(id);if(el){el.type='hidden';el.style.display='none';}});
+    const box=document.getElementById('taskCommentsBox');if(box){box.classList.add('hidden');box.innerHTML='';}
+  }
+  function cleanBrainPanel(){
+    const modal=document.getElementById('jarvisBrainModal'); if(!modal)return;
+    modal.querySelectorAll('[data-j11-tab="simulator"]').forEach(btn=>{if(/lote/i.test(btn.textContent||''))btn.textContent='Testar';});
+    modal.querySelectorAll('textarea, input, button, div, p, span, pre').forEach(el=>{
+      const txt=(el.textContent||el.placeholder||'');
+      if(/em lote|tarefas \{|prioridade|alterar status|adicionar coment/i.test(txt)){ if(el.placeholder)el.placeholder=''; }
+    });
+  }
+  cleanRules();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{cleanTaskModal();cleanBrainPanel();}); else {cleanTaskModal();cleanBrainPanel();}
+  setInterval(cleanBrainPanel,1200);
+})();
+</script>
+
+
+<script id="jarvis15-ultra-theme-runtime">
+(function(){
+  const KEY='jarvis.visual.theme.v15';
+  const THEMES={
+    neural:{label:'Ciano Neural',chip:'#22d3ee',chip2:'#2563eb',icon:'fa-bolt'},
+    quantum:{label:'Roxo Quântico',chip:'#a78bfa',chip2:'#7c3aed',icon:'fa-atom'},
+    matrix:{label:'Verde Matrix',chip:'#34d399',chip2:'#059669',icon:'fa-terminal'},
+    reactor:{label:'Âmbar Reator',chip:'#fbbf24',chip2:'#f97316',icon:'fa-fire-flame-curved'},
+    deepblue:{label:'Azul Profundo',chip:'#60a5fa',chip2:'#1d4ed8',icon:'fa-water'},
+    neonrose:{label:'Rosa Neon',chip:'#fb7185',chip2:'#db2777',icon:'fa-gem'},
+    crystal:{label:'Prata Cristal',chip:'#e0f2fe',chip2:'#94a3b8',icon:'fa-diamond'}
+  };
+  function safeGet(){try{return localStorage.getItem(KEY)||'neural'}catch(e){return 'neural'}}
+  function safeSet(v){try{localStorage.setItem(KEY,v)}catch(e){}}
+  function applyTheme(id,opts){
+    if(!THEMES[id]) id='neural';
+    document.documentElement.setAttribute('data-jarvis-theme',id);
+    safeSet(id);
+    updateThemeUI();
+    if(opts&&opts.toast&&typeof toast==='function') toast('Estilo visual aplicado: '+THEMES[id].label,'fa-palette');
+  }
+  function themeButton(id,t){
+    return '<button type="button" class="j15-theme-chip" data-j15-theme-option="'+id+'" title="'+t.label+'" aria-label="'+t.label+'" style="--chip:'+t.chip+';--chip2:'+t.chip2+'"><span class="sr-only">'+t.label+'</span></button>';
+  }
+  function themeGrid(){return Object.keys(THEMES).map(id=>themeButton(id,THEMES[id])).join('')}
+  function injectThemeConsole(){
+    const oldConsole=document.getElementById('j15ThemeConsole');
+    if(oldConsole) oldConsole.remove();
+    const oldSettingsCard=document.getElementById('j15ThemeSettingsCard');
+    if(oldSettingsCard) oldSettingsCard.remove();
+
+    const voiceContent=document.getElementById('jarvisVoiceSettingsContent');
+    if(voiceContent && !document.getElementById('j15ThemeVoiceCard')){
+      const scrollArea=voiceContent.querySelector('.overflow-y-auto.space-y-4')||voiceContent;
+      const voiceGrid=scrollArea.querySelector('.grid.grid-cols-1')||scrollArea.firstElementChild;
+      const card=document.createElement('section');
+      card.id='j15ThemeVoiceCard';
+      card.className='j15-theme-card bg-[#131c2f]/80 border border-cyan-500/10 rounded-2xl p-4 space-y-3';
+      card.innerHTML='<div class="flex items-center gap-2 text-cyan-300 font-bold text-xs uppercase tracking-widest"><i class="fas fa-palette"></i> Estilo visual do Jarvis</div><p class="text-[11px] text-slate-500 leading-relaxed">Escolha uma cor de borda/acento. A preferência fica salva no navegador.</p><div class="j15-theme-grid mt-3">'+themeGrid()+'</div>';
+      if(voiceGrid&&voiceGrid.parentNode===scrollArea) scrollArea.insertBefore(card,voiceGrid); else scrollArea.appendChild(card);
+    }
+    updateThemeUI();
+  }
+  function updateThemeUI(){
+    const active=document.documentElement.getAttribute('data-jarvis-theme')||safeGet();
+    document.querySelectorAll('[data-j15-theme-option]').forEach(btn=>{
+      const on=btn.getAttribute('data-j15-theme-option')===active;
+      btn.classList.toggle('is-active',on);
+      btn.setAttribute('aria-pressed',on?'true':'false');
+    });
+  }
+  function enhanceDiagnostics(){
+    const box=document.getElementById('j11TestResult');
+    if(!box||box.__j15diag)return;
+    const obs=new MutationObserver(()=>{
+      if(box.__j15Busy)return;
+      const txt=(box.textContent||'').trim();
+      if(!txt||box.querySelector('.j15-diagnostic-grid'))return;
+      box.__j15Busy=true;
+      const parts=txt.split(/\n|(?=Frase|Origem|Resposta|Ação|Confiança|Status)/i).map(x=>x.trim()).filter(Boolean).slice(0,6);
+      if(parts.length>=3){
+        box.innerHTML='<div class="j11-diag"><div class="j15-diagnostic-grid">'+parts.map((p,i)=>'<div class="j15-diagnostic-cell"><b>'+(['Entrada recebida','Diagnóstico','Origem','Resposta','Ação prevista','Status do cérebro'][i]||'Núcleo')+'</b><span>'+p.replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c]})+'</span></div>').join('')+'</div></div>';
+      }
+      box.__j15Busy=false;
+    });
+    obs.observe(box,{childList:true,subtree:true,characterData:true});
+    box.__j15diag=true;
+  }
+  document.addEventListener('click',function(ev){
+    const btn=ev.target.closest&&ev.target.closest('[data-j15-theme-option]');
+    if(!btn)return;
+    ev.preventDefault();
+    applyTheme(btn.getAttribute('data-j15-theme-option'),{toast:true});
+  });
+  applyTheme(safeGet());
+  function boot(){injectThemeConsole(); enhanceDiagnostics();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot); else boot();
+  try{new MutationObserver(function(){injectThemeConsole(); enhanceDiagnostics();}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+  window.jarvisVisualTheme={apply:applyTheme,themes:THEMES,current:function(){return document.documentElement.getAttribute('data-jarvis-theme')||safeGet()}};
+})();
+</script>
+
 </body>
 </html>
