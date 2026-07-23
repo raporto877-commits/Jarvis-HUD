@@ -5,8 +5,8 @@
 <!-- URL GOOGLE SCRIPT ATUALIZADA PARA PLANILHA NOVA -->
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>TAREFAS — ROBERTO | Workspace Jarvis 17.0</title>
-<meta content="Workspace Roberto Jarvis 17.0 — cérebro unificado, memória contextual, comandos compostos, aprendizado por correção e voz em tempo real." name="description"/>
+<title>TAREFAS — ROBERTO | Workspace Jarvis 18.0</title>
+<meta content="Workspace Roberto Jarvis 18.0 — agenda operacional local, radar explicável, ações responsivas, memória contextual e voz transacional." name="description"/>
 <meta content="#05050a" name="theme-color"/>
 <meta content="yes" name="apple-mobile-web-app-capable"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
@@ -987,7 +987,7 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
 <img alt="Jarvis Core" class="w-10 h-10 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] ring-2 ring-white/10" src="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2096%2096'%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D'g'%20x1%3D'0'%20x2%3D'1'%20y1%3D'0'%20y2%3D'1'%3E%0A%20%20%20%20%20%20%3Cstop%20stop-color%3D'%2318e8ff'%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D'1'%20stop-color%3D'%232d7dff'%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Crect%20width%3D'96'%20height%3D'96'%20rx%3D'22'%20fill%3D'%2302040a'%2F%3E%0A%20%20%3Cpath%20d%3D'M28%2030%20L68%2030%20L74%2048%20L62%2068%20L34%2068%20L22%2048%20Z'%20fill%3D'none'%20stroke%3D'url(%23g)'%20stroke-width%3D'4'%20stroke-linejoin%3D'round'%2F%3E%0A%20%20%3Cpath%20d%3D'M30%2038%20L42%2044%20M66%2038%20L54%2044'%20stroke%3D'%2318e8ff'%20stroke-width%3D'4'%20stroke-linecap%3D'round'%2F%3E%0A%3C%2Fsvg%3E"/>
 <div>
 <h2 class="text-sm font-bold text-white tracking-wide uppercase">ROBERTO</h2>
-<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 17.0</p>
+<p class="text-[10px] text-cyan-400 font-medium tracking-widest uppercase opacity-80">Workspace Jarvis 18.0</p>
 </div>
 </div>
 <div class="space-y-2">
@@ -4218,7 +4218,7 @@ function normalizeText(str) {
 
         function exportBackupJSON() {
             normalizeAllTasks();
-            const payload = { app: 'Workspace Roberto', version: '7.0 JARVIS HUD', exported_at: new Date().toISOString(), tarefas: tasks, notas: notes };
+            const payload = { app: 'Workspace Roberto', version: '18.0 JARVIS', exported_at: new Date().toISOString(), tarefas: tasks, notas: notes };
             downloadTextFile(`workspace_roberto_backup_${hojeISO()}.json`, JSON.stringify(payload, null, 2));
             showToast('Backup JSON exportado.', 'fa-download');
         }
@@ -5347,7 +5347,7 @@ function normalizeText(str) {
 
   function refreshWorkspacePanels(){}
 
-  function bootWorkspace(){if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 17.0';}
+  function bootWorkspace(){if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 18.0';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
   Object.assign(window,{workspace10:{version:VERSION,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone}});
 })();
@@ -6408,7 +6408,7 @@ function normalizeText(str) {
 
   function ensureButtons(){if($('btnJarvisBrain'))return; const parent=document.querySelector('header .flex.items-center.gap-2')||document.querySelector('header'); if(!parent)return; const sync=$('btnAutoSync'); const anchor=sync?sync.nextSibling:null; const brain=document.createElement('button'); brain.id='btnJarvisBrain'; brain.type='button'; brain.className='ws10-top-action bg-[#131c2f] hover:border-cyan-500/40'; brain.title='Jarvis Mega Brain'; brain.innerHTML='<i class="fas fa-brain text-cyan-300"></i><span>Brain</span>'; brain.onclick=()=>openPanel('learn'); const watch=document.createElement('button'); watch.id='btnJarvisWatch'; watch.type='button'; watch.className='ws10-top-action bg-[#131c2f] hover:border-emerald-500/40'; watch.title='Modo Vigia'; watch.innerHTML='<i class="fas fa-satellite-dish text-emerald-300"></i><span>Vigia</span>'; watch.onclick=()=>toggleWatchMode(); parent.insertBefore(brain,anchor); parent.insertBefore(watch,brain.nextSibling)}
   function boot(){injectStyle(); buildModal(); ensureButtons(); attachVoiceHooks(); try{window.processVoiceCommand=process}catch(e){} try{window.chooseBestJarvisTranscript=function(alts){if(!Array.isArray(alts)||!alts.length)return null;return alts.map(a=>Object.assign({},a,{_score:scoreTranscript(a.transcript)+(Number(a.speechConfidence)||0)})).sort((a,b)=>b._score-a._score)[0]}}catch(e){} toast('Jarvis Mega Brain 15.0 carregado.','fa-brain')}
-  ready(boot); ready(()=>{try{new MutationObserver(()=>ensureButtons()).observe(document.body,{childList:true,subtree:true})}catch(e){}});
+  ready(boot); ready(ensureButtons);
   window.jarvisBrain={version:VERSION,process,analyze,openPanel,closePanel,showTab,saveRule,saveActionRule,clearForm,fillForm,editRule,duplicateRule,toggleRule,deleteRule,loadModel,installAllModels,uninstallModelRules,learnPending,testRule,exportRules,importRules,saveDictionary,resetDictionary,setSettings,updateIntentHelp,updateActionTrainingHelp,validateCurrentRule,generateVariations,toggleWatchMode,getRules,parseDate,numbersFromText,visualTaskMap,resolveTaskByNumber};
 })();
 
@@ -6433,7 +6433,7 @@ function normalizeText(str) {
   }
   cleanRules();
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{cleanTaskModal();cleanBrainPanel();}); else {cleanTaskModal();cleanBrainPanel();}
-  setInterval(cleanBrainPanel,1200);
+  cleanBrainPanel();
 })();
 </script>
 
@@ -6515,7 +6515,7 @@ function normalizeText(str) {
   applyTheme(safeGet());
   function boot(){injectThemeConsole(); enhanceDiagnostics();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot); else boot();
-  try{new MutationObserver(function(){injectThemeConsole(); enhanceDiagnostics();}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+  /* A interface é estática após a inicialização; observação global removida para evitar trabalho contínuo. */
   window.jarvisVisualTheme={apply:applyTheme,themes:THEMES,current:function(){return document.documentElement.getAttribute('data-jarvis-theme')||safeGet()}};
 })();
 </script>
@@ -6777,13 +6777,13 @@ function normalizeText(str) {
   };
   window.renderKanban=function(filtered){const board=$('kanbanBoard');if(!board)return;const list=Array.isArray(filtered)?filtered:[];board.innerHTML=STATUS_OPTIONS.map(([id,label])=>{const items=list.filter(t=>normalizeOperationalStatus(t.status)===id);return `<div class="hud-column flex flex-col gap-4 p-5 rounded-2xl w-full"><div class="flex justify-between items-center border-b border-white/5 pb-3"><span class="text-xs font-bold text-cyan-300 uppercase tracking-widest flex items-center gap-2"><i class="fas ${statusIcon(id)}"></i>${esc(label)}</span><span class="text-[11px] font-bold text-cyan-300 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded-full">${items.length}</span></div><div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pt-1">${items.map(t=>window.createPlannerTaskCard(t,true)).join('')}</div>${items.length?'':'<div class="border border-dashed border-white/10 rounded-xl py-8 text-center text-xs text-slate-500 font-mono uppercase">Sem demandas</div>'}</div>`}).join('')};
 
-  function ensureRadar(){const planner=$('plannerView');if(!planner||$('jarvisOpsRadar'))return;const radar=document.createElement('section');radar.id='jarvisOpsRadar';planner.parentNode.insertBefore(radar,planner)}
+  function ensureRadar(){const planner=$('plannerView');if(!planner||$('jarvisOpsRadar'))return;const radar=document.createElement('section');radar.id='jarvisOpsRadar';planner.insertAdjacentElement('afterend',radar)}
   function renderRadar(){
     ensureRadar();const radar=$('jarvisOpsRadar');if(!radar)return;const hidden=(typeof currentView!=='undefined'&&currentView==='notes')||($('plannerView')&&$('plannerView').style.display==='none');radar.style.display=hidden?'none':'block';if(hidden)return;
     const list=(Array.isArray(tasks)?tasks:[]).filter(isOpen).map(t=>({task:t,risk:computeCriticality(t)}));const critical=list.filter(x=>x.risk.score>=75).length,stalled=list.filter(x=>x.risk.stale>=3).length,waiting=list.filter(x=>normalizeOperationalStatus(x.task.status).startsWith('Aguardando')).length,authorized=list.filter(x=>normalizeOperationalStatus(x.task.status)==='Compra autorizada').length;const alerts=list.filter(x=>x.risk.score>=50||x.risk.stale>=3).sort((a,b)=>b.risk.score-a.risk.score||b.risk.stale-a.risk.stale).slice(0,8);
     radar.innerHTML=`<div class="j16-radar-head"><div><div class="text-[9px] font-black uppercase tracking-[.22em] text-cyan-300"><i class="fas fa-satellite-dish mr-2"></i>Radar Operacional Jarvis 17.0</div><h2 class="text-base sm:text-lg font-black text-white mt-1">O que precisa da sua atenção</h2></div><button class="j16-btn j16-btn-primary" onclick="JarvisOps.openCapture()"><i class="fas fa-wand-magic-sparkles"></i><span>Transformar mensagem</span></button></div><div class="j16-radar-body"><div class="j16-metrics"><div class="j16-metric"><strong class="text-rose-300">${critical}</strong><span>Críticas</span></div><div class="j16-metric"><strong class="text-orange-300">${stalled}</strong><span>Paradas</span></div><div class="j16-metric"><strong class="text-cyan-300">${waiting}</strong><span>Aguardando</span></div><div class="j16-metric"><strong class="text-emerald-300">${authorized}</strong><span>Compras autorizadas</span></div></div><div><div class="text-[9px] font-black uppercase tracking-[.14em] text-slate-400 mb-2">Prioridade calculada automaticamente</div><div class="j16-radar-list">${alerts.length?alerts.map(({task,risk})=>`<button class="j16-radar-item" onclick="editTask(${Number(task.id)})"><span class="j16-main"><span class="j16-title">${esc(task.nome)}</span><span class="j16-sub">${esc(statusLabel(task.status))}${task.categoria?' • '+esc(task.categoria):''}${risk.reasons[0]?' • '+esc(risk.reasons[0]):''}</span></span><span class="j16-score ${scoreClass(risk.level)}">${risk.score}</span></button>`).join(''):'<div class="border border-dashed border-white/10 rounded-xl py-8 text-center text-xs text-slate-500">Nenhum alerta relevante agora.</div>'}</div></div></div>`;
   }
-  window.render=function(){const result=typeof original.render==='function'?original.render.apply(this,arguments):undefined;requestAnimationFrame(()=>{renderRadar();updateFormIntelligence()});return result};
+  window.render=function(){const result=typeof original.render==='function'?original.render.apply(this,arguments):undefined;requestAnimationFrame(()=>{if(!window.Jarvis18)renderRadar();updateFormIntelligence()});return result};
 
   function injectTopButton(){const actions=$('viewSwitcher')?.parentElement||document.querySelector('.glass-header>div:nth-child(2)');if(!actions||$('btnJarvisCapture'))return;const btn=document.createElement('button');btn.id='btnJarvisCapture';btn.className='ws10-top-action bg-cyan-500/10 border border-cyan-400/20 text-cyan-300';btn.title='Transformar mensagem em tarefa';btn.innerHTML='<i class="fas fa-wand-magic-sparkles"></i><span>Capturar</span>';btn.onclick=openCapture;actions.insertBefore(btn,$('viewSwitcher')||null)}
   function injectCaptureModal(){if($('j16CaptureModal'))return;document.body.insertAdjacentHTML('beforeend',`<div id="j16CaptureModal" class="j16-modal" role="dialog" aria-modal="true" aria-labelledby="j16CaptureTitle"><div class="j16-modal-card"><div class="j16-modal-head"><div><div class="text-[9px] font-black uppercase tracking-[.18em] text-cyan-300">Leitura inteligente local</div><h2 id="j16CaptureTitle" class="text-lg font-black text-white mt-1">Transformar mensagem em tarefa</h2></div><button class="j16-btn" onclick="JarvisOps.closeCapture()" aria-label="Fechar"><i class="fas fa-xmark"></i></button></div><div class="j16-modal-body"><div><label class="j16-label">Cole a mensagem do WhatsApp ou e-mail</label><textarea id="j16CaptureText" class="j16-field" rows="7" placeholder="Ex.: A síndica pediu três orçamentos para manutenção da bomba do condomínio Signature até sexta-feira..."></textarea></div><div class="flex justify-end"><button class="j16-btn j16-btn-primary" onclick="JarvisOps.analyzeCapture()"><i class="fas fa-brain"></i>Analisar conteúdo</button></div><div id="j16CapturePreview" class="hidden"><div class="j16-preview-grid"><div class="j16-full"><label class="j16-label">Tarefa identificada</label><input id="j16CapTitle" class="j16-field"></div><div><label class="j16-label">Condomínio / categoria</label><input id="j16CapCategory" class="j16-field"></div><div><label class="j16-label">Prazo</label><input id="j16CapDate" class="j16-field" type="date"></div><div><label class="j16-label">Solicitante identificado</label><input id="j16CapRequester" class="j16-field"></div><div><label class="j16-label">Status sugerido</label><select id="j16CapStatus" class="j16-field">${statusOptions('A Fazer')}</select></div><div class="j16-full"><label class="j16-label">Detalhes extraídos</label><textarea id="j16CapDetails" class="j16-field" rows="5"></textarea></div></div><div id="j16DuplicateWarning" class="mt-3"></div></div></div><div class="j16-modal-foot"><button class="j16-btn" onclick="JarvisOps.closeCapture()">Cancelar</button><button class="j16-btn" onclick="JarvisOps.analyzeCapture()"><i class="fas fa-rotate"></i>Reanalisar</button><button class="j16-btn j16-btn-primary" onclick="JarvisOps.createCaptured()"><i class="fas fa-plus"></i>Criar tarefa agora</button></div></div></div>`)}
@@ -6805,12 +6805,12 @@ function normalizeText(str) {
   window.processVoiceCommand=function(raw){if(handleVoiceOps(raw))return true;return typeof original.processVoiceCommand==='function'?original.processVoiceCommand.apply(this,arguments):false};
 
   function boot(){
-    injectTaskFields();injectCaptureModal();injectTopButton();ensureRadar();document.title='TAREFAS — ROBERTO | Workspace Jarvis 17.0';const title=document.querySelector('title');if(title)title.textContent=document.title;
+    injectTaskFields();injectCaptureModal();injectTopButton();ensureRadar();document.title='TAREFAS — ROBERTO | Workspace Jarvis 18.0';const title=document.querySelector('title');if(title)title.textContent=document.title;
     try{if(Array.isArray(tasks)){tasks=tasks.map(extendedNormalizeTask);if(typeof tasksNeedNormalize!=='undefined')tasksNeedNormalize=false;save()}}catch(e){console.warn('Normalização Jarvis 16',e)}
     try{window.processarRecorrencias()}catch(e){}renderNow();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
-  try{new MutationObserver(()=>{injectTaskFields();injectTopButton()}).observe(document.documentElement,{childList:true,subtree:true})}catch(e){}
+  /* Campos e botões são reinjetados pelos ciclos de abertura/renderização quando necessário. */
 })();
 </script>
 
@@ -7152,7 +7152,7 @@ function normalizeText(str) {
 
   function boot(){
     legacyProcessor=window.processVoiceCommand;injectVoiceUI();injectBrainModal();installFilterHook();connectBrainButton();installRecognition();installHoldToTalk();window.processVoiceCommand=function(raw){return process(raw,{speechConfidence})};
-    document.title='TAREFAS — ROBERTO | Workspace Jarvis 17.0';document.querySelectorAll('p').forEach(p=>{if(p.textContent.trim()==='Workspace Jarvis 15.0'||p.textContent.trim()==='Workspace Jarvis 16.0')p.textContent='Workspace Jarvis 17.0'});updateAlertBadge();
+    document.title='TAREFAS — ROBERTO | Workspace Jarvis 18.0';document.querySelectorAll('p').forEach(p=>{if(/^Workspace Jarvis (?:15|16|17)\.0$/.test(p.textContent.trim()))p.textContent='Workspace Jarvis 18.0'});updateAlertBadge();
     const i=generateInsights();if(settings.proactiveToast&&(i.overdue.length||i.stale.length))show(`Jarvis 17: ${i.overdue.length} atrasada(s) e ${i.stale.length} parada(s) aguardam atenção.`,'fa-brain');log('boot','Cérebro unificado Jarvis 17.0 carregado.');
   }
 
@@ -7160,6 +7160,716 @@ function normalizeText(str) {
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else setTimeout(boot,0);
 })();
 </script>
+
+<script id="jarvis18-operational-core">
+(function(){
+  'use strict';
+  const VERSION='18.0';
+  const KEYS={
+    risk:'jarvis18.riskWeights.v1',filters:'jarvis18.savedFilters.v1',activeFilter:'jarvis18.activeFilter.v1',
+    audit:'jarvis18.audit.v1',trash:'jarvis18.trash.v1',radar:'jarvis18.radarCollapsed.v1',
+    notification:'jarvis18.notificationDay.v1'
+  };
+  const STATUS=[
+    ['A Fazer','A Fazer'],['Em andamento','Em andamento'],['Aguardando gestão','Aguardando gestão'],
+    ['Aguardando administradora','Aguardando administradora'],['Aguardando fornecedor','Aguardando fornecedor'],
+    ['Aguardando orçamento','Aguardando orçamento'],['Compra autorizada','Compra autorizada'],
+    ['Cancelado','Cancelada'],['Concluido','Concluída']
+  ];
+  const DEFAULT_WEIGHTS={deadline:1,stale:1,waiting:1,safety:1,finance:1,priority:1,followup:1};
+  const $=id=>document.getElementById(id);
+  const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const norm=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/\s+/g,' ').trim();
+  const clone=value=>{try{return JSON.parse(JSON.stringify(value))}catch(e){return value}};
+  const nowISO=()=>new Date().toISOString();
+  const todayISO=()=>{if(typeof hojeISO==='function')return hojeISO();const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+  const parseISO=value=>{const m=String(value||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return null;const d=new Date(+m[1],+m[2]-1,+m[3]);return d.getFullYear()===+m[1]&&d.getMonth()===+m[2]-1&&d.getDate()===+m[3]?d:null};
+  const isoDate=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const formatBR=value=>{const m=String(value||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?`${m[3]}/${m[2]}/${m[1]}`:''};
+  const addDays=(date,amount)=>{const d=new Date(date);d.setDate(d.getDate()+amount);return d};
+  const toast=(message,icon='fa-circle-info')=>{if(typeof showToast==='function')showToast(message,icon);else console.log(message)};
+  const safeJSON=(key,fallback)=>{try{const parsed=JSON.parse(localStorage.getItem(key)||'null');return parsed??fallback}catch(e){return fallback}};
+  const writeJSON=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){console.warn('Jarvis18 storage',e);return false}};
+  const allTasks=()=>Array.isArray(tasks)?tasks:[];
+  const taskById=id=>allTasks().find(task=>Number(task.id)===Number(id));
+  const commentsOf=task=>Array.isArray(task?.comentarios)?task.comentarios:[];
+  const linksOf=task=>Array.isArray(task?.links)?task.links:String(task?.links||'').split(/\n|,/).map(v=>v.trim()).filter(Boolean);
+  const forceRender=()=>{try{if(typeof lastRenderSignature!=='undefined')lastRenderSignature=''}catch(e){}if(typeof window.render==='function')window.render()};
+
+  function normalizeStatus(value){
+    const n=norm(value);
+    if(!n||n==='pendente'||n==='a fazer'||n==='afazer')return'A Fazer';
+    if(n.includes('andamento'))return'Em andamento';
+    if(n.includes('gestao')||n.includes('sindic'))return'Aguardando gestão';
+    if(n.includes('administradora')||n.includes('pagamento'))return'Aguardando administradora';
+    if(n.includes('fornecedor')||n.includes('prestador')||n==='aguardando retorno')return'Aguardando fornecedor';
+    if(n.includes('orcamento')||n.includes('cotacao'))return'Aguardando orçamento';
+    if(n.includes('compra autoriz')||n.includes('compra aprovada')||n==='autorizado')return'Compra autorizada';
+    if(n.includes('cancel'))return'Cancelado';
+    if(n.includes('conclu')||n.includes('finaliz')||n==='feito')return'Concluido';
+    return STATUS.find(([id,label])=>norm(id)===n||norm(label)===n)?.[0]||'A Fazer';
+  }
+  const statusLabel=value=>STATUS.find(([id])=>id===normalizeStatus(value))?.[1]||normalizeStatus(value);
+  const statusIcon=value=>({
+    'A Fazer':'fa-circle','Em andamento':'fa-spinner','Aguardando gestão':'fa-user-tie',
+    'Aguardando administradora':'fa-building','Aguardando fornecedor':'fa-truck',
+    'Aguardando orçamento':'fa-file-invoice-dollar','Compra autorizada':'fa-cart-shopping',
+    'Cancelado':'fa-ban','Concluido':'fa-circle-check'
+  })[normalizeStatus(value)]||'fa-circle';
+  const isDone=task=>normalizeStatus(task?.status)==='Concluido';
+  const isCanceled=task=>normalizeStatus(task?.status)==='Cancelado';
+  const isOpen=task=>!isDone(task)&&!isCanceled(task);
+  const normalizePriority=value=>{const n=norm(value);if(n.includes('urgent'))return'Urgente';if(n.includes('alta'))return'Alta';if(n.includes('baix'))return'Baixa';return'Normal'};
+  const statusOptions=selected=>STATUS.map(([id,label])=>`<option value="${esc(id)}" ${normalizeStatus(selected)===id?'selected':''}>${esc(label)}</option>`).join('');
+
+  function easterDate(year){
+    const a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+    return new Date(year,month-1,day);
+  }
+  function holidays(year){
+    const set=new Set(['01-01','04-21','05-01','09-07','10-12','11-02','11-15','11-20','12-25'].map(md=>`${year}-${md}`));
+    const easter=easterDate(year);[-48,-47,-2,60].forEach(offset=>set.add(isoDate(addDays(easter,offset))));return set;
+  }
+  function nextBusinessDay(from=todayISO()){
+    let d=addDays(parseISO(from)||new Date(),1),guard=0;
+    while((d.getDay()===0||d.getDay()===6||holidays(d.getFullYear()).has(isoDate(d)))&&guard++<20)d=addDays(d,1);
+    return isoDate(d);
+  }
+  function daysSince(value){const d=new Date(value||0);return Number.isFinite(d.getTime())?Math.max(0,Math.floor((Date.now()-d.getTime())/86400000)):0}
+  function latestMovement(task){
+    const values=[task?.ultima_movimentacao,task?.updated_at,task?.data_atualizacao,task?.created_at,task?.data_criacao,...commentsOf(task).map(c=>c.criado_em||c.created_at)];
+    const dates=values.map(v=>new Date(v)).filter(d=>Number.isFinite(d.getTime()));return dates.length?new Date(Math.max(...dates.map(d=>d.getTime()))):new Date();
+  }
+  const staleDays=task=>isOpen(task)?daysSince(latestMovement(task)):0;
+  const followupDue=task=>isOpen(task)&&parseISO(task?.followup_date)&&String(task.followup_date)<=todayISO();
+  function getRiskWeights(){return Object.assign({},DEFAULT_WEIGHTS,safeJSON(KEYS.risk,{}))}
+  function criticality(task){
+    const w=getRiskWeights();let score=5;const reasons=[];const today=parseISO(todayISO())||new Date(),due=parseISO(task?.proxima_data),status=normalizeStatus(task?.status),stale=staleDays(task),text=norm([task?.nome,task?.descricao,task?.categoria,task?.next_action].join(' '));
+    if(due&&isOpen(task)){const delta=Math.round((due-today)/86400000);if(delta<0){const overdue=Math.abs(delta),points=Math.min(46,16+overdue*3)*w.deadline;score+=points;reasons.push(`${overdue} dia(s) atrasada`)}else if(delta===0){score+=24*w.deadline;reasons.push('vence hoje')}else if(delta<=2){score+=14*w.deadline;reasons.push('prazo muito próximo')}else if(delta<=5){score+=7*w.deadline;reasons.push('prazo próximo')}}
+    if(stale>=14){score+=30*w.stale;reasons.push(`${stale} dias sem movimentação`)}else if(stale>=7){score+=21*w.stale;reasons.push(`${stale} dias parada`)}else if(stale>=3){score+=12*w.stale;reasons.push(`${stale} dias sem atualização`)}
+    if(status.startsWith('Aguardando')){score+=(status==='Aguardando gestão'||status==='Aguardando administradora'?12:8)*w.waiting;reasons.push(status.toLowerCase())}else if(status==='Compra autorizada'){score+=14*w.waiting;reasons.push('compra autorizada pendente')}
+    if(followupDue(task)){score+=22*w.followup;reasons.push(`cobrança prevista para ${formatBR(task.followup_date)}`)}
+    const safety=['gas','incendio','avcb','vazamento','elevador','portao','bomba','caldeira','eletrica','choque','risco','seguranca','telhado','infiltracao'];
+    const finance=['pagamento','boleto','vencimento','nota fiscal','nf ','cobranca','credito'];
+    if(safety.some(term=>text.includes(term))){score+=20*w.safety;reasons.push('assunto de segurança/manutenção crítica')}
+    if(finance.some(term=>text.includes(term))){score+=11*w.finance;reasons.push('impacto financeiro')}
+    const priority=normalizePriority(task?.prioridade);if(priority==='Urgente'){score+=22*w.priority;reasons.push('prioridade manual urgente')}else if(priority==='Alta'){score+=11*w.priority;reasons.push('prioridade manual alta')}else if(priority==='Baixa'){score-=6*w.priority}
+    if(/urgente|emergencia|imediat/.test(text)){score+=18*w.priority;reasons.push('texto sinaliza urgência')}
+    if(commentsOf(task).length>=3){score+=5;reasons.push('múltiplas interações')}
+    if(isDone(task)||isCanceled(task))score=0;score=Math.max(0,Math.min(100,Math.round(score)));
+    return{score,level:score>=75?'Crítica':score>=50?'Alta':score>=25?'Média':'Baixa',reasons:[...new Set(reasons)].slice(0,6),stale,calculated_at:nowISO()};
+  }
+  const scoreClass=level=>level==='Crítica'?'critical':level==='Alta'?'high':level==='Baixa'?'low':'';
+
+  let dbPromise=null,mirrorTimer=null,lastSnapshot=[],selectionMode=false,selectedIds=new Set(),activeFilter=safeJSON(KEYS.activeFilter,{});
+  function openDB(){
+    if(dbPromise)return dbPromise;
+    dbPromise=new Promise((resolve,reject)=>{
+      if(!('indexedDB'in window))return reject(new Error('IndexedDB indisponível'));
+      const request=indexedDB.open('workspaceJarvis18',1);
+      request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains('snapshots'))db.createObjectStore('snapshots',{keyPath:'id',autoIncrement:true});if(!db.objectStoreNames.contains('audit'))db.createObjectStore('audit',{keyPath:'id',autoIncrement:true});if(!db.objectStoreNames.contains('trash'))db.createObjectStore('trash',{keyPath:'trash_id'})};
+      request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);
+    }).catch(error=>{console.warn('Jarvis18 IndexedDB',error);return null});
+    return dbPromise;
+  }
+  async function addDB(storeName,value){
+    const db=await openDB();if(!db)return;
+    await new Promise(resolve=>{const tx=db.transaction(storeName,'readwrite');tx.objectStore(storeName).put(value);tx.oncomplete=resolve;tx.onerror=resolve});
+  }
+  async function trimDB(storeName,limit){
+    const db=await openDB();if(!db)return;
+    const tx=db.transaction(storeName,'readwrite'),store=tx.objectStore(storeName),request=store.getAllKeys();
+    request.onsuccess=()=>request.result.slice(0,Math.max(0,request.result.length-limit)).forEach(key=>store.delete(key));
+  }
+  function mirrorData(reason='save'){
+    clearTimeout(mirrorTimer);mirrorTimer=setTimeout(async()=>{await addDB('snapshots',{at:nowISO(),reason,tasks:clone(allTasks()),notes:clone(Array.isArray(notes)?notes:[])});trimDB('snapshots',35)},450);
+  }
+  function auditEntries(){return safeJSON(KEYS.audit,[])}
+  function addAudit(entry){
+    const full={at:nowISO(),...entry};const list=auditEntries();list.unshift(full);writeJSON(KEYS.audit,list.slice(0,400));addDB('audit',full);trimDB('audit',1500);
+  }
+  function summarizeChangedFields(before,after){
+    const labels={nome:'título',descricao:'descrição',categoria:'condomínio',status:'status',prioridade:'prioridade',proxima_data:'data',followup_date:'data de cobrança',waiting_for:'responsável pelo retorno',next_action:'próxima providência',links:'links',comentarios:'observações',recorrencia:'recorrência'};
+    return Object.keys(labels).filter(key=>JSON.stringify(before?.[key]??null)!==JSON.stringify(after?.[key]??null)).map(key=>labels[key]);
+  }
+  function recordDiff(beforeList,afterList){
+    const before=new Map((beforeList||[]).map(task=>[Number(task.id),task])),after=new Map((afterList||[]).map(task=>[Number(task.id),task]));
+    after.forEach((task,id)=>{if(!before.has(id))addAudit({task_id:id,type:'created',message:'Tarefa criada',after:clone(task)});else{const fields=summarizeChangedFields(before.get(id),task);if(fields.length)addAudit({task_id:id,type:'updated',message:`Alterado: ${fields.join(', ')}`,before:clone(before.get(id)),after:clone(task)})}});
+    before.forEach((task,id)=>{if(!after.has(id))addAudit({task_id:id,type:'deleted',message:'Tarefa movida para a lixeira',before:clone(task)})});
+  }
+  function installStorageSafety(){
+    const baseSave=window.saveToStorage;lastSnapshot=clone(allTasks());
+    window.saveToStorage=function(){
+      const result=typeof baseSave==='function'?baseSave.apply(this,arguments):writeJSON('tasks',allTasks());
+      const next=clone(allTasks());recordDiff(lastSnapshot,next);lastSnapshot=next;mirrorData('task-save');return result;
+    };
+    window.addEventListener('beforeunload',()=>{try{localStorage.setItem('tasks',JSON.stringify(allTasks()));localStorage.setItem('notes',JSON.stringify(Array.isArray(notes)?notes:[]))}catch(e){}});
+    mirrorData('startup');
+  }
+  function persist(reason='update'){if(typeof window.saveToStorage==='function')window.saveToStorage();else writeJSON('tasks',allTasks());mirrorData(reason)}
+  function trashList(){return safeJSON(KEYS.trash,[])}
+  function writeTrash(list){writeJSON(KEYS.trash,list.slice(0,150))}
+  function moveToTrash(task){
+    const entry={trash_id:`${task.id}-${Date.now()}`,deleted_at:nowISO(),task:clone(task)};const list=trashList();list.unshift(entry);writeTrash(list);addDB('trash',entry);return entry;
+  }
+  function restoreTrash(trashId){
+    const list=trashList(),entry=list.find(item=>item.trash_id===trashId);if(!entry)return;
+    const restored=clone(entry.task);if(taskById(restored.id))restored.id=allTasks().length?Math.max(...allTasks().map(t=>Number(t.id)||0))+1:1;
+    restored.updated_at=nowISO();restored.data_atualizacao=restored.updated_at;tasks.push(restored);writeTrash(list.filter(item=>item.trash_id!==trashId));persist('trash-restore');if(typeof updateCategoryFilter==='function')updateCategoryFilter();closeModal('j18TrashModal');forceRender();toast('Tarefa restaurada da lixeira.','fa-trash-arrow-up');
+  }
+  function deleteTaskSafe(id){
+    const task=taskById(id);if(!task)return;
+    if(!confirm(`Mover esta tarefa para a lixeira?\n\n${task.nome}`))return;
+    moveToTrash(task);tasks=allTasks().filter(item=>Number(item.id)!==Number(id));selectedIds.delete(Number(id));persist('trash');forceRender();toast('Tarefa movida para a lixeira.','fa-trash-can-arrow-up');
+  }
+
+  function taskChip(icon,text,classes=''){
+    return`<span class="j18-chip ${classes}"><i class="fas ${icon}"></i><span>${esc(text)}</span></span>`;
+  }
+  function renderTaskCard(task,compact=false){
+    const risk=criticality(task),done=isDone(task),canceled=isCanceled(task),date=String(task.proxima_data||''),number=typeof getTaskVoiceNumber==='function'?getTaskVoiceNumber(task.id):'',links=linksOf(task),selected=selectedIds.has(Number(task.id));
+    const dateClass=isOpen(task)&&date<todayISO()?'is-overdue':isOpen(task)&&date===todayISO()?'is-today':'';
+    const chips=[
+      taskChip(statusIcon(task.status),statusLabel(task.status)),
+      date?taskChip('fa-clock',`${formatBR(date)}${dateClass==='is-overdue'?' • atrasada':dateClass==='is-today'?' • hoje':''}`,dateClass):'',
+      task.categoria?taskChip('fa-building',task.categoria):'',
+      normalizePriority(task.prioridade)!=='Normal'?taskChip('fa-bolt',normalizePriority(task.prioridade),normalizePriority(task.prioridade)==='Urgente'?'is-urgent':''):'',
+      task.followup_date?taskChip('fa-bell',`Cobrar ${formatBR(task.followup_date)}`,followupDue(task)?'is-followup':''):'',
+      task.waiting_for?taskChip('fa-user-clock',task.waiting_for):'',
+      links.length?taskChip('fa-link',`${links.length} link${links.length===1?'':'s'}`):'',
+      task.recorrencia?.ativa?taskChip(task.recorrencia?.pausada?'fa-pause':'fa-infinity',typeof getRecorrenciaLabel==='function'?getRecorrenciaLabel(task.recorrencia.tipo):task.recorrencia.tipo):''
+    ].filter(Boolean).join('');
+    return`<article class="j18-card ${risk.level==='Crítica'?'is-critical':''} ${selected?'is-selected':''}" onclick="if(!Jarvis18.selectionMode())editTask(${Number(task.id)})">
+      <div class="j18-card-head">
+        ${selectionMode?`<input class="j18-select-check" type="checkbox" ${selected?'checked':''} aria-label="Selecionar tarefa" onclick="event.stopPropagation()" onchange="Jarvis18.selectTask(${Number(task.id)},this.checked)">`:number?`<span class="j18-number" title="Comando de voz: tarefa ${number}">#${number}</span>`:'<span class="j18-number"><i class="fas fa-list-check"></i></span>'}
+        <div><h3 class="j18-title ${done?'is-done':''}">${esc(task.nome)}</h3>${!compact&&task.descricao?`<p class="j18-desc j18-clamp">${esc(task.descricao)}</p>`:''}${task.next_action?`<p class="j18-desc j18-clamp"><b class="text-cyan-300">Próxima providência:</b> ${esc(task.next_action)}</p>`:''}</div>
+        <span class="j18-score ${scoreClass(risk.level)}" title="${esc(risk.reasons.join(' • ')||'Sem fatores críticos')}"><i class="fas fa-gauge-high"></i>${risk.score}</span>
+      </div>
+      <div class="j18-chips">${chips}</div>
+      <div class="j18-card-actions" onclick="event.stopPropagation()">
+        <select class="j18-status" aria-label="Alterar status da tarefa" onchange="Jarvis18.setStatus(${Number(task.id)},this.value)">${statusOptions(task.status)}</select>
+        <div class="j18-quick-desktop">
+          <button class="j18-action-btn is-good" onclick="Jarvis18.complete(${Number(task.id)})" title="${done?'Restaurar tarefa':'Concluir tarefa'}"><i class="fas ${done?'fa-rotate-left':'fa-check'}"></i></button>
+          <button class="j18-action-btn is-next" onclick="Jarvis18.nextBusiness(${Number(task.id)})" title="Jogar para o próximo dia útil"><i class="fas fa-calendar-plus"></i></button>
+          <button class="j18-action-btn" onclick="Jarvis18.openActions(${Number(task.id)})" title="Mais ações"><i class="fas fa-ellipsis"></i><span>Mais</span></button>
+        </div>
+        <div class="j18-quick-mobile"><button class="j18-action-btn" onclick="Jarvis18.openActions(${Number(task.id)})" aria-label="Abrir ações da tarefa"><i class="fas fa-ellipsis-vertical"></i></button></div>
+      </div>
+    </article>`;
+  }
+
+  function positionRadar(){
+    const planner=$('plannerView'),radar=$('jarvisOpsRadar');if(!planner||!radar)return;
+    if(planner.nextElementSibling!==radar)planner.insertAdjacentElement('afterend',radar);
+  }
+  function renderRadar(){
+    positionRadar();const radar=$('jarvisOpsRadar');if(!radar)return;
+    const hidden=(typeof currentView!=='undefined'&&currentView==='notes')||($('plannerView')&&$('plannerView').style.display==='none');
+    radar.style.display=hidden?'none':'block';if(hidden)return;
+    const open=allTasks().filter(isOpen).map(task=>({task,risk:criticality(task)}));
+    const critical=open.filter(item=>item.risk.score>=75).length,waiting=open.filter(item=>normalizeStatus(item.task.status).startsWith('Aguardando')).length,authorized=open.filter(item=>normalizeStatus(item.task.status)==='Compra autorizada').length,due=open.filter(item=>followupDue(item.task)).length;
+    const alerts=open.filter(item=>item.risk.score>=40||item.risk.stale>=3||followupDue(item.task)).sort((a,b)=>b.risk.score-a.risk.score||b.risk.stale-a.risk.stale).slice(0,8);
+    const collapsed=localStorage.getItem(KEYS.radar)==='1';radar.classList.toggle('j18-collapsed',collapsed);
+    radar.innerHTML=`<div class="j18-radar-head"><div><div class="text-[9px] font-black uppercase tracking-[.22em] text-cyan-300"><i class="fas fa-satellite-dish mr-2"></i>Radar Operacional Jarvis 18.0</div><h2 class="text-base sm:text-lg font-black text-white mt-1">O que precisa da sua atenção</h2><div class="text-[9px] text-slate-500 mt-1"><span class="j18-offline-dot ${navigator.onLine?'':'is-offline'}"></span> Dados locais protegidos • ${navigator.onLine?'conectado':'modo sem conexão'}</div></div>
+      <div class="j18-radar-actions"><button class="j18-action-btn" onclick="Jarvis18.openCapture()" title="Transformar mensagens"><i class="fas fa-wand-magic-sparkles"></i><span>Capturar</span></button><button class="j18-action-btn" onclick="Jarvis18.openRisk()" title="Configurar radar"><i class="fas fa-sliders"></i><span>Ajustar</span></button><button class="j18-action-btn" onclick="Jarvis18.toggleRadar()" title="${collapsed?'Expandir':'Recolher'} radar"><i class="fas ${collapsed?'fa-chevron-down':'fa-chevron-up'}"></i><span>${collapsed?'Abrir':'Recolher'}</span></button></div></div>
+      <div class="j18-radar-content"><div class="j18-metrics"><div class="j18-metric"><strong class="text-rose-300">${critical}</strong><span>Críticas</span></div><div class="j18-metric"><strong class="text-amber-300">${due}</strong><span>Cobranças vencidas</span></div><div class="j18-metric"><strong class="text-cyan-300">${waiting}</strong><span>Aguardando</span></div><div class="j18-metric"><strong class="text-emerald-300">${authorized}</strong><span>Compras autorizadas</span></div></div>
+      <div><div class="text-[9px] font-black uppercase tracking-[.14em] text-slate-400 mb-2">Prioridade calculada e explicada</div><div class="j18-radar-list">${alerts.length?alerts.map(({task,risk})=>`<button class="j18-radar-item" onclick="editTask(${Number(task.id)})"><span><b>${esc(task.nome)}</b><small>${esc(statusLabel(task.status))}${task.categoria?' • '+esc(task.categoria):''}${risk.reasons[0]?' • '+esc(risk.reasons[0]):''}</small></span><span class="j18-score ${scoreClass(risk.level)}">${risk.score}</span></button>`).join(''):'<div class="j18-empty">Nenhum alerta relevante agora.</div>'}</div></div></div>`;
+  }
+  function toggleRadar(){const next=localStorage.getItem(KEYS.radar)==='1'?'0':'1';localStorage.setItem(KEYS.radar,next);renderRadar()}
+
+  function plannerTools(){
+    const count=selectedIds.size;
+    return`<div class="j18-planner-tools"><button class="j18-action-btn ${selectionMode?'is-good':''}" onclick="Jarvis18.toggleSelection()"><i class="fas fa-check-square"></i><span>${selectionMode?'Sair da seleção':'Selecionar tarefas'}</span></button><button class="j18-action-btn" onclick="Jarvis18.openFilters()"><i class="fas fa-filter"></i><span>Filtros inteligentes</span></button>${Object.keys(activeFilter||{}).some(key=>activeFilter[key])?`<button class="j18-action-btn" onclick="Jarvis18.clearFilters()"><i class="fas fa-filter-circle-xmark"></i><span>Limpar filtro</span></button>`:''}${selectionMode?`<span class="j18-filter-badge">${count} selecionada(s)</span>`:''}</div>`;
+  }
+  function ensureBulkBar(){
+    if($('j18BulkBar'))return;
+    document.body.insertAdjacentHTML('beforeend',`<div id="j18BulkBar" class="j18-bulkbar" role="region" aria-label="Ações em tarefas selecionadas"><span id="j18BulkCount" class="j18-bulk-count">0 selecionadas</span><select id="j18BulkStatus" class="j18-status">${statusOptions('A Fazer')}</select><button class="j18-action-btn is-good" onclick="Jarvis18.bulk('complete')" title="Concluir selecionadas"><i class="fas fa-check-double"></i><span>Concluir</span></button><button class="j18-action-btn is-next" onclick="Jarvis18.bulk('next')" title="Próximo dia útil"><i class="fas fa-calendar-plus"></i><span>Próximo útil</span></button><button class="j18-action-btn" onclick="Jarvis18.bulk('status')" title="Aplicar status"><i class="fas fa-arrows-rotate"></i><span>Aplicar status</span></button></div>`);
+  }
+  function updateBulkBar(){
+    ensureBulkBar();const bar=$('j18BulkBar'),count=$('j18BulkCount');bar?.classList.toggle('is-open',selectionMode);if(count)count.textContent=`${selectedIds.size} selecionada(s)`;
+  }
+  function toggleSelection(){selectionMode=!selectionMode;if(!selectionMode)selectedIds.clear();updateBulkBar();forceRender()}
+  function selectTask(id,checked){if(checked)selectedIds.add(Number(id));else selectedIds.delete(Number(id));updateBulkBar();const card=document.querySelector(`.j18-card input[onchange*="selectTask(${Number(id)}"]`)?.closest('.j18-card');card?.classList.toggle('is-selected',checked)}
+  function bulk(action){
+    const ids=[...selectedIds];if(!ids.length)return toast('Selecione pelo menos uma tarefa.','fa-circle-info');
+    const label=action==='complete'?'concluir':action==='next'?'reagendar para o próximo dia útil':'alterar o status de';
+    if(!confirm(`Deseja ${label} ${ids.length} tarefa(s)?`))return;
+    ids.forEach(id=>{const task=taskById(id);if(!task)return;if(action==='complete'){if(!isDone(task)){if(task.recorrencia?.ativa&&typeof window.concluirOcorrenciaRecorrente==='function')window.concluirOcorrenciaRecorrente(task);else task.status='Concluido'}}else if(action==='next'){task.proxima_data=nextBusinessDay(todayISO());if(isDone(task)||isCanceled(task))task.status='A Fazer'}else task.status=normalizeStatus($('j18BulkStatus')?.value);task.updated_at=nowISO();task.data_atualizacao=task.updated_at;task.ultima_movimentacao=task.updated_at});
+    persist(`bulk-${action}`);selectedIds.clear();selectionMode=false;updateBulkBar();forceRender();toast('Ação em lote concluída.','fa-check-double');
+  }
+
+  function updateTask(id,mutator,message,icon='fa-circle-check'){
+    const task=taskById(id);if(!task)return;try{if(typeof saveHistory==='function')saveHistory()}catch(e){}
+    mutator(task);task.updated_at=nowISO();task.data_atualizacao=task.updated_at;task.ultima_movimentacao=task.updated_at;task.criticidade=criticality(task);persist(message);forceRender();if(message)toast(message,icon);
+  }
+  function setStatus(id,status){updateTask(id,task=>{const next=normalizeStatus(status);if(next==='Concluido'&&task.recorrencia?.ativa&&typeof window.concluirOcorrenciaRecorrente==='function')window.concluirOcorrenciaRecorrente(task);else task.status=next},`Status atualizado: ${statusLabel(status)}.`,'fa-arrows-rotate')}
+  function complete(id){const task=taskById(id);if(!task)return;if(isDone(task))updateTask(id,item=>{item.status='A Fazer';if(item.data_anterior)item.proxima_data=item.data_anterior},'Tarefa restaurada.','fa-rotate-left');else updateTask(id,item=>{if(item.recorrencia?.ativa&&typeof window.concluirOcorrenciaRecorrente==='function')window.concluirOcorrenciaRecorrente(item);else item.status='Concluido'},'Tarefa concluída.','fa-circle-check')}
+  function nextBusiness(id){const next=nextBusinessDay(todayISO());updateTask(id,task=>{task.proxima_data=next;if(isDone(task)||isCanceled(task))task.status='A Fazer'},`Tarefa reagendada para ${formatBR(next)}.`,'fa-calendar-plus')}
+  function toggleUrgent(id){updateTask(id,task=>{task.prioridade=normalizePriority(task.prioridade)==='Urgente'?'Normal':'Urgente'},normalizePriority(taskById(id)?.prioridade)==='Urgente'?'Prioridade normalizada.':'Tarefa marcada como urgente.','fa-bolt')}
+  function duplicateTask(id){
+    const source=taskById(id);if(!source)return;const copy=clone(source);copy.id=allTasks().length?Math.max(...allTasks().map(task=>Number(task.id)||0))+1:1;copy.nome=`Cópia — ${source.nome}`;copy.status='A Fazer';copy.created_at=nowISO();copy.data_criacao=copy.created_at;copy.updated_at=copy.created_at;copy.data_atualizacao=copy.created_at;copy.ultima_movimentacao=copy.created_at;copy.comentarios=[];tasks.push(typeof window.normalizeTask==='function'?window.normalizeTask(copy):copy);persist('duplicate');closeModal('j18ActionModal');if(typeof updateCategoryFilter==='function')updateCategoryFilter();forceRender();toast('Tarefa duplicada.','fa-clone');
+  }
+
+  function modalShell(id,title,body,footer='',wide=false){
+    let modal=$(id);if(!modal){document.body.insertAdjacentHTML('beforeend',`<div id="${id}" class="j18-modal" onclick="if(event.target===this)Jarvis18.closeModal('${id}')"><div class="j18-modal-card ${wide?'is-wide':''}"><div class="j18-modal-head"><h2 class="j18-modal-title"></h2><button class="j18-action-btn" onclick="Jarvis18.closeModal('${id}')" aria-label="Fechar"><i class="fas fa-xmark"></i></button></div><div class="j18-modal-body"></div><div class="j18-modal-foot"></div></div></div>`);modal=$(id)}
+    modal.querySelector('.j18-modal-card')?.classList.toggle('is-wide',wide);modal.querySelector('.j18-modal-title').textContent=title;modal.querySelector('.j18-modal-body').innerHTML=body;const foot=modal.querySelector('.j18-modal-foot');foot.innerHTML=footer;foot.style.display=footer?'':'none';modal.classList.add('is-open');return modal;
+  }
+  function closeModal(id){$(id)?.classList.remove('is-open')}
+  function actionButtons(task){
+    const hasLinks=linksOf(task).length>0;
+    return`<div class="j18-action-list">
+      <button class="j18-action-row" onclick="Jarvis18.complete(${task.id});Jarvis18.closeModal('j18ActionModal')"><i class="fas ${isDone(task)?'fa-rotate-left':'fa-check'}"></i><span>${isDone(task)?'Restaurar tarefa':'Concluir tarefa'}</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.nextBusiness(${task.id});Jarvis18.closeModal('j18ActionModal')"><i class="fas fa-calendar-plus"></i><span>Próximo dia útil</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.toggleUrgent(${task.id});Jarvis18.closeModal('j18ActionModal')"><i class="fas fa-bolt"></i><span>${normalizePriority(task.prioridade)==='Urgente'?'Remover urgência':'Marcar como urgente'}</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.actionForm(${task.id},'comment')"><i class="fas fa-comment-medical"></i><span>Acrescentar observação</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.actionForm(${task.id},'date')"><i class="fas fa-calendar-days"></i><span>Reagendar</span></button>
+      <button class="j18-action-row" ${hasLinks?`onclick="Jarvis18.actionForm(${task.id},'links')"`:'disabled style="opacity:.45"'}><i class="fas fa-arrow-up-right-from-square"></i><span>Abrir links</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.duplicate(${task.id})"><i class="fas fa-clone"></i><span>Duplicar tarefa</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.openHistory(${task.id})"><i class="fas fa-clock-rotate-left"></i><span>Histórico da tarefa</span></button>
+      <button class="j18-action-row" onclick="editTask(${task.id});Jarvis18.closeModal('j18ActionModal')"><i class="fas fa-pen-to-square"></i><span>Abrir edição completa</span></button>
+      <button class="j18-action-row" onclick="Jarvis18.deleteTask(${task.id});Jarvis18.closeModal('j18ActionModal')"><i class="fas fa-trash text-rose-300"></i><span>Enviar para a lixeira</span></button>
+    </div>`;
+  }
+  function openActions(id){const task=taskById(id);if(task)modalShell('j18ActionModal',task.nome,actionButtons(task))}
+  function actionForm(id,type){
+    const task=taskById(id);if(!task)return;let body='',footer='';
+    if(type==='comment'){body=`<label class="j18-label">Nova observação</label><textarea id="j18ActionComment" class="j18-field" placeholder="Digite a informação que deve ficar registrada"></textarea>`;footer=`<button class="j18-action-btn" onclick="Jarvis18.openActions(${id})">Voltar</button><button class="j18-action-btn is-good" onclick="Jarvis18.saveComment(${id})"><i class="fas fa-floppy-disk"></i>Salvar observação</button>`}
+    if(type==='date'){body=`<label class="j18-label">Nova data</label><input id="j18ActionDate" class="j18-field" type="date" value="${esc(task.proxima_data||todayISO())}">`;footer=`<button class="j18-action-btn" onclick="Jarvis18.openActions(${id})">Voltar</button><button class="j18-action-btn is-good" onclick="Jarvis18.saveDate(${id})"><i class="fas fa-calendar-check"></i>Reagendar</button>`}
+    if(type==='links'){body=`<div class="j18-action-list">${linksOf(task).map((link,index)=>`<button class="j18-action-row" onclick="Jarvis18.openLink('${encodeURIComponent(link).replace(/'/g,'%27')}')"><i class="fas fa-link"></i><span>Link ${index+1}: ${esc(link)}</span></button>`).join('')}</div>`;footer=`<button class="j18-action-btn" onclick="Jarvis18.openActions(${id})">Voltar</button>`}
+    modalShell('j18ActionModal',type==='comment'?'Acrescentar observação':type==='date'?'Reagendar tarefa':'Links da tarefa',body,footer);setTimeout(()=>$('j18ActionComment')?.focus(),40);
+  }
+  function saveComment(id){const text=String($('j18ActionComment')?.value||'').trim();if(!text)return toast('Digite a observação.','fa-triangle-exclamation');updateTask(id,task=>{task.comentarios=commentsOf(task);task.comentarios.push({texto:text,criado_em:nowISO()})},'Observação registrada.','fa-comment-dots');closeModal('j18ActionModal')}
+  function saveDate(id){const date=$('j18ActionDate')?.value;if(!parseISO(date))return toast('Escolha uma data válida.','fa-calendar-xmark');updateTask(id,task=>{task.proxima_data=date;if(isDone(task)||isCanceled(task))task.status='A Fazer'},`Tarefa reagendada para ${formatBR(date)}.`,'fa-calendar-check');closeModal('j18ActionModal')}
+  function openLink(encoded){const link=decodeURIComponent(encoded),safe=/^(https?:|mailto:)/i.test(link)?link:`https://${link}`;window.open(safe,'_blank','noopener,noreferrer')}
+
+  function openHistory(id){
+    const task=taskById(id),entries=auditEntries().filter(entry=>Number(entry.task_id)===Number(id));
+    const body=`<div class="j18-audit-list">${entries.length?entries.map(entry=>`<div class="j18-list-row"><div class="j18-list-main"><b>${esc(entry.message)}</b><span>${new Date(entry.at).toLocaleString('pt-BR')}</span></div></div>`).join(''):'<div class="j18-empty">Ainda não há alterações registradas para esta tarefa.</div>'}</div>`;
+    closeModal('j18ActionModal');modalShell('j18HistoryModal',`Histórico — ${task?.nome||'Tarefa'}`,body,`<button class="j18-action-btn" onclick="Jarvis18.closeModal('j18HistoryModal')">Fechar</button>`);
+  }
+  function openTrash(){
+    const list=trashList(),body=`<div class="j18-trash-list">${list.length?list.map(entry=>`<div class="j18-list-row"><div class="j18-list-main"><b>${esc(entry.task?.nome||'Tarefa')}</b><span>Excluída em ${new Date(entry.deleted_at).toLocaleString('pt-BR')}</span></div><div><button class="j18-action-btn is-good" onclick="Jarvis18.restoreTrash('${esc(entry.trash_id)}')"><i class="fas fa-trash-arrow-up"></i><span>Restaurar</span></button><button class="j18-action-btn is-danger" onclick="Jarvis18.purgeTrash('${esc(entry.trash_id)}')"><i class="fas fa-xmark"></i><span>Remover</span></button></div></div>`).join(''):'<div class="j18-empty">A lixeira está vazia.</div>'}</div>`;
+    modalShell('j18TrashModal','Lixeira recuperável',body,`<button class="j18-action-btn" onclick="Jarvis18.openBackup()"><i class="fas fa-shield-halved"></i>Backup protegido</button><button class="j18-action-btn" onclick="Jarvis18.closeModal('j18TrashModal')">Fechar</button>`,true);
+  }
+  function purgeTrash(id){if(!confirm('Remover definitivamente este item da lixeira?'))return;writeTrash(trashList().filter(item=>item.trash_id!==id));openTrash()}
+
+  function injectHeaderButtons(){
+    const actions=$('viewSwitcher')?.parentElement||document.querySelector('.glass-header>div:nth-child(2)');if(!actions)return;
+    if(!$('btnJ18Filters')){const button=document.createElement('button');button.id='btnJ18Filters';button.type='button';button.className='ws10-top-action bg-[#131c2f] hover:border-violet-500/40 text-violet-300';button.title='Filtros inteligentes';button.innerHTML='<i class="fas fa-filter"></i><span>Filtros</span>';button.onclick=()=>window.Jarvis18?.openFilters?.();actions.insertBefore(button,$('viewSwitcher')||null)}
+    if(!$('btnJ18Trash')){const button=document.createElement('button');button.id='btnJ18Trash';button.type='button';button.className='ws10-top-action bg-[#131c2f] hover:border-rose-500/40 text-rose-300';button.title='Lixeira recuperável';button.innerHTML='<i class="fas fa-trash-can-arrow-up"></i><span>Lixeira</span>';button.onclick=openTrash;actions.insertBefore(button,$('viewSwitcher')||null)}
+  }
+
+  function ensureFollowupFields(){
+    const status=$('j16TaskStatus');if(!status||$('j18FollowupPanel'))return;
+    const details=document.createElement('details');details.id='j18FollowupPanel';details.innerHTML=`<summary><i class="fas fa-user-clock mr-2"></i>Acompanhamento e próxima providência</summary><div class="j18-grid mt-3"><div><label class="j18-label">Quem deve responder</label><input id="j18WaitingFor" class="j18-field" placeholder="Ex.: Administradora, fornecedor, síndica"></div><div><label class="j18-label">Cobrar novamente em</label><input id="j18FollowupDate" class="j18-field" type="date"></div><div class="j18-full"><label class="j18-label">Próxima providência</label><textarea id="j18NextAction" class="j18-field" rows="3" placeholder="Qual é o próximo passo objetivo desta demanda?"></textarea></div><div class="j18-full"><label class="j18-label">Solicitante</label><input id="j18Requester" class="j18-field" placeholder="Quem solicitou esta demanda?"></div></div>`;
+    status.closest('div')?.insertAdjacentElement('afterend',details);
+    status.addEventListener('change',()=>{if(normalizeStatus(status.value).startsWith('Aguardando'))details.open=true});
+  }
+  function populateFollowup(task){
+    ensureFollowupFields();if(!$('j18FollowupPanel'))return;
+    $('j18WaitingFor').value=task?.waiting_for||'';$('j18FollowupDate').value=task?.followup_date||'';$('j18NextAction').value=task?.next_action||'';$('j18Requester').value=task?.solicitante||'';
+    $('j18FollowupPanel').open=!!(task?.waiting_for||task?.followup_date||task?.next_action||normalizeStatus(task?.status).startsWith('Aguardando'));
+  }
+  function installTaskFormHooks(){
+    ensureFollowupFields();const baseClear=window.clearForm,baseEdit=window.editTask,baseSave=window.saveTask;
+    window.clearForm=function(){ensureFollowupFields();const result=typeof baseClear==='function'?baseClear.apply(this,arguments):undefined;populateFollowup(null);return result};
+    window.editTask=function(id){ensureFollowupFields();const result=typeof baseEdit==='function'?baseEdit.apply(this,arguments):undefined;populateFollowup(taskById(id));return result};
+    window.saveTask=function(btn){
+      ensureFollowupFields();const idBefore=Number($('taskId')?.value||0),idsBefore=new Set(allTasks().map(task=>Number(task.id)));
+      const extra={waiting_for:String($('j18WaitingFor')?.value||'').trim(),followup_date:String($('j18FollowupDate')?.value||''),next_action:String($('j18NextAction')?.value||'').trim(),solicitante:String($('j18Requester')?.value||'').trim()};
+      const result=typeof baseSave==='function'?baseSave.apply(this,arguments):undefined;
+      const target=idBefore?taskById(idBefore):allTasks().find(task=>!idsBefore.has(Number(task.id)));if(target){Object.assign(target,extra);target.updated_at=nowISO();target.data_atualizacao=target.updated_at;persist('followup-fields');forceRender()}return result;
+    };
+  }
+
+  function openRisk(){
+    const w=getRiskWeights(),range=(key,label)=>`<div><div class="flex justify-between gap-2 mb-1"><label class="j18-label">${label}</label><span id="j18Risk_${key}_value" class="text-[10px] text-cyan-300">${Number(w[key]).toFixed(1)}x</span></div><input id="j18Risk_${key}" class="w-full accent-cyan-400" type="range" min="0" max="2" step=".1" value="${w[key]}" oninput="document.getElementById('j18Risk_${key}_value').textContent=Number(this.value).toFixed(1)+'x'"></div>`;
+    const body=`<p class="j18-capture-help">A pontuação continua automática, mas você decide quanto cada fator pesa. O valor 1,0x é o padrão; 0 desativa o fator.</p><div class="j18-grid mt-3">${range('deadline','Prazos e atrasos')}${range('stale','Dias sem movimentação')}${range('waiting','Status aguardando')}${range('followup','Cobranças programadas')}${range('safety','Segurança e manutenção crítica')}${range('finance','Impacto financeiro')}${range('priority','Prioridade manual')}</div><div class="mt-3"><button class="j18-action-btn" onclick="Jarvis18.enableNotifications()"><i class="fas fa-bell"></i>Ativar alertas locais</button></div>`;
+    const footer=`<button class="j18-action-btn" onclick="Jarvis18.resetRisk()">Restaurar padrão</button><button class="j18-action-btn is-good" onclick="Jarvis18.saveRisk()">Salvar pesos</button>`;
+    modalShell('j18RiskModal','Configuração do radar',body,footer);
+  }
+  function saveRisk(){
+    const next={};Object.keys(DEFAULT_WEIGHTS).forEach(key=>next[key]=Math.max(0,Math.min(2,Number($(`j18Risk_${key}`)?.value)||0)));writeJSON(KEYS.risk,next);allTasks().forEach(task=>task.criticidade=criticality(task));persist('risk-settings');closeModal('j18RiskModal');forceRender();toast('Pesos do radar atualizados.','fa-gauge-high');
+  }
+  function resetRisk(){writeJSON(KEYS.risk,DEFAULT_WEIGHTS);openRisk();forceRender()}
+  async function enableNotifications(){
+    if(!('Notification'in window))return toast('Alertas do navegador não estão disponíveis.','fa-bell-slash');
+    const permission=await Notification.requestPermission();toast(permission==='granted'?'Alertas locais ativados.':'Permissão de alertas não concedida.',permission==='granted'?'fa-bell':'fa-bell-slash');
+  }
+  function notifyDue(){
+    const due=allTasks().filter(followupDue),day=todayISO();if(!due.length||localStorage.getItem(KEYS.notification)===day)return;
+    localStorage.setItem(KEYS.notification,day);toast(`${due.length} cobrança(s) precisam de atenção hoje.`,'fa-bell');
+    if('Notification'in window&&Notification.permission==='granted')new Notification('Jarvis — cobranças pendentes',{body:`${due.length} tarefa(s) chegaram à data de acompanhamento.`});
+  }
+
+  function installRendering(){
+    const baseRender=window.render,baseToolbar=window.createPlannerToolbar;
+    window.createPlannerTaskCard=renderTaskCard;
+    window.createPlannerToolbar=function(total){const html=typeof baseToolbar==='function'?baseToolbar.apply(this,arguments):'';return`${html}${plannerTools()}`};
+    window.render=function(){const result=typeof baseRender==='function'?baseRender.apply(this,arguments):undefined;requestAnimationFrame(()=>{positionRadar();renderRadar();updateBulkBar()});return result};
+    if(window.JarvisOps){window.JarvisOps.computeCriticality=criticality;window.JarvisOps.openRadar=()=>{$('jarvisOpsRadar')?.scrollIntoView({behavior:'smooth',block:'start'})}}
+    window.deleteTaskById=deleteTaskSafe;
+  }
+
+  function updateConnectivity(){const dot=document.querySelector('#jarvisOpsRadar .j18-offline-dot');dot?.classList.toggle('is-offline',!navigator.onLine);renderRadar()}
+  function installKeyboard(){
+    document.addEventListener('keydown',event=>{if(event.key==='Escape'){document.querySelectorAll('.j18-modal.is-open').forEach(modal=>modal.classList.remove('is-open'));if(selectionMode){selectionMode=false;selectedIds.clear();updateBulkBar();forceRender()}}});
+  }
+
+  /* Filtros, captura em lote e comandos de voz são adicionados na continuação deste núcleo. */
+  window.Jarvis18={
+    version:VERSION,criticality,statusLabel,normalizeStatus,nextBusinessDay,selectionMode:()=>selectionMode,
+    selectTask,toggleSelection,bulk,setStatus,complete,nextBusiness,toggleUrgent,openActions,actionForm,
+    saveComment,saveDate,openLink,duplicate:duplicateTask,deleteTask:deleteTaskSafe,openHistory,
+    closeModal,openTrash,restoreTrash,purgeTrash,toggleRadar,openRisk,saveRisk,resetRisk,enableNotifications,
+    _modalShell:modalShell,_forceRender:forceRender,_persist:persist,_taskById:taskById,_allTasks:allTasks,
+    _esc:esc,_norm:norm,_formatBR:formatBR,_todayISO:todayISO,_parseISO:parseISO,_statusOptions:statusOptions,
+    _linksOf:linksOf,_commentsOf:commentsOf,_followupDue:followupDue,_staleDays:staleDays,_nextBusinessDay:nextBusinessDay,
+    _setActiveFilter:value=>{activeFilter=value||{};writeJSON(KEYS.activeFilter,activeFilter)},_getActiveFilter:()=>clone(activeFilter),
+    _keys:KEYS,_writeJSON:writeJSON,_safeJSON:safeJSON,_nowISO:nowISO,_clone:clone,_toast:toast
+  };
+
+  function boot(){
+    if(window.__jarvis18Booted)return;window.__jarvis18Booted=true;
+    document.title='TAREFAS — ROBERTO | Workspace Jarvis 18.0';
+    document.querySelectorAll('p').forEach(p=>{if(/^Workspace Jarvis (?:15|16|17)\\.0$/.test(p.textContent.trim()))p.textContent='Workspace Jarvis 18.0'});
+    installStorageSafety();installTaskFormHooks();installRendering();injectHeaderButtons();ensureBulkBar();installKeyboard();
+    window.addEventListener('online',updateConnectivity);window.addEventListener('offline',updateConnectivity);
+    positionRadar();forceRender();setTimeout(notifyDue,700);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else setTimeout(boot,0);
+})();
+</script>
+
+<script id="jarvis18-search-capture-voice">
+(function(){
+  'use strict';
+  const J=window.Jarvis18;if(!J)return;
+  const $=id=>document.getElementById(id),esc=J._esc,norm=J._norm,toast=J._toast;
+  const FILTER_STATUS=['A Fazer','Em andamento','Aguardando gestão','Aguardando administradora','Aguardando fornecedor','Aguardando orçamento','Compra autorizada','Cancelado','Concluido'];
+  let captureQueue=[],baseVoice=null;
+  const filterKeys=J._keys;
+
+  function taskText(task){
+    const comments=J._commentsOf(task).map(c=>c.texto||c.text||'').join(' ');
+    const links=J._linksOf(task).join(' ');
+    return norm([
+      task.nome,task.descricao,task.categoria,task.status,J.statusLabel(task.status),task.prioridade,
+      task.solicitante,task.waiting_for,task.next_action,task.texto_origem,comments,links,
+      task.proxima_data,J._formatBR(task.proxima_data),task.followup_date,J._formatBR(task.followup_date)
+    ].join(' '));
+  }
+  function filterMatches(task,spec){
+    if(spec.query&&!taskText(task).includes(norm(spec.query)))return false;
+    if(spec.status&&J.normalizeStatus(task.status)!==J.normalizeStatus(spec.status))return false;
+    if(spec.priority&&norm(task.prioridade)!==norm(spec.priority))return false;
+    if(spec.followup==='due'&&!J._followupDue(task))return false;
+    if(spec.followup==='scheduled'&&!task.followup_date)return false;
+    if(spec.followup==='missing'&&task.followup_date)return false;
+    if(Number(spec.stale||0)>0&&J._staleDays(task)<Number(spec.stale))return false;
+    return true;
+  }
+  function installSearch(){
+    window.getFilteredTasks=function(){
+      const search=norm($('searchInput')?.value||''),category=$('filterCategory')?.value||'',spec=J._getActiveFilter();
+      let list=J._allTasks().filter(task=>{
+        if(search&&!taskText(task).includes(search))return false;
+        if(category&&task.categoria!==category)return false;
+        if(!filterMatches(task,spec))return false;
+        try{
+          if(typeof voiceFilter!=='undefined'&&voiceFilter){
+            if(voiceFilter.category&&!norm(task.categoria).includes(norm(voiceFilter.category)))return false;
+            if(voiceFilter.recurringOnly&&!(task.recorrencia&&task.recorrencia.ativa))return false;
+            if(voiceFilter.date&&String(task.proxima_data)!==String(voiceFilter.date))return false;
+            if(voiceFilter.overdueOnly&&!(J.normalizeStatus(task.status)!=='Concluido'&&task.proxima_data&&task.proxima_data<J._todayISO()))return false;
+            if(voiceFilter.todayOnly&&!(J.normalizeStatus(task.status)!=='Concluido'&&task.proxima_data===J._todayISO()))return false;
+          }
+        }catch(e){}
+        return true;
+      });
+      try{
+        const context=window.Jarvis17?.context?.(),ids=context?.lastResultIds||[];
+        if(ids.length){const order=new Map(ids.map((id,index)=>[Number(id),index]));list=list.filter(task=>order.has(Number(task.id))).sort((a,b)=>order.get(Number(a.id))-order.get(Number(b.id)))}
+      }catch(e){}
+      if(typeof compareTasksByScheduledDateAndNumber==='function')list.sort(compareTasksByScheduledDateAndNumber);
+      return list;
+    };
+  }
+  function savedFilters(){return J._safeJSON(filterKeys.filters,[])}
+  function filterSummary(spec){
+    const parts=[];if(spec.query)parts.push(`texto “${spec.query}”`);if(spec.status)parts.push(J.statusLabel(spec.status));if(spec.priority)parts.push(`prioridade ${spec.priority}`);if(spec.followup==='due')parts.push('cobrança vencida');if(spec.followup==='scheduled')parts.push('com cobrança');if(spec.followup==='missing')parts.push('sem cobrança');if(spec.stale)parts.push(`${spec.stale}+ dias sem movimentação`);return parts.join(' • ')||'Sem critérios';
+  }
+  function savedFilterHTML(){
+    const list=savedFilters();return`<div class="j18-saved-list">${list.length?list.map(item=>`<div class="j18-list-row"><div class="j18-list-main"><b>${esc(item.name)}</b><span>${esc(filterSummary(item.spec||{}))}</span></div><div><button class="j18-action-btn is-good" onclick="Jarvis18.useFilter('${esc(item.id)}')"><i class="fas fa-play"></i><span>Aplicar</span></button><button class="j18-action-btn is-danger" onclick="Jarvis18.deleteFilter('${esc(item.id)}')"><i class="fas fa-trash"></i></button></div></div>`).join(''):'<div class="j18-empty">Nenhum filtro salvo.</div>'}</div>`;
+  }
+  function openFilters(){
+    const spec=J._getActiveFilter(),body=`<div class="j18-grid">
+      <div class="j18-full"><label class="j18-label">Texto complementar</label><input id="j18FilterQuery" class="j18-field" value="${esc(spec.query||'')}" placeholder="Ex.: orçamento, Adriana, bomba"></div>
+      <div><label class="j18-label">Status</label><select id="j18FilterStatus" class="j18-field"><option value="" ${!spec.status?'selected':''}>Todos</option>${FILTER_STATUS.map(value=>`<option value="${esc(value)}" ${spec.status===value?'selected':''}>${esc(J.statusLabel(value))}</option>`).join('')}</select></div>
+      <div><label class="j18-label">Prioridade</label><select id="j18FilterPriority" class="j18-field"><option value="">Todas</option>${['Urgente','Alta','Normal','Baixa'].map(value=>`<option ${spec.priority===value?'selected':''}>${value}</option>`).join('')}</select></div>
+      <div><label class="j18-label">Acompanhamento</label><select id="j18FilterFollowup" class="j18-field"><option value="">Todos</option><option value="due" ${spec.followup==='due'?'selected':''}>Cobrança vencida</option><option value="scheduled" ${spec.followup==='scheduled'?'selected':''}>Com cobrança programada</option><option value="missing" ${spec.followup==='missing'?'selected':''}>Sem cobrança programada</option></select></div>
+      <div><label class="j18-label">Parada há pelo menos</label><select id="j18FilterStale" class="j18-field"><option value="">Qualquer período</option>${[3,7,14,30].map(value=>`<option value="${value}" ${Number(spec.stale)===value?'selected':''}>${value} dias</option>`).join('')}</select></div>
+      <div class="j18-full"><label class="j18-label">Nome para salvar esta visão</label><input id="j18FilterName" class="j18-field" placeholder="Ex.: Orçamentos sem retorno"></div>
+    </div><div class="mt-4"><div class="j18-label">Visões salvas</div>${savedFilterHTML()}</div>`;
+    const footer=`<button class="j18-action-btn" onclick="Jarvis18.clearFilters()">Limpar</button><button class="j18-action-btn" onclick="Jarvis18.saveFilter()"><i class="fas fa-bookmark"></i>Salvar visão</button><button class="j18-action-btn is-good" onclick="Jarvis18.applyFilter()"><i class="fas fa-filter"></i>Aplicar</button>`;
+    J._modalShell('j18FilterModal','Filtros inteligentes',body,footer,true);
+  }
+  function readFilterForm(){return{query:String($('j18FilterQuery')?.value||'').trim(),status:$('j18FilterStatus')?.value||'',priority:$('j18FilterPriority')?.value||'',followup:$('j18FilterFollowup')?.value||'',stale:Number($('j18FilterStale')?.value)||0}}
+  function applyFilter(spec=readFilterForm()){J._setActiveFilter(spec);J.closeModal('j18FilterModal');J._forceRender();toast('Filtro aplicado.','fa-filter')}
+  function clearFilters(){J._setActiveFilter({});J.closeModal('j18FilterModal');try{if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false})}catch(e){}J._forceRender();toast('Filtros removidos.','fa-filter-circle-xmark')}
+  function saveFilter(){
+    const name=String($('j18FilterName')?.value||'').trim();if(!name)return toast('Informe um nome para a visão.','fa-bookmark');
+    const list=savedFilters(),item={id:`f${Date.now()}`,name,spec:readFilterForm(),created_at:J._nowISO()};list.unshift(item);J._writeJSON(filterKeys.filters,list.slice(0,30));openFilters();toast('Visão salva.','fa-bookmark');
+  }
+  function useFilter(id){const item=savedFilters().find(filter=>filter.id===id);if(item)applyFilter(item.spec)}
+  function deleteFilter(id){J._writeJSON(filterKeys.filters,savedFilters().filter(filter=>filter.id!==id));openFilters()}
+
+  function splitMessages(text){
+    const clean=String(text||'').trim();if(!clean)return[];
+    const bySeparator=clean.split(/\n\s*-{3,}\s*\n/g).map(part=>part.trim()).filter(Boolean);if(bySeparator.length>1)return bySeparator;
+    const timestampParts=clean.split(/(?=\n?\[\d{1,2}\/\d{1,2}\/\d{2,4}[,\s])/g).map(part=>part.trim()).filter(part=>part.length>10);
+    return timestampParts.length>1?timestampParts:[clean];
+  }
+  function knownCategory(text){
+    const normalized=norm(text),categories=[...new Set(J._allTasks().map(task=>String(task.categoria||'').trim()).filter(Boolean))].sort((a,b)=>b.length-a.length);
+    const existing=categories.find(category=>normalized.includes(norm(category)));if(existing)return existing;
+    const match=String(text).match(/(?:condom[ií]nio|edif[ií]cio|residencial)\s+["“']?([^\n,.;:]{2,55})/i);return match?match[1].replace(/\b(?:at[eé]|para|precisa|solicitou|pediu)\b.*$/i,'').replace(/["”']$/,'').trim():'';
+  }
+  function dateFromText(text){
+    try{if(typeof extractDateOnly==='function'){const parsed=extractDateOnly(text);if(J._parseISO(parsed))return parsed}}catch(e){}
+    const now=new Date(),match=String(text).match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/);
+    if(match){let year=match[3]?Number(match[3]):now.getFullYear();if(year<100)year+=2000;const date=new Date(year,Number(match[2])-1,Number(match[1]));return`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`}
+    const n=norm(text);if(n.includes('depois de amanha')){const d=new Date();d.setDate(d.getDate()+2);return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}if(n.includes('amanha'))return J._nextBusinessDay(J._todayISO());return J._todayISO();
+  }
+  function requesterFromText(text){
+    const match=String(text).match(/(?:s[ií]ndica|s[ií]ndico|zelador|subsíndic[oa]|gerente|administradora)\s+([A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][A-Za-zÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇáàâãéèêíìîóòôõúùûç]+(?:\s+[A-ZÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇ][A-Za-zÁÀÂÃÉÈÊÍÌÎÓÒÔÕÚÙÛÇáàâãéèêíìîóòôõúùûç]+){0,2})/i);return match?match[1].trim():'';
+  }
+  function inferStatus(text){
+    const n=norm(text);if(/compra (?:foi )?(?:autorizada|aprovada)|pode comprar|autorizado/.test(n))return'Compra autorizada';if(/aguardando.*gestao|aguardando.*sindic|pendente.*aprovacao/.test(n))return'Aguardando gestão';if(/aguardando.*administradora|encaminhado.*administradora|aguardando.*pagamento/.test(n))return'Aguardando administradora';if(/aguardando.*fornecedor|sem retorno.*fornecedor|prestador.*nao respondeu/.test(n))return'Aguardando fornecedor';if(/aguardando.*orcamento|orcamentos? solicitados|cotacoes? solicitadas/.test(n))return'Aguardando orçamento';if(/em andamento|ja iniciado|execucao iniciada/.test(n))return'Em andamento';if(/cancelad/.test(n))return'Cancelado';if(/concluid|finalizad/.test(n))return'Concluido';return'A Fazer';
+  }
+  function titleFromText(text){
+    let clean=String(text||'').replace(/https?:\/\/\S+/g,'').replace(/\[[^\]]+\]\s*[^:]{1,40}:\s*/g,'').replace(/\b(?:bom dia|boa tarde|boa noite|ol[aá]|oi|por favor|obrigad[oa])\b[!,.\s]*/gi,' ').replace(/\s+/g,' ').trim();
+    const patterns=[/(?:preciso que|precisamos|solicitou|pediu|favor|necess[aá]rio)\s+(.{10,135}?)(?:[.;]|$)/i,/((?:solicitar|providenciar|comprar|verificar|cobrar|agendar|enviar|instalar|realizar|fazer|obter|contratar)\s+.{6,125}?)(?:[.;]|$)/i];
+    let title='';for(const pattern of patterns){const match=clean.match(pattern);if(match){title=match[1];break}}if(!title)title=clean.split(/[.!?\n]/).map(value=>value.trim()).find(value=>value.length>8)||clean;
+    return title.split(' ').slice(0,16).join(' ').replace(/^./,char=>char.toUpperCase())||'Nova tarefa extraída da mensagem';
+  }
+  function analyzeMessage(text){
+    const candidate={nome:titleFromText(text),descricao:`Mensagem original:\n${String(text).trim()}`,categoria:knownCategory(text),status:inferStatus(text),prioridade:/urgente|emergencia|imediat/i.test(norm(text))?'Urgente':'Normal',proxima_data:dateFromText(text),solicitante:requesterFromText(text),links:String(text).match(/https?:\/\/[^\s)]+/g)||[],texto_origem:String(text).trim(),recorrencia:{ativa:false,tipo:''}};
+    const duplicate=window.JarvisOps?.findDuplicates?.(candidate,null)?.[0]||null;return{...candidate,duplicate,action:duplicate&&duplicate.score>=.82?'merge':'create',mergeId:duplicate?.task?.id||null};
+  }
+  function captureRow(item,index){
+    const duplicate=item.duplicate;
+    return`<div class="j18-capture-row"><div class="j18-capture-row-head"><b class="text-xs text-white">Demanda ${index+1}</b><select class="j18-status" style="max-width:190px" onchange="Jarvis18.captureChange(${index},'action',this.value)"><option value="create" ${item.action==='create'?'selected':''}>Criar nova</option>${duplicate?`<option value="merge" ${item.action==='merge'?'selected':''}>Vincular à existente</option>`:''}<option value="ignore" ${item.action==='ignore'?'selected':''}>Ignorar</option></select></div><div class="j18-grid">
+      <div class="j18-full"><label class="j18-label">Tarefa identificada</label><input class="j18-field" value="${esc(item.nome)}" onchange="Jarvis18.captureChange(${index},'nome',this.value)"></div>
+      <div><label class="j18-label">Condomínio</label><input class="j18-field" value="${esc(item.categoria)}" onchange="Jarvis18.captureChange(${index},'categoria',this.value)"></div>
+      <div><label class="j18-label">Prazo</label><input class="j18-field" type="date" value="${esc(item.proxima_data)}" onchange="Jarvis18.captureChange(${index},'proxima_data',this.value)"></div>
+      <div><label class="j18-label">Status</label><select class="j18-field" onchange="Jarvis18.captureChange(${index},'status',this.value)">${J._statusOptions(item.status)}</select></div>
+      <div><label class="j18-label">Solicitante</label><input class="j18-field" value="${esc(item.solicitante)}" onchange="Jarvis18.captureChange(${index},'solicitante',this.value)"></div>
+    </div>${duplicate?`<div class="j18-duplicate"><b>Possível duplicidade (${Math.round(duplicate.score*100)}%)</b><br>${esc(duplicate.task.nome)}. Se escolher “Vincular”, a mensagem entrará como nova observação nessa tarefa.</div>`:''}</div>`;
+  }
+  function openCapture(){
+    const body=`<div class="j18-capture-help"><b>Uma ou várias demandas:</b> cole mensagens de WhatsApp ou e-mails. Para separar manualmente assuntos diferentes, coloque uma linha com <b>---</b> entre eles.</div><textarea id="j18CaptureText" class="j18-field mt-3" rows="9" placeholder="Cole aqui as mensagens..."></textarea><div id="j18CapturePreview"></div>`;
+    const footer=`<button class="j18-action-btn" onclick="Jarvis18.closeModal('j18CaptureBatchModal')">Cancelar</button><button class="j18-action-btn" onclick="Jarvis18.previewCapture()"><i class="fas fa-brain"></i>Analisar</button><button id="j18CaptureSave" class="j18-action-btn is-good" style="display:none" onclick="Jarvis18.saveCapture()"><i class="fas fa-check"></i>Gravar fila</button>`;
+    J._modalShell('j18CaptureBatchModal','Caixa de entrada inteligente',body,footer,true);setTimeout(()=>$('j18CaptureText')?.focus(),50);
+  }
+  function previewCapture(){
+    const blocks=splitMessages($('j18CaptureText')?.value||'');if(!blocks.length)return toast('Cole pelo menos uma mensagem.','fa-paste');
+    captureQueue=blocks.map(analyzeMessage);const preview=$('j18CapturePreview');preview.innerHTML=`<div class="j18-capture-grid">${captureQueue.map(captureRow).join('')}</div>`;$('j18CaptureSave').style.display='inline-flex';toast(`${captureQueue.length} demanda(s) identificada(s).`,'fa-wand-magic-sparkles');
+  }
+  function captureChange(index,field,value){if(captureQueue[index])captureQueue[index][field]=value}
+  function saveCapture(){
+    let created=0,merged=0,ignored=0;const now=J._nowISO();
+    captureQueue.forEach(item=>{
+      if(item.action==='ignore'){ignored++;return}
+      if(item.action==='merge'&&item.mergeId){
+        const task=J._taskById(item.mergeId);if(task){task.comentarios=J._commentsOf(task);task.comentarios.push({texto:`Mensagem vinculada pela caixa de entrada:\n${item.texto_origem}`,criado_em:now});task.updated_at=now;task.data_atualizacao=now;task.ultima_movimentacao=now;if(!task.solicitante&&item.solicitante)task.solicitante=item.solicitante;merged++;return}
+      }
+      const id=J._allTasks().length?Math.max(...J._allTasks().map(task=>Number(task.id)||0))+1:1,candidate={...item,id,duplicate:undefined,action:undefined,mergeId:undefined,comentarios:[],created_at:now,data_criacao:now,updated_at:now,data_atualizacao:now,ultima_movimentacao:now,origem:'captura-em-lote-jarvis-18'};
+      tasks.push(typeof window.normalizeTask==='function'?window.normalizeTask(candidate):candidate);created++;
+    });
+    if(!created&&!merged)return toast('Nenhuma demanda selecionada para gravação.','fa-circle-info');
+    J._persist('batch-capture');if(typeof updateCategoryFilter==='function')updateCategoryFilter();J.closeModal('j18CaptureBatchModal');J._forceRender();toast(`${created} criada(s), ${merged} vinculada(s)${ignored?` e ${ignored} ignorada(s)`:''}.`,'fa-circle-check');
+  }
+
+  function resolveVoiceTask(number){
+    let id=null;try{if(typeof getTaskIdByVoiceNumber==='function')id=getTaskIdByVoiceNumber(Number(number))}catch(e){}
+    return J._taskById(id)||J._taskById(number)||J._allTasks()[Number(number)-1]||null;
+  }
+  function parseVoiceDate(text){try{if(typeof extractDateOnly==='function')return extractDateOnly(text)}catch(e){}return dateFromText(text)}
+  function handleVoice(raw){
+    const text=String(raw||''),n=norm(text),numberMatch=n.match(/(?:tarefa|demanda|item)\s+(?:numero\s+)?(\d+)/),task=numberMatch?resolveVoiceTask(numberMatch[1]):null;
+    if(task&&/\b(proximo dia util|próximo dia útil)\b/.test(n)&&/\b(joga|jogue|passa|passe|reagenda|reagende|mova|mover)\b/.test(n)){const date=J._nextBusinessDay(J._todayISO());if(confirm(`Plano do Jarvis:\n\nReagendar “${task.nome}” para ${J._formatBR(date)}?`))J.nextBusiness(task.id);return true}
+    if(task&&/\b(urgente|prioridade urgente)\b/.test(n)&&/\b(marca|marque|coloca|coloque|define|defina)\b/.test(n)){if(confirm(`Plano do Jarvis:\n\nMarcar “${task.nome}” como urgente?`))J.toggleUrgent(task.id);return true}
+    if(task&&/\b(cobrar|cobranca|acompanhar|follow up|retorno)\b/.test(n)){const date=parseVoiceDate(text);if(date&&confirm(`Plano do Jarvis:\n\nProgramar cobrança de “${task.nome}” para ${J._formatBR(date)}?`)){const target=J._taskById(task.id);target.followup_date=date;target.updated_at=J._nowISO();target.ultima_movimentacao=target.updated_at;J._persist('voice-followup');J._forceRender();toast('Cobrança programada por voz.','fa-bell')}return true}
+    if(task&&/\b(observacao|comentario|anotacao)\b/.test(n)&&/\b(adiciona|adicione|acrescenta|acrescente|coloca|coloque|registre|registrar)\b/.test(n)){
+      let comment=text.replace(new RegExp(`.*?(?:observa[cç][aã]o|coment[aá]rio|anota[cç][aã]o)\\s*`, 'i'),'').replace(new RegExp(`\\s+(?:na|para a|à)\\s+(?:tarefa|demanda|item)\\s+(?:n[uú]mero\\s+)?${numberMatch[1]}.*$`,'i'),'').trim();
+      if(!comment||norm(comment)===norm(text)){toast('Não consegui separar o texto da observação.','fa-comment-slash');return true}
+      if(confirm(`Plano do Jarvis:\n\nAdicionar em “${task.nome}”:\n“${comment}” ?`)){task.comentarios=J._commentsOf(task);task.comentarios.push({texto:comment,criado_em:J._nowISO()});task.updated_at=J._nowISO();task.ultima_movimentacao=task.updated_at;J._persist('voice-comment');J._forceRender();toast('Observação adicionada por voz.','fa-comment-dots')}return true;
+    }
+    return false;
+  }
+  function installVoice(){baseVoice=window.processVoiceCommand;window.processVoiceCommand=function(raw){if(handleVoice(raw))return true;return typeof baseVoice==='function'?baseVoice.apply(this,arguments):false}}
+
+  const bytesToBase64=bytes=>{let binary='';bytes.forEach(byte=>binary+=String.fromCharCode(byte));return btoa(binary)};
+  const base64ToBytes=value=>Uint8Array.from(atob(value),char=>char.charCodeAt(0));
+  async function deriveBackupKey(password,salt,usages){
+    const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,usages);
+  }
+  function downloadBlob(filename,content,type='application/json'){
+    const url=URL.createObjectURL(new Blob([content],{type})),anchor=document.createElement('a');anchor.href=url;anchor.download=filename;document.body.appendChild(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),500);
+  }
+  function openBackup(){
+    J.closeModal('j18TrashModal');
+    const body=`<div class="j18-capture-help">O arquivo será criptografado no próprio navegador. A senha não é armazenada e será indispensável para restaurar o conteúdo.</div><div class="j18-grid mt-3"><div><label class="j18-label">Senha do backup</label><input id="j18BackupPassword" class="j18-field" type="password" autocomplete="new-password"></div><div><label class="j18-label">Confirmar senha</label><input id="j18BackupConfirm" class="j18-field" type="password" autocomplete="new-password"></div></div>`;
+    const footer=`<button class="j18-action-btn" onclick="Jarvis18.closeModal('j18BackupModal')">Cancelar</button><button class="j18-action-btn is-good" onclick="Jarvis18.exportProtected()"><i class="fas fa-file-shield"></i>Gerar backup</button>`;
+    J._modalShell('j18BackupModal','Backup local protegido',body,footer);setTimeout(()=>$('j18BackupPassword')?.focus(),50);
+  }
+  async function exportProtected(){
+    if(!crypto?.subtle)return toast('Criptografia do navegador indisponível.','fa-shield-halved');
+    const password=$('j18BackupPassword')?.value||'',confirmation=$('j18BackupConfirm')?.value||'';if(password.length<8)return toast('Use uma senha com pelo menos oito caracteres.','fa-key');if(password!==confirmation)return toast('As senhas não conferem.','fa-key');
+    const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await deriveBackupKey(password,salt,['encrypt']);
+    const payload={app:'Workspace Roberto',version:J.version,exported_at:J._nowISO(),tarefas:J._allTasks(),notas:Array.isArray(notes)?notes:[],audit:J._safeJSON(filterKeys.audit,[])};
+    const encrypted=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(payload))));
+    const envelope={format:'jarvis18-encrypted',version:1,kdf:'PBKDF2-SHA256',iterations:250000,cipher:'AES-256-GCM',salt:bytesToBase64(salt),iv:bytesToBase64(iv),data:bytesToBase64(encrypted)};
+    downloadBlob(`workspace_roberto_protegido_${J._todayISO()}.jarvis.json`,JSON.stringify(envelope,null,2));J.closeModal('j18BackupModal');toast('Backup protegido gerado. Guarde a senha em segurança.','fa-file-shield');
+  }
+  async function decryptProtected(envelope,password){
+    const salt=base64ToBytes(envelope.salt),iv=base64ToBytes(envelope.iv),data=base64ToBytes(envelope.data),key=await deriveBackupKey(password,salt,['decrypt']);
+    const decrypted=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,data);return JSON.parse(new TextDecoder().decode(decrypted));
+  }
+  function installImportPreview(){
+    window.importBackupJSON=function(event){
+      const file=event?.target?.files?.[0];if(!file)return;const reader=new FileReader();
+      reader.onload=async()=>{try{
+        let data=JSON.parse(String(reader.result||'').replace(/^\uFEFF/,'').trim());
+        if(data?.format==='jarvis18-encrypted'){const password=prompt('Digite a senha usada para proteger este backup:');if(!password)return;try{data=await decryptProtected(data,password)}catch(e){throw new Error('Senha incorreta ou arquivo protegido danificado.')}}
+        const incomingTasks=Array.isArray(data)?data:(data.tarefas||data.tasks||data.items),incomingNotes=data.notas||data.notes||[];
+        if(!Array.isArray(incomingTasks))throw new Error('O arquivo não contém uma lista reconhecível de tarefas.');
+        const openCount=incomingTasks.filter(task=>!['concluido','concluído','cancelado'].includes(norm(task.status))).length;
+        if(!confirm(`Prévia da importação:\n\n${incomingTasks.length} tarefa(s)\n${openCount} aberta(s)\n${Array.isArray(incomingNotes)?incomingNotes.length:0} nota(s)\n\nOs dados atuais serão preservados em um snapshot local antes da substituição. Continuar?`))return;
+        J._persist('before-import');tasks=incomingTasks.map((task,index)=>typeof window.normalizeTask==='function'?window.normalizeTask({...task,id:Number(task.id)||index+1}):task);if(Array.isArray(incomingNotes))notes=incomingNotes;localStorage.setItem('tasks',JSON.stringify(tasks));localStorage.setItem('notes',JSON.stringify(notes));if(typeof updateCategoryFilter==='function')updateCategoryFilter();try{plannerDate=J._todayISO()}catch(e){}J._persist('import');J._forceRender();toast('Backup importado após validação.','fa-file-import');
+      }catch(error){console.error(error);toast(`Não foi possível importar: ${error.message}`,'fa-triangle-exclamation')}finally{if(event?.target)event.target.value=''}};
+      reader.readAsText(file,'UTF-8');
+    };
+  }
+  function restoreFromIndexedDBIfNecessary(){
+    if(localStorage.getItem('tasks')!==null||!('indexedDB'in window))return;
+    const request=indexedDB.open('workspaceJarvis18',1);request.onsuccess=()=>{const db=request.result;if(!db.objectStoreNames.contains('snapshots'))return;const tx=db.transaction('snapshots','readonly'),all=tx.objectStore('snapshots').getAll();all.onsuccess=()=>{const latest=all.result.filter(item=>Array.isArray(item.tasks)&&item.tasks.length).sort((a,b)=>String(b.at).localeCompare(String(a.at)))[0];if(!latest)return;if(confirm(`Encontrei uma cópia local de segurança com ${latest.tasks.length} tarefa(s). Deseja restaurá-la?`)){tasks=latest.tasks;if(Array.isArray(latest.notes))notes=latest.notes;localStorage.setItem('tasks',JSON.stringify(tasks));localStorage.setItem('notes',JSON.stringify(notes));J._forceRender();toast('Cópia local restaurada.','fa-clock-rotate-left')}}};
+  }
+  function boot(){
+    installSearch();installVoice();installImportPreview();restoreFromIndexedDBIfNecessary();
+    if(window.JarvisOps){window.JarvisOps.openCapture=openCapture}
+    const captureButton=$('btnJarvisCapture');if(captureButton)captureButton.onclick=openCapture;
+    Object.assign(J,{openFilters,applyFilter,clearFilters,saveFilter,useFilter,deleteFilter,openCapture,previewCapture,captureChange,saveCapture,openBackup,exportProtected});
+    J._forceRender();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else setTimeout(boot,0);
+})();
+</script>
+
+<style id="jarvis18-operational-style">
+/* ==============================================================================================
+   WORKSPACE JARVIS 18.0 — CAMADA FINAL DE COMPATIBILIDADE E OPERAÇÃO
+   Mantém o núcleo existente e unifica layout, cartões, acompanhamento, filtros, captura e segurança.
+================================================================================================ */
+:root{--j18-cyan:#22d3ee;--j18-blue:#2563eb;--j18-bg:#020712;--j18-panel:#07111f;--j18-line:rgba(148,163,184,.16)}
+html,body{max-width:100%;overflow-x:hidden!important}
+#reportContainer,#plannerView,#jarvisOpsRadar,.j18-card,.j18-card *,.j18-modal-card,.j18-modal-card *{min-width:0;box-sizing:border-box}
+.j18-modal-card p,.j18-modal-card span,.j18-modal-card b,.j18-modal-card label{overflow-wrap:anywhere}
+#plannerView{order:0;width:100%;overflow:visible!important}
+#jarvisOpsRadar{order:1;width:100%;margin:1rem 0 0!important}
+#jarvisOpsRadar.j18-collapsed .j18-radar-content{display:none}
+.j18-wrap{overflow-wrap:anywhere;word-break:normal}
+.j18-clamp{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.j18-card{position:relative;width:100%;max-width:100%;overflow:hidden;border:1px solid rgba(255,255,255,.09);border-radius:1.15rem;background:linear-gradient(145deg,rgba(8,23,42,.94),rgba(3,10,22,.88));padding:1rem;box-shadow:0 16px 42px rgba(0,0,0,.25);transition:border-color .16s ease,box-shadow .16s ease,transform .16s ease}
+.j18-card:hover{border-color:rgba(var(--jarvis-accent-rgb,34,211,238),.38);box-shadow:0 18px 54px rgba(0,0,0,.30),0 0 22px rgba(var(--jarvis-accent-rgb,34,211,238),.08)}
+.j18-card.is-critical{border-color:rgba(251,113,133,.38);box-shadow:0 18px 48px rgba(0,0,0,.28),0 0 24px rgba(244,63,94,.09)}
+.j18-card.is-selected{border-color:rgba(34,211,238,.68);box-shadow:0 0 0 2px rgba(34,211,238,.16),0 18px 50px rgba(0,0,0,.32)}
+.j18-card-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:.7rem}
+.j18-number,.j18-select-check{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;width:32px;height:32px;border-radius:.7rem;border:1px solid rgba(34,211,238,.25);background:rgba(34,211,238,.08);color:#a5f3fc;font-size:10px;font-weight:900}
+.j18-select-check{cursor:pointer;accent-color:#22d3ee}
+.j18-title{margin:0;color:#f1f5f9;font-size:.88rem;line-height:1.38;font-weight:850;overflow-wrap:anywhere}
+.j18-title.is-done{text-decoration:line-through;color:#64748b}
+.j18-desc{margin:.32rem 0 0;color:#94a3b8;font-size:.7rem;line-height:1.55;overflow-wrap:anywhere}
+.j18-score{display:inline-flex;align-items:center;gap:.35rem;flex:0 0 auto;max-width:94px;white-space:nowrap;border-radius:999px;padding:.34rem .55rem;font-size:9px;font-weight:950;border:1px solid rgba(56,189,248,.28);background:rgba(56,189,248,.08);color:#bae6fd}
+.j18-score.critical{border-color:rgba(251,113,133,.44);background:rgba(244,63,94,.12);color:#ffe4e6}
+.j18-score.high{border-color:rgba(251,191,36,.40);background:rgba(245,158,11,.10);color:#fef3c7}
+.j18-score.low{border-color:rgba(52,211,153,.28);background:rgba(16,185,129,.08);color:#a7f3d0}
+.j18-chips{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.75rem;max-width:100%}
+.j18-chip{display:inline-flex;align-items:center;gap:.32rem;max-width:100%;min-height:27px;border-radius:999px;padding:.28rem .55rem;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);color:#cbd5e1;font-size:9px;font-weight:850;letter-spacing:.03em}
+.j18-chip>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.j18-chip.is-overdue,.j18-chip.is-followup{border-color:rgba(251,113,133,.32);background:rgba(244,63,94,.09);color:#fecdd3}
+.j18-chip.is-today{border-color:rgba(251,191,36,.32);background:rgba(245,158,11,.08);color:#fde68a}
+.j18-chip.is-urgent{border-color:rgba(251,113,133,.38);color:#fecdd3}
+.j18-card-actions{display:grid;grid-template-columns:minmax(150px,1fr) auto;gap:.55rem;align-items:center;margin-top:.8rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.j18-status{width:100%;max-width:100%;min-height:42px;border:1px solid rgba(255,255,255,.10);border-radius:.8rem;background:#07101d;color:#e2e8f0;padding:.55rem .7rem;font-size:11px;font-weight:750;outline:none}
+.j18-status:focus{border-color:rgba(34,211,238,.55);box-shadow:0 0 0 3px rgba(34,211,238,.09)}
+.j18-quick-desktop{display:flex;align-items:center;justify-content:flex-end;gap:.42rem}
+.j18-quick-mobile{display:none}
+.j18-action-btn{min-width:42px;min-height:42px;border:1px solid rgba(255,255,255,.10);border-radius:.8rem;background:#07101d;color:#cbd5e1;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.48rem .66rem;font-size:10px;font-weight:850;white-space:nowrap}
+.j18-action-btn:hover{border-color:rgba(34,211,238,.42);color:#fff;background:rgba(34,211,238,.08)}
+.j18-action-btn.is-good{color:#86efac}.j18-action-btn.is-next{color:#fde68a}.j18-action-btn.is-danger{color:#fda4af}
+.j18-planner-tools{display:flex;align-items:center;justify-content:flex-end;gap:.5rem;flex-wrap:wrap;margin:-.1rem 0 1rem}
+.j18-planner-tools .j18-action-btn{min-width:auto}
+.j18-bulkbar{position:fixed;z-index:210;left:50%;bottom:max(1rem,env(safe-area-inset-bottom));transform:translate(-50%,140%);opacity:0;pointer-events:none;width:min(880px,calc(100vw - 2rem));border:1px solid rgba(34,211,238,.30);border-radius:1.1rem;background:rgba(3,12,25,.97);box-shadow:0 24px 90px rgba(0,0,0,.72),0 0 28px rgba(34,211,238,.12);padding:.72rem;display:grid;grid-template-columns:auto minmax(150px,1fr) repeat(3,auto);gap:.5rem;align-items:center;transition:.2s ease}
+.j18-bulkbar.is-open{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.j18-bulk-count{color:#a5f3fc;font-size:11px;font-weight:900;white-space:nowrap;padding:0 .4rem}
+.j18-modal{position:fixed;inset:0;z-index:230;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(2,4,10,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.j18-modal.is-open{display:flex}
+.j18-modal-card{width:min(720px,100%);max-height:calc(100dvh - 2rem);overflow:hidden;display:flex;flex-direction:column;border:1px solid rgba(34,211,238,.25);border-radius:1.3rem;background:linear-gradient(145deg,#071526,#020814);box-shadow:0 34px 120px rgba(0,0,0,.80),0 0 42px rgba(34,211,238,.12)}
+.j18-modal-card.is-wide{width:min(1050px,100%)}
+.j18-modal-head,.j18-modal-foot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:1rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.j18-modal-foot{border-top:1px solid rgba(255,255,255,.07);border-bottom:0;justify-content:flex-end;flex-wrap:wrap}
+.j18-modal-body{padding:1rem 1.1rem;overflow:auto;overscroll-behavior:contain}
+.j18-modal-title{margin:0;color:#fff;font-size:1rem;font-weight:900;overflow-wrap:anywhere}
+.j18-label{display:block;margin:0 0 .38rem;color:#94a3b8;font-size:9px;font-weight:900;text-transform:uppercase;letter-spacing:.12em}
+.j18-field{width:100%;max-width:100%;min-height:44px;border:1px solid rgba(255,255,255,.11);border-radius:.85rem;background:#020a16;color:#f8fafc;padding:.72rem .82rem;font-size:13px;outline:none}
+textarea.j18-field{min-height:100px;resize:vertical;line-height:1.55}
+.j18-field:focus{border-color:rgba(34,211,238,.58);box-shadow:0 0 0 3px rgba(34,211,238,.09)}
+.j18-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}.j18-full{grid-column:1/-1}
+.j18-action-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.j18-action-row{width:100%;min-height:54px;border:1px solid rgba(255,255,255,.09);border-radius:.9rem;background:rgba(255,255,255,.035);color:#e2e8f0;padding:.72rem .8rem;display:flex;align-items:center;gap:.7rem;text-align:left;font-size:12px;font-weight:800;overflow:hidden}
+.j18-action-row i{width:20px;text-align:center;color:#67e8f9;flex:0 0 auto}.j18-action-row span{overflow-wrap:anywhere}
+.j18-action-row:hover{border-color:rgba(34,211,238,.40);background:rgba(34,211,238,.07)}
+#j18FollowupPanel{border:1px solid rgba(34,211,238,.12);border-radius:1rem;background:rgba(34,211,238,.035);padding:.75rem}
+#j18FollowupPanel>summary{cursor:pointer;color:#a5f3fc;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.j18-radar-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:1rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.j18-radar-actions{display:flex;align-items:center;justify-content:flex-end;gap:.45rem;flex-wrap:wrap}
+.j18-radar-content{padding:1rem 1.1rem;display:grid;grid-template-columns:minmax(230px,.68fr) minmax(0,1.32fr);gap:1rem}
+.j18-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
+.j18-metric{min-height:76px;border:1px solid rgba(255,255,255,.08);border-radius:.9rem;background:rgba(2,10,20,.50);padding:.7rem;display:flex;flex-direction:column;justify-content:center}
+.j18-metric strong{font-size:1.25rem;color:#fff}.j18-metric span{margin-top:.2rem;color:#64748b;font-size:9px;font-weight:850;text-transform:uppercase;letter-spacing:.06em;overflow-wrap:anywhere}
+.j18-radar-list{display:flex;flex-direction:column;gap:.5rem;max-height:320px;overflow:auto}
+.j18-radar-item{width:100%;max-width:100%;border:1px solid rgba(255,255,255,.08);border-radius:.9rem;background:rgba(2,10,20,.48);padding:.68rem .76rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.65rem;align-items:center;text-align:left;color:#e2e8f0}
+.j18-radar-item:hover{border-color:rgba(34,211,238,.36);background:rgba(34,211,238,.055)}
+.j18-radar-item b,.j18-radar-item small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.j18-radar-item b{font-size:11px}.j18-radar-item small{color:#64748b;font-size:9px;margin-top:.22rem}
+.j18-filter-badge{display:inline-flex;align-items:center;gap:.35rem;min-height:30px;border:1px solid rgba(167,139,250,.28);border-radius:999px;background:rgba(139,92,246,.08);color:#ddd6fe;padding:.35rem .6rem;font-size:9px;font-weight:850}
+.j18-saved-list,.j18-trash-list,.j18-audit-list{display:flex;flex-direction:column;gap:.55rem;margin-top:.8rem}
+.j18-list-row{border:1px solid rgba(255,255,255,.08);border-radius:.9rem;background:rgba(255,255,255,.03);padding:.7rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem}
+.j18-list-main{min-width:0}.j18-list-main b,.j18-list-main span{display:block;overflow-wrap:anywhere}.j18-list-main b{color:#e2e8f0;font-size:11px}.j18-list-main span{color:#64748b;font-size:9px;margin-top:.2rem}
+.j18-capture-help{border:1px solid rgba(34,211,238,.12);border-radius:.9rem;background:rgba(34,211,238,.04);padding:.7rem;color:#94a3b8;font-size:11px;line-height:1.55}
+.j18-capture-grid{display:flex;flex-direction:column;gap:.75rem;margin-top:.8rem}
+.j18-capture-row{border:1px solid rgba(255,255,255,.09);border-radius:1rem;background:rgba(2,10,20,.45);padding:.8rem}
+.j18-capture-row-head{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-bottom:.65rem}
+.j18-duplicate{margin-top:.55rem;border:1px solid rgba(251,191,36,.25);border-radius:.75rem;background:rgba(245,158,11,.07);color:#fde68a;padding:.55rem;font-size:10px;overflow-wrap:anywhere}
+.j18-empty{border:1px dashed rgba(255,255,255,.11);border-radius:.9rem;padding:1.5rem;text-align:center;color:#64748b;font-size:11px}
+.j18-offline-dot{width:8px;height:8px;border-radius:999px;background:#34d399;box-shadow:0 0 12px rgba(52,211,153,.7);display:inline-block}.j18-offline-dot.is-offline{background:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.6)}
+@media(max-width:767px){
+  .j18-card{padding:.86rem;border-radius:1rem}.j18-card-head{grid-template-columns:auto minmax(0,1fr) auto;gap:.55rem}.j18-title{font-size:.82rem}.j18-score{max-width:74px;padding:.32rem .45rem}
+  .j18-chip>span{max-width:160px}.j18-card-actions{grid-template-columns:minmax(0,1fr) 48px;gap:.5rem}.j18-quick-desktop{display:none}.j18-quick-mobile{display:flex}
+  .j18-action-btn{min-width:44px;min-height:44px;padding:.5rem}.j18-planner-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}.j18-planner-tools .j18-action-btn{width:100%}
+  .j18-bulkbar{bottom:max(.5rem,env(safe-area-inset-bottom));width:calc(100vw - 1rem);grid-template-columns:repeat(3,minmax(0,1fr));padding:.6rem}.j18-bulk-count{grid-column:1/-1;text-align:center}.j18-bulkbar .j18-status{grid-column:1/-1}.j18-bulkbar .j18-action-btn{width:100%;font-size:0}.j18-bulkbar .j18-action-btn i{font-size:13px}
+  .j18-modal{align-items:flex-end;padding:.45rem}.j18-modal-card,.j18-modal-card.is-wide{width:100%;max-height:calc(100svh - .6rem);border-radius:1.2rem 1.2rem .75rem .75rem}.j18-modal-head,.j18-modal-foot,.j18-modal-body{padding:.82rem}
+  .j18-grid,.j18-action-list{grid-template-columns:minmax(0,1fr)}.j18-full{grid-column:auto}.j18-modal-foot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.j18-modal-foot>*{width:100%}
+  .j18-radar-head{align-items:flex-start;flex-direction:column}.j18-radar-actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.j18-radar-actions .j18-action-btn{width:100%;font-size:0}.j18-radar-actions .j18-action-btn i{font-size:12px}
+  .j18-radar-content{grid-template-columns:minmax(0,1fr);padding:.85rem}.j18-radar-item b,.j18-radar-item small{white-space:normal;overflow-wrap:anywhere}
+  .j18-list-row{align-items:flex-start;flex-direction:column}.j18-list-row>div:last-child{width:100%;display:flex;gap:.45rem}.j18-list-row .j18-action-btn{flex:1}
+  .j18-field,.j18-status{font-size:16px}
+}
+@media(max-width:380px){.j18-score{font-size:8px}.j18-number,.j18-select-check{width:29px;height:29px}.j18-metrics{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.j18-card,.j18-bulkbar{transition:none!important}}
+</style>
 
 </body>
 </html>
