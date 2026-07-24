@@ -1334,29 +1334,63 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
 
         function isCloudSyncConfigured() { return Boolean(getGoogleScriptUrl()); }
 
+        function parseCloudJSONField(value, fallback) {
+            if (value == null || value === '') return fallback;
+            if (typeof value !== 'string') return value;
+            try { return JSON.parse(value); } catch(e) { return value; }
+        }
+
         function normalizeCloudPayload(data) {
-            if (!data) return { tarefas: [], notas: [] };
-            if (Array.isArray(data)) return { tarefas: data, notas: [] };
+            if (!data) return { tarefas: [], notas: [], schema_version: 1 };
+            if (typeof data === 'string') {
+                try { data = JSON.parse(data); } catch(e) { throw new Error('A nuvem retornou um conteúdo que não é JSON válido.'); }
+            }
+            if (Array.isArray(data)) return { tarefas: data, notas: [], schema_version: 1 };
             if (data.data && typeof data.data === 'object') data = data.data;
+            if (data.payload && typeof data.payload === 'object') data = data.payload;
+            const rawTasks = Array.isArray(data.tarefas) ? data.tarefas : (Array.isArray(data.tasks) ? data.tasks : []);
+            const rawNotes = Array.isArray(data.notas) ? data.notas : (Array.isArray(data.notes) ? data.notes : []);
+            const tarefas = rawTasks.map(item => {
+                const task = item && typeof item === 'object' ? { ...item } : {};
+                ['recorrencia', 'comentarios', 'comments', 'links', 'etapas', 'checklist', 'dependencias'].forEach(key => {
+                    if (key in task) task[key] = parseCloudJSONField(task[key], key === 'recorrencia' ? { ativa: false, tipo: '' } : []);
+                });
+                if (!Array.isArray(task.etapas) && Array.isArray(task.checklist)) task.etapas = task.checklist;
+                return task;
+            });
             return {
-                tarefas: Array.isArray(data.tarefas) ? data.tarefas : [],
-                notas: Array.isArray(data.notas) ? data.notas : []
+                tarefas,
+                notas: rawNotes.map(item => item && typeof item === 'object' ? { ...item } : {}),
+                schema_version: Number(data.schema_version || data.schemaVersion || 1)
             };
         }
 
         function enrichTasksForCloud(list) {
             const now = new Date().toISOString();
-            return (Array.isArray(list) ? list : []).map(t => ({
-                id: t.id,
-                nome: t.nome || '',
-                descricao: t.descricao || '',
-                categoria: t.categoria || '',
-                status: t.status || 'A Fazer',
-                recorrencia: t.recorrencia || { ativa: false, tipo: '' },
-                proxima_data: t.proxima_data || '',
-                data_criacao: t.data_criacao || t.created_at || now,
-                data_atualizacao: now
-            }));
+            return (Array.isArray(list) ? list : []).map(source => {
+                const t = source && typeof source === 'object'
+                    ? JSON.parse(JSON.stringify(source))
+                    : {};
+                const createdAt = t.data_criacao || t.created_at || now;
+                const updatedAt = t.data_atualizacao || t.updated_at || t.ultima_movimentacao || createdAt;
+                return {
+                    ...t,
+                    id: t.id,
+                    nome: t.nome || '',
+                    descricao: t.descricao || '',
+                    categoria: t.categoria || '',
+                    status: t.status || 'A Fazer',
+                    recorrencia: t.recorrencia && typeof t.recorrencia === 'object' ? t.recorrencia : { ativa: false, tipo: '' },
+                    comentarios: Array.isArray(t.comentarios) ? t.comentarios : [],
+                    links: Array.isArray(t.links) ? t.links : [],
+                    etapas: Array.isArray(t.etapas) ? t.etapas : (Array.isArray(t.checklist) ? t.checklist : []),
+                    proxima_data: t.proxima_data || '',
+                    data_criacao: createdAt,
+                    created_at: t.created_at || createdAt,
+                    data_atualizacao: updatedAt,
+                    updated_at: t.updated_at || updatedAt
+                };
+            });
         }
 
         function normalizeNote(note) {
@@ -1373,7 +1407,21 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
         }
 
         function enrichNotesForCloud(list) {
-            return (Array.isArray(list) ? list : []).map(normalizeNote);
+            return (Array.isArray(list) ? list : []).map(source => {
+                const note = source && typeof source === 'object' ? JSON.parse(JSON.stringify(source)) : {};
+                const idDate = Number(note.id) > 1000000000000 ? new Date(Number(note.id)).toISOString() : '1970-01-01T00:00:00.000Z';
+                const createdAt = note.criado_em || note.created_at || idDate;
+                const updatedAt = note.atualizado_em || note.updated_at || createdAt;
+                return {
+                    ...note,
+                    id: Number(note.id) || 0,
+                    titulo: String(note.titulo || note.title || '').trim(),
+                    texto: String(note.texto || note.text || '').trim(),
+                    criado_em: createdAt,
+                    atualizado_em: updatedAt,
+                    origem: note.origem || 'workspace-jarvis-hud'
+                };
+            });
         }
 
         let tasks = [];
@@ -1511,7 +1559,12 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
         }
 
         function getLocalCloudPayload() {
-            return { tarefas: enrichTasksForCloud(tasks), notas: enrichNotesForCloud(notes) };
+            return {
+                schema_version: 2,
+                app_version: '18.0',
+                tarefas: enrichTasksForCloud(tasks),
+                notas: enrichNotesForCloud(notes)
+            };
         }
 
         function summarizeCloudPayload(payload) {
@@ -1521,12 +1574,20 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
             tarefas.forEach(t => { if (t?.data_atualizacao || t?.updated_at) dates.push(String(t.data_atualizacao || t.updated_at)); });
             notas.forEach(n => { if (n?.atualizado_em || n?.updated_at) dates.push(String(n.atualizado_em || n.updated_at)); });
             dates.sort();
+            const comparableTasks = tarefas.map(task => {
+                const clean = task && typeof task === 'object' ? JSON.parse(JSON.stringify(task)) : {};
+                delete clean.criticidade;
+                delete clean._score;
+                return clean;
+            }).sort((a, b) => Number(a.id || 0) - Number(b.id || 0));
+            const comparableNotes = notas.map(note => note && typeof note === 'object' ? JSON.parse(JSON.stringify(note)) : {})
+                .sort((a, b) => Number(a.id || 0) - Number(b.id || 0));
             return {
                 tarefas: tarefas.length,
                 notas: notas.length,
                 total: tarefas.length + notas.length,
                 atualizadoEm: dates[dates.length - 1] || '',
-                hash: simpleHash({ tarefas, notas })
+                hash: simpleHash({ tarefas: comparableTasks, notas: comparableNotes })
             };
         }
 
@@ -1695,17 +1756,51 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
             renderCloudSyncPanel();
         }
 
+        function validateCloudPayload(payload) {
+            if (!payload || !Array.isArray(payload.tarefas) || !Array.isArray(payload.notas)) {
+                throw new Error('A nuvem não retornou as listas esperadas de tarefas e notas.');
+            }
+            const ids = new Set();
+            payload.tarefas.forEach((task, index) => {
+                if (!task || typeof task !== 'object') throw new Error(`A tarefa remota ${index + 1} está danificada.`);
+                const id = Number(task.id);
+                if (!Number.isFinite(id)) throw new Error(`A tarefa remota ${index + 1} está sem identificador válido.`);
+                if (ids.has(id)) throw new Error(`A nuvem contém o identificador de tarefa ${id} duplicado.`);
+                ids.add(id);
+            });
+            return payload;
+        }
+
         async function fetchCloudSnapshot() {
             if (!isCloudSyncConfigured()) throw new Error('Google Sheets não configurado.');
             const baseUrl = getGoogleScriptUrl();
             const safeUrl = baseUrl + (baseUrl.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
             const response = await fetch(safeUrl, { method: 'GET', cache: 'no-store' });
+            if (!response.ok) throw new Error(`A nuvem respondeu com o código ${response.status}.`);
             const data = await response.json();
             if (data && data.ok === false) throw new Error(data.error || 'Falha ao carregar planilha.');
-            const payload = normalizeCloudPayload(data);
+            const payload = validateCloudPayload(normalizeCloudPayload(data));
             payload.tarefas = Array.isArray(payload.tarefas) ? payload.tarefas.map(normalizeTask) : [];
             payload.notas = Array.isArray(payload.notas) ? payload.notas.map(normalizeNote) : [];
             return { payload, summary: summarizeCloudPayload(payload), raw: data };
+        }
+
+        function waitForCloud(milliseconds) {
+            return new Promise(resolve => setTimeout(resolve, milliseconds));
+        }
+
+        async function verifyPublishedCloud(expectedHash) {
+            let lastRemote = null;
+            for (const delay of [500, 1200, 2200]) {
+                await waitForCloud(delay);
+                try {
+                    lastRemote = await fetchCloudSnapshot();
+                    if (lastRemote.summary.hash === expectedHash) return { confirmed: true, remote: lastRemote };
+                } catch(e) {
+                    console.warn('Confirmação da publicação ainda indisponível:', e);
+                }
+            }
+            return { confirmed: false, remote: lastRemote };
         }
 
         async function testCloudConnection() {
@@ -1736,6 +1831,27 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
             }
         }
 
+        function detectCloudFieldLoss(localPayload, remotePayload) {
+            const remoteById = new Map((remotePayload?.tarefas || []).map(task => [Number(task.id), task]));
+            const fields = [
+                ['comentarios', 'observações', value => Array.isArray(value) && value.length > 0],
+                ['links', 'links', value => Array.isArray(value) && value.length > 0],
+                ['etapas', 'etapas/checklists', value => Array.isArray(value) && value.length > 0],
+                ['waiting_for', 'responsáveis por retorno', value => String(value || '').trim().length > 0],
+                ['followup_date', 'datas de cobrança', value => String(value || '').trim().length > 0],
+                ['next_action', 'próximas providências', value => String(value || '').trim().length > 0]
+            ];
+            const losses = new Map();
+            (localPayload?.tarefas || []).forEach(localTask => {
+                const remoteTask = remoteById.get(Number(localTask.id));
+                if (!remoteTask) return;
+                fields.forEach(([key, label, hasValue]) => {
+                    if (hasValue(localTask[key]) && !hasValue(remoteTask[key])) losses.set(label, (losses.get(label) || 0) + 1);
+                });
+            });
+            return [...losses.entries()].map(([label, count]) => `${count} tarefa(s) sem ${label}`);
+        }
+
         async function pullCloudToLocal() {
             if (!isCloudSyncConfigured()) { openCloudSyncPanel(); return false; }
             setSyncStatus('checking');
@@ -1746,6 +1862,11 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
                 if (remoteSummary.total === 0 && localSummary.total > 0) {
                     const allowEmpty = confirm('A nuvem parece vazia, mas este aparelho possui dados. Mesmo assim deseja substituir os dados locais pela nuvem vazia?');
                     if (!allowEmpty) { renderCloudSyncPanel(remote, 'Operação cancelada. Dados locais preservados.'); setSyncStatus('conflict'); return false; }
+                }
+                const potentialLosses = detectCloudFieldLoss(getLocalCloudPayload(), remote.payload);
+                if (potentialLosses.length) {
+                    const acceptRisk = confirm(`Atenção: a cópia da nuvem parece incompleta em relação a este aparelho:\n\n• ${potentialLosses.join('\n• ')}\n\nUm backup será criado, mas esses campos deixarão de aparecer após a substituição. Deseja continuar mesmo assim?`);
+                    if (!acceptRisk) { renderCloudSyncPanel(remote, 'Download cancelado porque a nuvem parece incompleta. Dados locais preservados.'); setSyncStatus('conflict'); return false; }
                 }
                 const ok = confirm(`Puxar dados da nuvem para este aparelho?\n\nEste aparelho: ${localSummary.tarefas} tarefas e ${localSummary.notas} nota(s)\nNuvem: ${remoteSummary.tarefas} tarefas e ${remoteSummary.notas} nota(s)\n\nUm backup local será criado antes da substituição.`);
                 if (!ok) { renderCloudSyncPanel(remote, 'Operação cancelada. Nenhum dado foi alterado.'); setSyncStatus('conflict'); return false; }
@@ -1796,11 +1917,26 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
                 });
-                writeLocalJSON(CLOUD_STATE_KEY, { lastPublishAt: new Date().toISOString(), lastLocalHash: localSummary.hash, deviceId: getDeviceId(), deviceName: cfg.deviceName });
+                const verification = await verifyPublishedCloud(localSummary.hash);
+                const checkedAt = new Date().toISOString();
+                writeLocalJSON(CLOUD_STATE_KEY, {
+                    lastPublishAt: checkedAt,
+                    lastLocalHash: localSummary.hash,
+                    lastPublishConfirmed: verification.confirmed,
+                    deviceId: getDeviceId(),
+                    deviceName: cfg.deviceName
+                });
+                if (!verification.confirmed) {
+                    setSyncStatus('conflict');
+                    renderCloudSyncPanel(verification.remote, 'O envio foi solicitado, mas a planilha ainda não devolveu uma cópia idêntica. Nenhum dado local foi alterado.');
+                    setCloudLastAction('Envio sem confirmação em ' + formatSyncDate(checkedAt));
+                    showToast('Envio solicitado, mas ainda não confirmado pela planilha.', 'fa-triangle-exclamation');
+                    return false;
+                }
                 setSyncStatus('ok');
-                renderCloudSyncPanel(null, 'Publicação enviada. Use “Verificar nuvem” para conferir o resultado.');
-                setCloudLastAction('Publicação enviada em ' + formatSyncDate(new Date().toISOString()));
-                showToast('Publicação enviada ao Google Sheets. Verifique a nuvem para conferir.', 'fa-cloud-arrow-up');
+                renderCloudSyncPanel(verification.remote, 'Publicação confirmada pela leitura da nuvem.');
+                setCloudLastAction('Publicação confirmada em ' + formatSyncDate(checkedAt));
+                showToast('Publicação confirmada no Google Sheets.', 'fa-cloud-check');
                 return true;
             } catch(error) {
                 console.warn('Falha ao publicar no Google Sheets:', error);
@@ -1820,7 +1956,11 @@ input:focus,textarea:focus,select:focus,.j11-input:focus,.j11-select:focus,.j11-
             return publishLocalToCloud();
         }
 
-        async function manualSync() { openCloudSyncPanel(); }
+        async function manualSync() {
+            openCloudSyncPanel();
+            if (!isCloudSyncConfigured()) return false;
+            return checkCloudSync();
+        }
 
         function persistLocalOnly(reason = 'local-save') {
             try {
@@ -6694,7 +6834,7 @@ function normalizeText(str) {
   window.normalizarTipoRecorrencia=normalizeRecType;
   window.getRecorrenciaLabel=recurrenceLabel;
   window.calcularProximaData=function(tipo,dataBaseStr,config){return calculateNextDate(tipo,dataBaseStr,config||{})};
-  window.enrichTasksForCloud=function(list){return (Array.isArray(list)?list:[]).map(t=>{const n=extendedNormalizeTask(t);return{...n,criticidade:computeCriticality(n)}})};
+  window.enrichTasksForCloud=function(list){return (Array.isArray(list)?list:[]).map(t=>{const n=extendedNormalizeTask(t),clean={...n};delete clean.criticidade;return clean})};
 
   window.concluirOcorrenciaRecorrente=function(task){
     if(!task)return false;const rec=normalizeRecurrence(task.recorrencia);if(!rec.ativa||!rec.tipo||rec.pausada){task.status='Concluido';task.ultima_movimentacao=nowISO();return false}
@@ -6977,6 +7117,18 @@ function normalizeText(str) {
   }
   function describeTask(task){const r=risk(task);return `Tarefa ${taskNumber(task)}, ${task.nome}${task.categoria?`, do ${task.categoria}`:''}, status ${statusLabel(task.status)}${task.proxima_data?`, prazo ${formatDate(task.proxima_data)}`:''}, criticidade ${r.score}.`}
 
+  function requestedPlannerView(text){
+    const n=norm(text);
+    const hasViewVerb=/\b(mostra|mostre|mostrar|abre|abra|abrir|ver|visualiza|visualizar|muda|mude|mudar|ir|vai)\b/.test(n);
+    const hasAgendaContext=/\b(agenda|calendario|visao|modo)\b/.test(n);
+    if(!hasViewVerb&&!hasAgendaContext)return'';
+    if(/\b(?:agenda|calendario|visao|modo)?\s*(?:da|de|em)?\s*semana\b/.test(n)||/\bvisao semanal\b/.test(n))return'week';
+    if(/\b(?:agenda|calendario|visao|modo)?\s*(?:do|de|em)?\s*mes\b/.test(n)||/\bvisao mensal\b/.test(n))return'month';
+    if(/\b(?:agenda|calendario|visao|modo)?\s*(?:do|de|em)?\s*ano\b/.test(n)||/\bvisao anual\b/.test(n))return'year';
+    if(/\b(?:agenda|calendario|visao|modo)?\s*(?:do|de|em)?\s*(?:dia|hoje)\b/.test(n)||/\bvisao diaria\b/.test(n))return'day';
+    return'';
+  }
+
   function buildPlan(raw){
     const text=learnedText(raw),n=norm(text),status=statusFromText(text),date=parseDate(text);
     if(/\b(bom dia jarvis|briefing|resumo inteligente|o que precisa da minha atencao|recomendacoes|recomendacao do dia|o que esta critico)\b/.test(n))return{type:'briefing',raw:text,readOnly:true,confidence:.99};
@@ -6984,6 +7136,9 @@ function normalizeText(str) {
     if(isCreateCommand(text)){const title=createTitle(text),category=extractCategory(text),explicitDate=date,statusValue=status||'A Fazer';return{type:'create',raw:text,slots:{title,category,categorySpecified:!!category,date:explicitDate,status:statusValue,description:''},readOnly:false,confidence:title?.length>4?.90:.68}}
     if(/\b(leia|ler|fale|resuma|resumir)\b/.test(n)&&/\b(critica|criticas|primeira|primeiras|top|tarefas|resultados)\b/.test(n)){return{type:'read_results',raw:text,count:numberFromText(text)||3,readOnly:true,confidence:.94}}
     if(/\b(coloca|coloque|ordenar|ordene|organiza|organize)\b.*\b(topo|primeiro|prioridade|critica|criticidade)\b/.test(n))return{type:'sort_results',raw:text,sort:/aguardando orcamento/.test(n)?'waiting_quote':'criticality',readOnly:true,confidence:.92};
+    const plannerView=requestedPlannerView(text);
+    if(plannerView)return{type:'view',raw:text,view:plannerView,date:date||'',readOnly:true,confidence:.99};
+    if(date&&/\b(mostra|mostre|mostrar|abre|abra|abrir|ver|visualiza|visualizar|agenda)\b/.test(n))return{type:'show_date',raw:text,date,readOnly:true,confidence:.98};
     if(/\b(mostra|mostre|mostrar|lista|liste|listar|quais|busca|busque|buscar|procura|procure|procurar|localiza|localize|localizar|filtra|filtre|filtrar)\b/.test(n)||/^(atrasadas|pendentes|paradas|recorrentes)$/.test(n)||(context.lastResultIds?.length&&/\b(agora|so|somente|dessas|desses|entre elas)\b.*\b(atrasad|pendente|parada|aguardando|concluid)\w*/.test(n))){const spec=parseFilter(text);const query=extractTaskQuery(text);return{type:'filter',raw:text,spec,query,withinContext:!!(context.lastResultIds?.length&&/\b(agora|so|somente|dessas|desses|entre elas)\b/.test(n)),readOnly:true,confidence:.93}}
     if(status&&/\b(coloca|coloque|muda|mude|altera|alterar|marca|marque|deixa|deixe|passa|passou|status|esta|está|ficou)\b/.test(n)){const ref=resolveTask(text);return{type:'status',raw:text,status,ref,readOnly:false,confidence:ref.task?Math.min(.99,ref.confidence):.66}}
     if(date&&/\b(joga|jogue|reagenda|reagendar|remarca|remarcar|adia|adiar|muda a data|troca a data|passa para)\b/.test(n)){const ref=resolveTask(text);return{type:'reschedule',raw:text,date,ref,readOnly:false,confidence:ref.task?Math.min(.98,ref.confidence):.65}}
@@ -6999,7 +7154,7 @@ function normalizeText(str) {
     return parts;
   }
   function planDescription(plan){
-    const task=plan.ref?.task;switch(plan.type){case'create':return`Criar “${plan.slots.title||'tarefa'}”${plan.slots.category?` em ${plan.slots.category}`:''}${plan.slots.date?` para ${formatDate(plan.slots.date)}`:''}${plan.slots.status&&plan.slots.status!=='A Fazer'?` como ${statusLabel(plan.slots.status)}`:''}`;case'status':return`Alterar “${task?.nome||'tarefa não definida'}” para ${statusLabel(plan.status)}`;case'reschedule':return`Reagendar “${task?.nome||'tarefa não definida'}” para ${formatDate(plan.date)}`;case'complete':return`Concluir “${task?.nome||'tarefa não definida'}”`;case'reopen':return`Reabrir “${task?.nome||'tarefa não definida'}”`;case'filter':return`Mostrar ${plan.spec.label}${plan.spec.category?` de ${plan.spec.category}`:''}`;case'sort_results':return'Ordenar os resultados atuais';case'read_results':return`Ler as ${plan.count} tarefas mais críticas`;case'briefing':return'Abrir o briefing inteligente';case'open_task':return`Abrir “${task?.nome||'tarefa'}”`;default:return plan.type}}
+    const task=plan.ref?.task;switch(plan.type){case'create':return`Criar “${plan.slots.title||'tarefa'}”${plan.slots.category?` em ${plan.slots.category}`:''}${plan.slots.date?` para ${formatDate(plan.slots.date)}`:''}${plan.slots.status&&plan.slots.status!=='A Fazer'?` como ${statusLabel(plan.slots.status)}`:''}`;case'view':return`Mostrar a agenda ${plan.view==='week'?'da semana':plan.view==='day'?'do dia':plan.view==='month'?'do mês':'do ano'}${plan.date?` em ${formatDate(plan.date)}`:''}`;case'show_date':return`Mostrar a agenda de ${formatDate(plan.date)}`;case'status':return`Alterar “${task?.nome||'tarefa não definida'}” para ${statusLabel(plan.status)}`;case'reschedule':return`Reagendar “${task?.nome||'tarefa não definida'}” para ${formatDate(plan.date)}`;case'complete':return`Concluir “${task?.nome||'tarefa não definida'}”`;case'reopen':return`Reabrir “${task?.nome||'tarefa não definida'}”`;case'filter':return`Mostrar ${plan.spec.label}${plan.spec.category?` de ${plan.spec.category}`:''}`;case'sort_results':return'Ordenar os resultados atuais';case'read_results':return`Ler as ${plan.count} tarefas mais críticas`;case'briefing':return'Abrir o briefing inteligente';case'open_task':return`Abrir “${task?.nome||'tarefa'}”`;default:return plan.type}}
 
   function askPending(pending,message){context.pending=pending;store();renderVoicePlan(message);speak(message,true)}
   function clearPending(){context.pending=null;store();renderVoicePlan('')}
@@ -7051,6 +7206,16 @@ function normalizeText(str) {
     try{
       if(plan.type==='briefing'){openBrain('briefing');const insights=generateInsights();context.lastResultIds=insights.priority.map(x=>x.task.id);store();return{ok:true,message:briefingSpeech(insights)}}
       if(plan.type==='clear_filter'){clearContextFilter();return{ok:true,message:'Filtros contextuais removidos.'}}
+      if(plan.type==='view'||plan.type==='show_date'){
+        const view=plan.type==='show_date'?'day':plan.view;
+        const labels={day:'dia',week:'semana',month:'mês',year:'ano'};
+        context.lastResultIds=[];context.lastResultLabel='';context.lastAction='view';store();
+        try{legacyClearVoiceFilter?.call(window,{renderNow:false})}catch(e){}
+        if(plan.date&&typeof setPlannerDate==='function')setPlannerDate(plan.date,view);
+        else if(typeof setView==='function')setView(view);
+        else{currentView=view;if(plan.date)plannerDate=plan.date;if(typeof render==='function')render()}
+        return{ok:true,message:plan.date?`Agenda de ${formatDate(plan.date)} aberta na visualização de ${labels[view]}.`:`Visualização de ${labels[view]} ativada.`}
+      }
       if(plan.type==='filter'){
         let base=plan.withinContext?(context.lastResultIds||[]).map(taskById).filter(Boolean):null;let list=filterTasks(plan.spec,base);if(plan.query&&plan.query.length>2&&!plan.spec.category&&plan.spec.mode==='all'){const ids=new Set(semanticCandidates(plan.query,{includeClosed:true,limit:30}).map(x=>x.task.id));list=allTasks().filter(t=>ids.has(t.id))}
         context.lastResultIds=list.map(t=>t.id);context.lastResultLabel=plan.spec.label+(plan.spec.category?` • ${plan.spec.category}`:'');if(plan.spec.category)context.lastCategory=plan.spec.category;store();renderContextResults();return{ok:true,message:list.length?`Encontrei ${list.length} tarefa${list.length===1?'':'s'}. ${list.slice(0,3).map(t=>t.nome).join('; ')}.`:'Não encontrei tarefas com esse filtro.'}
@@ -7242,6 +7407,37 @@ function normalizeText(str) {
   }
   const staleDays=task=>isOpen(task)?daysSince(latestMovement(task)):0;
   const followupDue=task=>isOpen(task)&&parseISO(task?.followup_date)&&String(task.followup_date)<=todayISO();
+  function checklistOf(task){
+    const source=Array.isArray(task?.etapas)?task.etapas:(Array.isArray(task?.checklist)?task.checklist:[]);
+    return source.map((step,index)=>{
+      if(typeof step==='string')return{id:`step-${index+1}`,texto:step,concluida:false,depende_de:''};
+      const id=String(step?.id||`step-${index+1}`).replace(/[^a-zA-Z0-9_-]/g,'-');
+      return{
+        id,
+        texto:String(step?.texto||step?.text||step?.titulo||'').trim(),
+        concluida:!!(step?.concluida??step?.done??step?.completed),
+        depende_de:String(step?.depende_de||step?.depends_on||step?.dependsOn||'')
+      };
+    }).filter(step=>step.texto);
+  }
+  function checklistState(task){
+    const steps=checklistOf(task),byId=new Map(steps.map(step=>[step.id,step]));
+    const completed=steps.filter(step=>step.concluida).length;
+    const blocked=steps.filter(step=>!step.concluida&&step.depende_de&&byId.has(step.depende_de)&&!byId.get(step.depende_de).concluida).length;
+    return{steps,total:steps.length,completed,blocked,percent:steps.length?Math.round(completed/steps.length*100):0};
+  }
+  function checklistHasCycle(steps){
+    const byId=new Map(steps.map(step=>[step.id,step])),visiting=new Set(),visited=new Set();
+    function visit(id){
+      if(visiting.has(id))return true;
+      if(visited.has(id)||!byId.has(id))return false;
+      visiting.add(id);
+      const dependency=byId.get(id).depende_de;
+      if(dependency&&visit(dependency))return true;
+      visiting.delete(id);visited.add(id);return false;
+    }
+    return steps.some(step=>visit(step.id));
+  }
   function getRiskWeights(){return Object.assign({},DEFAULT_WEIGHTS,safeJSON(KEYS.risk,{}))}
   function criticality(task){
     const w=getRiskWeights();let score=5;const reasons=[];const today=parseISO(todayISO())||new Date(),due=parseISO(task?.proxima_data),status=normalizeStatus(task?.status),stale=staleDays(task),text=norm([task?.nome,task?.descricao,task?.categoria,task?.next_action].join(' '));
@@ -7327,7 +7523,7 @@ function normalizeText(str) {
     return`<span class="j18-chip ${classes}"><i class="fas ${icon}"></i><span>${esc(text)}</span></span>`;
   }
   function renderTaskCard(task,compact=false){
-    const risk=criticality(task),done=isDone(task),canceled=isCanceled(task),date=String(task.proxima_data||''),number=typeof getTaskVoiceNumber==='function'?getTaskVoiceNumber(task.id):'',links=linksOf(task),selected=selectedIds.has(Number(task.id));
+    const risk=criticality(task),done=isDone(task),canceled=isCanceled(task),date=String(task.proxima_data||''),number=typeof getTaskVoiceNumber==='function'?getTaskVoiceNumber(task.id):'',links=linksOf(task),selected=selectedIds.has(Number(task.id)),checklist=checklistState(task);
     const dateClass=isOpen(task)&&date<todayISO()?'is-overdue':isOpen(task)&&date===todayISO()?'is-today':'';
     const chips=[
       taskChip(statusIcon(task.status),statusLabel(task.status)),
@@ -7337,7 +7533,8 @@ function normalizeText(str) {
       task.followup_date?taskChip('fa-bell',`Cobrar ${formatBR(task.followup_date)}`,followupDue(task)?'is-followup':''):'',
       task.waiting_for?taskChip('fa-user-clock',task.waiting_for):'',
       links.length?taskChip('fa-link',`${links.length} link${links.length===1?'':'s'}`):'',
-      task.recorrencia?.ativa?taskChip(task.recorrencia?.pausada?'fa-pause':'fa-infinity',typeof getRecorrenciaLabel==='function'?getRecorrenciaLabel(task.recorrencia.tipo):task.recorrencia.tipo):''
+      task.recorrencia?.ativa?taskChip(task.recorrencia?.pausada?'fa-pause':'fa-infinity',typeof getRecorrenciaLabel==='function'?getRecorrenciaLabel(task.recorrencia.tipo):task.recorrencia.tipo):'',
+      checklist.total?taskChip('fa-list-check',`${checklist.completed}/${checklist.total} etapas${checklist.blocked?` • ${checklist.blocked} bloqueada(s)`:''}`,checklist.blocked?'is-followup':''):''
     ].filter(Boolean).join('');
     return`<article class="j18-card ${risk.level==='Crítica'?'is-critical':''} ${selected?'is-selected':''}" onclick="if(!Jarvis18.selectionMode())editTask(${Number(task.id)})">
       <div class="j18-card-head">
@@ -7346,14 +7543,14 @@ function normalizeText(str) {
         <span class="j18-score ${scoreClass(risk.level)}" title="${esc(risk.reasons.join(' • ')||'Sem fatores críticos')}"><i class="fas fa-gauge-high"></i>${risk.score}</span>
       </div>
       <div class="j18-chips">${chips}</div>
+      ${checklist.total?`<div class="j18-check-progress ${checklist.blocked?'is-blocked':''}" title="${checklist.blocked?`${checklist.blocked} etapa(s) aguardando dependência`:`${checklist.completed} de ${checklist.total} etapas concluídas`}"><div class="j18-check-track"><span style="width:${checklist.percent}%"></span></div><small>${checklist.percent}%${checklist.blocked?` • ${checklist.blocked} bloqueada(s)`:''}</small></div>`:''}
       <div class="j18-card-actions" onclick="event.stopPropagation()">
         <select class="j18-status" aria-label="Alterar status da tarefa" onchange="Jarvis18.setStatus(${Number(task.id)},this.value)">${statusOptions(task.status)}</select>
         <div class="j18-quick-desktop">
           <button class="j18-action-btn is-good" onclick="Jarvis18.complete(${Number(task.id)})" title="${done?'Restaurar tarefa':'Concluir tarefa'}"><i class="fas ${done?'fa-rotate-left':'fa-check'}"></i></button>
-          <button class="j18-action-btn is-next" onclick="Jarvis18.nextBusiness(${Number(task.id)})" title="Jogar para o próximo dia útil"><i class="fas fa-calendar-plus"></i></button>
           <button class="j18-action-btn" onclick="Jarvis18.openActions(${Number(task.id)})" title="Mais ações"><i class="fas fa-ellipsis"></i><span>Mais</span></button>
         </div>
-        <div class="j18-quick-mobile"><button class="j18-action-btn" onclick="Jarvis18.openActions(${Number(task.id)})" aria-label="Abrir ações da tarefa"><i class="fas fa-ellipsis-vertical"></i></button></div>
+        <div class="j18-quick-mobile"><button class="j18-action-btn is-good" onclick="Jarvis18.complete(${Number(task.id)})" title="${done?'Restaurar tarefa':'Concluir tarefa'}"><i class="fas ${done?'fa-rotate-left':'fa-check'}"></i><span>${done?'Restaurar':'Concluir'}</span></button><button class="j18-action-btn" onclick="Jarvis18.openActions(${Number(task.id)})" aria-label="Abrir ações da tarefa"><i class="fas fa-ellipsis-vertical"></i></button></div>
       </div>
     </article>`;
   }
@@ -7378,24 +7575,18 @@ function normalizeText(str) {
   function toggleRadar(){const next=localStorage.getItem(KEYS.radar)==='1'?'0':'1';localStorage.setItem(KEYS.radar,next);renderRadar()}
 
   function plannerTools(){
-    const count=selectedIds.size;
-    return`<div class="j18-planner-tools"><button class="j18-action-btn ${selectionMode?'is-good':''}" onclick="Jarvis18.toggleSelection()"><i class="fas fa-check-square"></i><span>${selectionMode?'Sair da seleção':'Selecionar tarefas'}</span></button><button class="j18-action-btn" onclick="Jarvis18.openFilters()"><i class="fas fa-filter"></i><span>Filtros inteligentes</span></button>${Object.keys(activeFilter||{}).some(key=>activeFilter[key])?`<button class="j18-action-btn" onclick="Jarvis18.clearFilters()"><i class="fas fa-filter-circle-xmark"></i><span>Limpar filtro</span></button>`:''}${selectionMode?`<span class="j18-filter-badge">${count} selecionada(s)</span>`:''}</div>`;
+    return`<div class="j18-planner-tools"><button class="j18-action-btn" onclick="Jarvis18.openFilters()"><i class="fas fa-filter"></i><span>Filtros inteligentes</span></button>${Object.keys(activeFilter||{}).some(key=>activeFilter[key])?`<button class="j18-action-btn" onclick="Jarvis18.clearFilters()"><i class="fas fa-filter-circle-xmark"></i><span>Limpar filtro</span></button>`:''}</div>`;
   }
   function ensureBulkBar(){
-    if($('j18BulkBar'))return;
-    document.body.insertAdjacentHTML('beforeend',`<div id="j18BulkBar" class="j18-bulkbar" role="region" aria-label="Ações em tarefas selecionadas"><span id="j18BulkCount" class="j18-bulk-count">0 selecionadas</span><select id="j18BulkStatus" class="j18-status">${statusOptions('A Fazer')}</select><button class="j18-action-btn is-good" onclick="Jarvis18.bulk('complete')" title="Concluir selecionadas"><i class="fas fa-check-double"></i><span>Concluir</span></button><button class="j18-action-btn is-next" onclick="Jarvis18.bulk('next')" title="Próximo dia útil"><i class="fas fa-calendar-plus"></i><span>Próximo útil</span></button><button class="j18-action-btn" onclick="Jarvis18.bulk('status')" title="Aplicar status"><i class="fas fa-arrows-rotate"></i><span>Aplicar status</span></button></div>`);
+    $('j18BulkBar')?.remove();selectionMode=false;selectedIds.clear();
   }
   function updateBulkBar(){
-    ensureBulkBar();const bar=$('j18BulkBar'),count=$('j18BulkCount');bar?.classList.toggle('is-open',selectionMode);if(count)count.textContent=`${selectedIds.size} selecionada(s)`;
+    $('j18BulkBar')?.remove();selectionMode=false;selectedIds.clear();
   }
-  function toggleSelection(){selectionMode=!selectionMode;if(!selectionMode)selectedIds.clear();updateBulkBar();forceRender()}
-  function selectTask(id,checked){if(checked)selectedIds.add(Number(id));else selectedIds.delete(Number(id));updateBulkBar();const card=document.querySelector(`.j18-card input[onchange*="selectTask(${Number(id)}"]`)?.closest('.j18-card');card?.classList.toggle('is-selected',checked)}
+  function toggleSelection(){selectionMode=false;selectedIds.clear();updateBulkBar();toast('A seleção em lote não está disponível.','fa-user-check')}
+  function selectTask(){selectionMode=false;selectedIds.clear();updateBulkBar()}
   function bulk(action){
-    const ids=[...selectedIds];if(!ids.length)return toast('Selecione pelo menos uma tarefa.','fa-circle-info');
-    const label=action==='complete'?'concluir':action==='next'?'reagendar para o próximo dia útil':'alterar o status de';
-    if(!confirm(`Deseja ${label} ${ids.length} tarefa(s)?`))return;
-    ids.forEach(id=>{const task=taskById(id);if(!task)return;if(action==='complete'){if(!isDone(task)){if(task.recorrencia?.ativa&&typeof window.concluirOcorrenciaRecorrente==='function')window.concluirOcorrenciaRecorrente(task);else task.status='Concluido'}}else if(action==='next'){task.proxima_data=nextBusinessDay(todayISO());if(isDone(task)||isCanceled(task))task.status='A Fazer'}else task.status=normalizeStatus($('j18BulkStatus')?.value);task.updated_at=nowISO();task.data_atualizacao=task.updated_at;task.ultima_movimentacao=task.updated_at});
-    persist(`bulk-${action}`);selectedIds.clear();selectionMode=false;updateBulkBar();forceRender();toast('Ação em lote concluída.','fa-check-double');
+    selectionMode=false;selectedIds.clear();updateBulkBar();toast('Ações em lote foram removidas. Use uma tarefa por vez.','fa-user-check');return false;
   }
 
   function updateTask(id,mutator,message,icon='fa-circle-check'){
@@ -7470,13 +7661,60 @@ function normalizeText(str) {
     $('j18WaitingFor').value=task?.waiting_for||'';$('j18FollowupDate').value=task?.followup_date||'';$('j18NextAction').value=task?.next_action||'';$('j18Requester').value=task?.solicitante||'';
     $('j18FollowupPanel').open=!!(task?.waiting_for||task?.followup_date||task?.next_action||normalizeStatus(task?.status).startsWith('Aguardando'));
   }
+  function ensureChecklistFields(){
+    ensureFollowupFields();if($('j18ChecklistPanel'))return;
+    const anchor=$('j18FollowupPanel')||$('j16TaskStatus')?.closest('div');if(!anchor)return;
+    const details=document.createElement('details');details.id='j18ChecklistPanel';details.innerHTML=`<summary><i class="fas fa-list-check mr-2"></i>Checklist, etapas e dependências</summary><div class="j18-check-help">Cadastre as etapas e, se necessário, informe qual etapa precisa ser concluída antes da próxima.</div><div id="j18ChecklistEditor" class="j18-check-editor"></div><button type="button" class="j18-action-btn j18-check-add" onclick="Jarvis18.addChecklistStep()"><i class="fas fa-plus"></i><span>Adicionar etapa</span></button>`;
+    anchor.insertAdjacentElement('afterend',details);
+  }
+  function checklistRows(){
+    return[...document.querySelectorAll('#j18ChecklistEditor .j18-step-row')].map(row=>({
+      id:String(row.dataset.stepId||''),
+      texto:String(row.querySelector('.j18-step-text')?.value||'').trim(),
+      concluida:!!row.querySelector('.j18-step-done')?.checked,
+      depende_de:String(row.querySelector('.j18-step-dependency')?.value||'')
+    }));
+  }
+  function renderChecklistEditor(steps=[]){
+    ensureChecklistFields();const editor=$('j18ChecklistEditor');if(!editor)return;
+    editor.innerHTML=steps.map((step,index)=>`<div class="j18-step-row" data-step-id="${esc(step.id)}"><label class="j18-step-check" title="Marcar etapa como concluída"><input class="j18-step-done" type="checkbox" ${step.concluida?'checked':''} onchange="Jarvis18.refreshChecklistEditor()"><span>${index+1}</span></label><input class="j18-field j18-step-text" value="${esc(step.texto)}" placeholder="Descreva a etapa" oninput="Jarvis18.refreshChecklistEditor()"><select class="j18-field j18-step-dependency" data-selected="${esc(step.depende_de||'')}" aria-label="Dependência da etapa" onchange="Jarvis18.refreshChecklistEditor()"></select><button type="button" class="j18-action-btn is-danger" onclick="Jarvis18.removeChecklistStep('${esc(step.id)}')" title="Remover etapa"><i class="fas fa-trash"></i></button></div>`).join('');
+    refreshChecklistEditor();
+  }
+  function refreshChecklistEditor(){
+    const rows=checklistRows(),byId=new Map(rows.map(step=>[step.id,step]));
+    document.querySelectorAll('#j18ChecklistEditor .j18-step-row').forEach((row,index)=>{
+      const current=rows[index],select=row.querySelector('.j18-step-dependency'),checkbox=row.querySelector('.j18-step-done');
+      if(!current||!select||!checkbox)return;
+      const selected=select.value||select.dataset.selected||current.depende_de||'';
+      const options=rows.filter(step=>step.id!==current.id&&step.texto).map(step=>`<option value="${esc(step.id)}" ${selected===step.id?'selected':''}>Após: ${esc(step.texto.slice(0,54))}</option>`).join('');
+      select.innerHTML=`<option value="">Sem dependência</option>${options}`;
+      select.dataset.selected=select.value;
+      const dependency=byId.get(select.value),blocked=!!(dependency&&!dependency.concluida&&!checkbox.checked);
+      row.classList.toggle('is-blocked',blocked);checkbox.disabled=blocked;checkbox.title=blocked?`Conclua primeiro: ${dependency.texto}`:'Marcar etapa como concluída';
+    });
+    const panel=$('j18ChecklistPanel'),valid=rows.filter(step=>step.texto);if(panel)panel.dataset.count=String(valid.length);
+  }
+  function addChecklistStep(){
+    const steps=checklistRows(),id=`step-${Date.now().toString(36)}-${steps.length+1}`;steps.push({id,texto:'',concluida:false,depende_de:''});renderChecklistEditor(steps);$('j18ChecklistPanel').open=true;setTimeout(()=>document.querySelector('#j18ChecklistEditor .j18-step-row:last-child .j18-step-text')?.focus(),30);
+  }
+  function removeChecklistStep(id){
+    const steps=checklistRows().filter(step=>step.id!==String(id)).map(step=>({...step,depende_de:step.depende_de===String(id)?'':step.depende_de}));renderChecklistEditor(steps);
+  }
+  function readChecklistForm(){
+    const steps=checklistRows().filter(step=>step.texto),ids=new Set(steps.map(step=>step.id));
+    return steps.map(step=>({...step,depende_de:ids.has(step.depende_de)?step.depende_de:''}));
+  }
+  function populateChecklist(task){
+    ensureChecklistFields();const steps=checklistOf(task);renderChecklistEditor(steps);if($('j18ChecklistPanel'))$('j18ChecklistPanel').open=steps.length>0;
+  }
   function installTaskFormHooks(){
-    ensureFollowupFields();const baseClear=window.clearForm,baseEdit=window.editTask,baseSave=window.saveTask;
-    window.clearForm=function(){ensureFollowupFields();const result=typeof baseClear==='function'?baseClear.apply(this,arguments):undefined;populateFollowup(null);return result};
-    window.editTask=function(id){ensureFollowupFields();const result=typeof baseEdit==='function'?baseEdit.apply(this,arguments):undefined;populateFollowup(taskById(id));return result};
+    ensureFollowupFields();ensureChecklistFields();const baseClear=window.clearForm,baseEdit=window.editTask,baseSave=window.saveTask;
+    window.clearForm=function(){ensureFollowupFields();ensureChecklistFields();const result=typeof baseClear==='function'?baseClear.apply(this,arguments):undefined;populateFollowup(null);populateChecklist(null);return result};
+    window.editTask=function(id){ensureFollowupFields();ensureChecklistFields();const result=typeof baseEdit==='function'?baseEdit.apply(this,arguments):undefined;populateFollowup(taskById(id));populateChecklist(taskById(id));return result};
     window.saveTask=function(btn){
-      ensureFollowupFields();const idBefore=Number($('taskId')?.value||0),idsBefore=new Set(allTasks().map(task=>Number(task.id)));
-      const extra={waiting_for:String($('j18WaitingFor')?.value||'').trim(),followup_date:String($('j18FollowupDate')?.value||''),next_action:String($('j18NextAction')?.value||'').trim(),solicitante:String($('j18Requester')?.value||'').trim()};
+      ensureFollowupFields();ensureChecklistFields();const idBefore=Number($('taskId')?.value||0),idsBefore=new Set(allTasks().map(task=>Number(task.id)));
+      const extra={waiting_for:String($('j18WaitingFor')?.value||'').trim(),followup_date:String($('j18FollowupDate')?.value||''),next_action:String($('j18NextAction')?.value||'').trim(),solicitante:String($('j18Requester')?.value||'').trim(),etapas:readChecklistForm()};
+      if(checklistHasCycle(extra.etapas)){$('j18ChecklistPanel').open=true;toast('Existe um ciclo nas dependências das etapas. Ajuste antes de salvar.','fa-diagram-project');return false}
       const result=typeof baseSave==='function'?baseSave.apply(this,arguments):undefined;
       const target=idBefore?taskById(idBefore):allTasks().find(task=>!idsBefore.has(Number(task.id)));if(target){Object.assign(target,extra);target.updated_at=nowISO();target.data_atualizacao=target.updated_at;persist('followup-fields');forceRender()}return result;
     };
@@ -7521,6 +7759,7 @@ function normalizeText(str) {
     version:VERSION,criticality,statusLabel,normalizeStatus,nextBusinessDay,selectionMode:()=>selectionMode,
     selectTask,toggleSelection,bulk,setStatus,complete,nextBusiness,toggleUrgent,openActions,actionForm,
     saveComment,saveDate,openLink,duplicate:duplicateTask,deleteTask:deleteTaskSafe,openHistory,
+    addChecklistStep,removeChecklistStep,refreshChecklistEditor,
     closeModal,openTrash,restoreTrash,purgeTrash,toggleRadar,openRisk,saveRisk,resetRisk,enableNotifications,
     _modalShell:modalShell,_forceRender:forceRender,_persist:persist,_taskById:taskById,_allTasks:allTasks,
     _esc:esc,_norm:norm,_formatBR:formatBR,_todayISO:todayISO,_parseISO:parseISO,_statusOptions:statusOptions,
@@ -7547,22 +7786,38 @@ function normalizeText(str) {
   const J=window.Jarvis18;if(!J)return;
   const $=id=>document.getElementById(id),esc=J._esc,norm=J._norm,toast=J._toast;
   const FILTER_STATUS=['A Fazer','Em andamento','Aguardando gestão','Aguardando administradora','Aguardando fornecedor','Aguardando orçamento','Compra autorizada','Cancelado','Concluido'];
+  const RECURRENCE_FILTERS=[
+    ['','Todas'],['none','Sem recorrência'],['active','Somente recorrentes'],['paused','Recorrência pausada'],
+    ['diaria','Diária'],['dias_uteis','Dias úteis'],['semanal','Semanal'],['quinzenal','Quinzenal'],
+    ['mensal','Mensal'],['trimestral','Trimestral'],['anual','Anual'],['primeiro_dia_util','Primeiro dia útil'],
+    ['ultimo_dia_util','Último dia útil'],['segunda_terca','Segunda terça-feira'],['apos_conclusao','Após a conclusão']
+  ];
   let captureQueue=[],baseVoice=null;
   const filterKeys=J._keys;
 
   function taskText(task){
     const comments=J._commentsOf(task).map(c=>c.texto||c.text||'').join(' ');
     const links=J._linksOf(task).join(' ');
+    const steps=(Array.isArray(task.etapas)?task.etapas:(Array.isArray(task.checklist)?task.checklist:[])).map(step=>typeof step==='string'?step:(step?.texto||step?.text||step?.titulo||'')).join(' ');
     return norm([
       task.nome,task.descricao,task.categoria,task.status,J.statusLabel(task.status),task.prioridade,
       task.solicitante,task.waiting_for,task.next_action,task.texto_origem,comments,links,
-      task.proxima_data,J._formatBR(task.proxima_data),task.followup_date,J._formatBR(task.followup_date)
+      steps,task.proxima_data,J._formatBR(task.proxima_data),task.followup_date,J._formatBR(task.followup_date)
     ].join(' '));
   }
   function filterMatches(task,spec){
     if(spec.query&&!taskText(task).includes(norm(spec.query)))return false;
     if(spec.status&&J.normalizeStatus(task.status)!==J.normalizeStatus(spec.status))return false;
     if(spec.priority&&norm(task.prioridade)!==norm(spec.priority))return false;
+    if(spec.recurrence){
+      const recurrence=task?.recorrencia&&typeof task.recorrencia==='object'?task.recorrencia:{ativa:false,tipo:''};
+      let type=String(recurrence.tipo||'');
+      try{if(typeof normalizarTipoRecorrencia==='function')type=normalizarTipoRecorrencia(type)}catch(e){}
+      if(spec.recurrence==='none'&&recurrence.ativa)return false;
+      if(spec.recurrence==='active'&&!recurrence.ativa)return false;
+      if(spec.recurrence==='paused'&&!(recurrence.ativa&&recurrence.pausada))return false;
+      if(!['none','active','paused'].includes(spec.recurrence)&&!(recurrence.ativa&&type===spec.recurrence))return false;
+    }
     if(spec.followup==='due'&&!J._followupDue(task))return false;
     if(spec.followup==='scheduled'&&!task.followup_date)return false;
     if(spec.followup==='missing'&&task.followup_date)return false;
@@ -7597,7 +7852,7 @@ function normalizeText(str) {
   }
   function savedFilters(){return J._safeJSON(filterKeys.filters,[])}
   function filterSummary(spec){
-    const parts=[];if(spec.query)parts.push(`texto “${spec.query}”`);if(spec.status)parts.push(J.statusLabel(spec.status));if(spec.priority)parts.push(`prioridade ${spec.priority}`);if(spec.followup==='due')parts.push('cobrança vencida');if(spec.followup==='scheduled')parts.push('com cobrança');if(spec.followup==='missing')parts.push('sem cobrança');if(spec.stale)parts.push(`${spec.stale}+ dias sem movimentação`);return parts.join(' • ')||'Sem critérios';
+    const parts=[];if(spec.query)parts.push(`texto “${spec.query}”`);if(spec.status)parts.push(J.statusLabel(spec.status));if(spec.priority)parts.push(`prioridade ${spec.priority}`);if(spec.recurrence)parts.push(RECURRENCE_FILTERS.find(([value])=>value===spec.recurrence)?.[1]||spec.recurrence);if(spec.followup==='due')parts.push('cobrança vencida');if(spec.followup==='scheduled')parts.push('com cobrança');if(spec.followup==='missing')parts.push('sem cobrança');if(spec.stale)parts.push(`${spec.stale}+ dias sem movimentação`);return parts.join(' • ')||'Sem critérios';
   }
   function savedFilterHTML(){
     const list=savedFilters();return`<div class="j18-saved-list">${list.length?list.map(item=>`<div class="j18-list-row"><div class="j18-list-main"><b>${esc(item.name)}</b><span>${esc(filterSummary(item.spec||{}))}</span></div><div><button class="j18-action-btn is-good" onclick="Jarvis18.useFilter('${esc(item.id)}')"><i class="fas fa-play"></i><span>Aplicar</span></button><button class="j18-action-btn is-danger" onclick="Jarvis18.deleteFilter('${esc(item.id)}')"><i class="fas fa-trash"></i></button></div></div>`).join(''):'<div class="j18-empty">Nenhum filtro salvo.</div>'}</div>`;
@@ -7606,6 +7861,7 @@ function normalizeText(str) {
     const spec=J._getActiveFilter(),body=`<div class="j18-grid">
       <div class="j18-full"><label class="j18-label">Texto complementar</label><input id="j18FilterQuery" class="j18-field" value="${esc(spec.query||'')}" placeholder="Ex.: orçamento, Adriana, bomba"></div>
       <div><label class="j18-label">Status</label><select id="j18FilterStatus" class="j18-field"><option value="" ${!spec.status?'selected':''}>Todos</option>${FILTER_STATUS.map(value=>`<option value="${esc(value)}" ${spec.status===value?'selected':''}>${esc(J.statusLabel(value))}</option>`).join('')}</select></div>
+      <div><label class="j18-label">Recorrência</label><select id="j18FilterRecurrence" class="j18-field">${RECURRENCE_FILTERS.map(([value,label])=>`<option value="${esc(value)}" ${(spec.recurrence||'')===value?'selected':''}>${esc(label)}</option>`).join('')}</select></div>
       <div><label class="j18-label">Prioridade</label><select id="j18FilterPriority" class="j18-field"><option value="">Todas</option>${['Urgente','Alta','Normal','Baixa'].map(value=>`<option ${spec.priority===value?'selected':''}>${value}</option>`).join('')}</select></div>
       <div><label class="j18-label">Acompanhamento</label><select id="j18FilterFollowup" class="j18-field"><option value="">Todos</option><option value="due" ${spec.followup==='due'?'selected':''}>Cobrança vencida</option><option value="scheduled" ${spec.followup==='scheduled'?'selected':''}>Com cobrança programada</option><option value="missing" ${spec.followup==='missing'?'selected':''}>Sem cobrança programada</option></select></div>
       <div><label class="j18-label">Parada há pelo menos</label><select id="j18FilterStale" class="j18-field"><option value="">Qualquer período</option>${[3,7,14,30].map(value=>`<option value="${value}" ${Number(spec.stale)===value?'selected':''}>${value} dias</option>`).join('')}</select></div>
@@ -7614,7 +7870,7 @@ function normalizeText(str) {
     const footer=`<button class="j18-action-btn" onclick="Jarvis18.clearFilters()">Limpar</button><button class="j18-action-btn" onclick="Jarvis18.saveFilter()"><i class="fas fa-bookmark"></i>Salvar visão</button><button class="j18-action-btn is-good" onclick="Jarvis18.applyFilter()"><i class="fas fa-filter"></i>Aplicar</button>`;
     J._modalShell('j18FilterModal','Filtros inteligentes',body,footer,true);
   }
-  function readFilterForm(){return{query:String($('j18FilterQuery')?.value||'').trim(),status:$('j18FilterStatus')?.value||'',priority:$('j18FilterPriority')?.value||'',followup:$('j18FilterFollowup')?.value||'',stale:Number($('j18FilterStale')?.value)||0}}
+  function readFilterForm(){return{query:String($('j18FilterQuery')?.value||'').trim(),status:$('j18FilterStatus')?.value||'',recurrence:$('j18FilterRecurrence')?.value||'',priority:$('j18FilterPriority')?.value||'',followup:$('j18FilterFollowup')?.value||'',stale:Number($('j18FilterStale')?.value)||0}}
   function applyFilter(spec=readFilterForm()){J._setActiveFilter(spec);J.closeModal('j18FilterModal');J._forceRender();toast('Filtro aplicado.','fa-filter')}
   function clearFilters(){J._setActiveFilter({});J.closeModal('j18FilterModal');try{if(typeof clearVoiceFilter==='function')clearVoiceFilter({renderNow:false})}catch(e){}J._forceRender();toast('Filtros removidos.','fa-filter-circle-xmark')}
   function saveFilter(){
@@ -7775,6 +8031,10 @@ function normalizeText(str) {
 ================================================================================================ */
 :root{--j18-cyan:#22d3ee;--j18-blue:#2563eb;--j18-bg:#020712;--j18-panel:#07111f;--j18-line:rgba(148,163,184,.16)}
 html,body{max-width:100%;overflow-x:hidden!important}
+html{scrollbar-width:auto;scrollbar-color:var(--jarvis-accent,#22d3ee) #0b0f19}
+html::-webkit-scrollbar,body::-webkit-scrollbar{width:10px;height:8px}
+html::-webkit-scrollbar-track,body::-webkit-scrollbar-track{background:#0b0f19}
+html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb{border:2px solid #0b0f19;border-radius:999px;background:linear-gradient(180deg,var(--jarvis-accent,#22d3ee),var(--jarvis-accent-2,#2563eb))}
 #reportContainer,#plannerView,#jarvisOpsRadar,.j18-card,.j18-card *,.j18-modal-card,.j18-modal-card *{min-width:0;box-sizing:border-box}
 .j18-modal-card p,.j18-modal-card span,.j18-modal-card b,.j18-modal-card label{overflow-wrap:anywhere}
 #plannerView{order:0;width:100%;overflow:visible!important}
@@ -7802,7 +8062,10 @@ html,body{max-width:100%;overflow-x:hidden!important}
 .j18-chip.is-overdue,.j18-chip.is-followup{border-color:rgba(251,113,133,.32);background:rgba(244,63,94,.09);color:#fecdd3}
 .j18-chip.is-today{border-color:rgba(251,191,36,.32);background:rgba(245,158,11,.08);color:#fde68a}
 .j18-chip.is-urgent{border-color:rgba(251,113,133,.38);color:#fecdd3}
-.j18-card-actions{display:grid;grid-template-columns:minmax(150px,1fr) auto;gap:.55rem;align-items:center;margin-top:.8rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.06)}
+.j18-check-progress{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:.55rem;margin-top:.62rem}
+.j18-check-track{height:6px;border-radius:999px;background:rgba(255,255,255,.07);overflow:hidden}.j18-check-track span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#22d3ee,#34d399)}
+.j18-check-progress small{color:#94a3b8;font-size:9px;font-weight:850;white-space:nowrap}.j18-check-progress.is-blocked .j18-check-track span{background:linear-gradient(90deg,#f59e0b,#fb7185)}.j18-check-progress.is-blocked small{color:#fcd34d}
+.j18-card-actions{display:grid;grid-template-columns:minmax(150px,230px) auto;justify-content:start;gap:.55rem;align-items:center;margin-top:.8rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.06)}
 .j18-status{width:100%;max-width:100%;min-height:42px;border:1px solid rgba(255,255,255,.10);border-radius:.8rem;background:#07101d;color:#e2e8f0;padding:.55rem .7rem;font-size:11px;font-weight:750;outline:none}
 .j18-status:focus{border-color:rgba(34,211,238,.55);box-shadow:0 0 0 3px rgba(34,211,238,.09)}
 .j18-quick-desktop{display:flex;align-items:center;justify-content:flex-end;gap:.42rem}
@@ -7832,8 +8095,14 @@ textarea.j18-field{min-height:100px;resize:vertical;line-height:1.55}
 .j18-action-row{width:100%;min-height:54px;border:1px solid rgba(255,255,255,.09);border-radius:.9rem;background:rgba(255,255,255,.035);color:#e2e8f0;padding:.72rem .8rem;display:flex;align-items:center;gap:.7rem;text-align:left;font-size:12px;font-weight:800;overflow:hidden}
 .j18-action-row i{width:20px;text-align:center;color:#67e8f9;flex:0 0 auto}.j18-action-row span{overflow-wrap:anywhere}
 .j18-action-row:hover{border-color:rgba(34,211,238,.40);background:rgba(34,211,238,.07)}
-#j18FollowupPanel{border:1px solid rgba(34,211,238,.12);border-radius:1rem;background:rgba(34,211,238,.035);padding:.75rem}
-#j18FollowupPanel>summary{cursor:pointer;color:#a5f3fc;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+#j18FollowupPanel,#j18ChecklistPanel{border:1px solid rgba(34,211,238,.12);border-radius:1rem;background:rgba(34,211,238,.035);padding:.75rem}
+#j18FollowupPanel>summary,#j18ChecklistPanel>summary{cursor:pointer;color:#a5f3fc;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.j18-check-help{margin:.75rem 0;color:#64748b;font-size:10px;line-height:1.5}
+.j18-check-editor{display:flex;flex-direction:column;gap:.55rem}
+.j18-step-row{display:grid;grid-template-columns:38px minmax(180px,1fr) minmax(160px,.75fr) 42px;gap:.5rem;align-items:center;border:1px solid rgba(255,255,255,.07);border-radius:.9rem;background:rgba(2,10,20,.42);padding:.5rem}
+.j18-step-row.is-blocked{border-color:rgba(251,191,36,.22);background:rgba(245,158,11,.045)}
+.j18-step-check{width:36px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.12rem;color:#64748b;font-size:8px;font-weight:900}.j18-step-check input{width:18px;height:18px;accent-color:#22d3ee}.j18-step-check input:disabled{cursor:not-allowed;opacity:.45}
+.j18-step-row .j18-field{min-height:42px;padding:.55rem .65rem;font-size:12px}.j18-check-add{margin-top:.65rem}
 .j18-radar-head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:1rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.07)}
 .j18-radar-actions{display:flex;align-items:center;justify-content:flex-end;gap:.45rem;flex-wrap:wrap}
 .j18-radar-content{padding:1rem 1.1rem;display:grid;grid-template-columns:minmax(230px,.68fr) minmax(0,1.32fr);gap:1rem}
@@ -7857,7 +8126,7 @@ textarea.j18-field{min-height:100px;resize:vertical;line-height:1.55}
 .j18-offline-dot{width:8px;height:8px;border-radius:999px;background:#34d399;box-shadow:0 0 12px rgba(52,211,153,.7);display:inline-block}.j18-offline-dot.is-offline{background:#fbbf24;box-shadow:0 0 12px rgba(251,191,36,.6)}
 @media(max-width:767px){
   .j18-card{padding:.86rem;border-radius:1rem}.j18-card-head{grid-template-columns:auto minmax(0,1fr) auto;gap:.55rem}.j18-title{font-size:.82rem}.j18-score{max-width:74px;padding:.32rem .45rem}
-  .j18-chip>span{max-width:160px}.j18-card-actions{grid-template-columns:minmax(0,1fr) 48px;gap:.5rem}.j18-quick-desktop{display:none}.j18-quick-mobile{display:flex}
+  .j18-chip>span{max-width:160px}.j18-card-actions{grid-template-columns:minmax(140px,220px) auto;justify-content:start;gap:.5rem}.j18-quick-desktop{display:flex}.j18-quick-mobile{display:none}
   .j18-action-btn{min-width:44px;min-height:44px;padding:.5rem}.j18-planner-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}.j18-planner-tools .j18-action-btn{width:100%}
   .j18-bulkbar{bottom:max(.5rem,env(safe-area-inset-bottom));width:calc(100vw - 1rem);grid-template-columns:repeat(3,minmax(0,1fr));padding:.6rem}.j18-bulk-count{grid-column:1/-1;text-align:center}.j18-bulkbar .j18-status{grid-column:1/-1}.j18-bulkbar .j18-action-btn{width:100%;font-size:0}.j18-bulkbar .j18-action-btn i{font-size:13px}
   .j18-modal{align-items:flex-end;padding:.45rem}.j18-modal-card,.j18-modal-card.is-wide{width:100%;max-height:calc(100svh - .6rem);border-radius:1.2rem 1.2rem .75rem .75rem}.j18-modal-head,.j18-modal-foot,.j18-modal-body{padding:.82rem}
@@ -7865,7 +8134,16 @@ textarea.j18-field{min-height:100px;resize:vertical;line-height:1.55}
   .j18-radar-head{align-items:flex-start;flex-direction:column}.j18-radar-actions{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.j18-radar-actions .j18-action-btn{width:100%;font-size:0}.j18-radar-actions .j18-action-btn i{font-size:12px}
   .j18-radar-content{grid-template-columns:minmax(0,1fr);padding:.85rem}.j18-radar-item b,.j18-radar-item small{white-space:normal;overflow-wrap:anywhere}
   .j18-list-row{align-items:flex-start;flex-direction:column}.j18-list-row>div:last-child{width:100%;display:flex;gap:.45rem}.j18-list-row .j18-action-btn{flex:1}
+  .j18-step-row{grid-template-columns:38px minmax(0,1fr) 44px}.j18-step-row .j18-step-dependency{grid-column:2/4}.j18-step-row>.j18-action-btn{grid-column:3;grid-row:1}
   .j18-field,.j18-status{font-size:16px}
+}
+@media(max-width:520px){
+  html::-webkit-scrollbar,body::-webkit-scrollbar{width:8px}
+  .j18-card-actions{grid-template-columns:minmax(0,1fr)}
+  .j18-card-actions>.j18-status{grid-column:1/-1}
+  .j18-quick-desktop{display:none}
+  .j18-quick-mobile{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) 48px;gap:.5rem}
+  .j18-quick-mobile .j18-action-btn{width:100%}
 }
 @media(max-width:380px){.j18-score{font-size:8px}.j18-number,.j18-select-check{width:29px;height:29px}.j18-metrics{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){.j18-card,.j18-bulkbar{transition:none!important}}
