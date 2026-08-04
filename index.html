@@ -5485,8 +5485,6 @@ function normalizeText(str) {
     saveToStorage();render();
   };
 
-  function refreshWorkspacePanels(){}
-
   function bootWorkspace(){if(Array.isArray(tasks)){tasksNeedNormalize=true;normalizeAllTasks();updateCategoryFilter();render()}document.title='TAREFAS — ROBERTO | Workspace Jarvis 18.0';}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bootWorkspace);else bootWorkspace();
   Object.assign(window,{workspace10:{version:VERSION,normalizeTaskStatus,normalizePriority,isTaskOpen,isTaskDone}});
@@ -6268,6 +6266,7 @@ function normalizeText(str) {
     let text=heard; if(activeWatch){if(settings().watchRequiresWake&&!hasWake(text)){scheduleWatch();return true} text=stripWake(text)}
     const a=analyze(text); const plan=a.best;
     if(!plan){
+      if(window.JarvisAI?.handleFallback?.(heard))return true;
       addPending(heard);
       const fallbackResult=sendUnrecognizedVoiceToSearch(heard);
       if(!fallbackResult.ok) speak(fallbackResult.message);
@@ -7032,47 +7031,72 @@ function normalizeText(str) {
   function statusLabel(value){return value==='Concluido'?'Concluída':value==='Cancelado'?'Cancelada':String(value||'A Fazer')}
   function normalizeStatus(value){const n=norm(value);for(const [id,phrases] of STATUS){if(n===norm(id)||phrases.some(p=>n.includes(norm(p))))return id}return value||'A Fazer'}
   function statusFromText(text){const n=norm(text);let best=null;for(const [id,phrases] of STATUS){for(const phrase of [id,...phrases]){const p=norm(phrase);if(n.includes(p)&&(!best||p.length>best.len))best={id,len:p.length}}}return best?.id||null}
-  function taskNumber(task){try{return typeof getTaskVoiceNumber==='function'?getTaskVoiceNumber(task.id):task.id}catch(e){return task.id}}
+  function taskNumber(task){try{const visible=typeof getTaskVoiceNumber==='function'?getTaskVoiceNumber(task.id):null;return visible||task.id}catch(e){return task.id}}
   function formatDate(value){const m=String(value||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);return m?`${m[3]}/${m[2]}/${m[1]}`:String(value||'')}
   function daysSince(value){const d=new Date(value||0);return Number.isFinite(d.getTime())?Math.max(0,Math.floor((Date.now()-d.getTime())/86400000)):0}
   function risk(task){try{return window.JarvisOps?.computeCriticality?window.JarvisOps.computeCriticality(task):{score:0,level:'Baixa',stale:daysSince(task.updated_at||task.created_at),reasons:[]}}catch(e){return{score:0,level:'Baixa',stale:0,reasons:[]}}}
   function persistTasks(){try{if(typeof normalizeAllTasks==='function')normalizeAllTasks();if(typeof save==='function')save();if(typeof updateCategoryFilter==='function')updateCategoryFilter();if(typeof render==='function')render();updateAlertBadge()}catch(e){console.error('Jarvis 17 persist',e)}}
 
   function words(value){return norm(value).split(' ').filter(w=>w.length>1&&!STOP.has(w))}
-  function tokenSimilarity(a,b){const A=new Set(words(a)),B=new Set(words(b));if(!A.size||!B.size)return 0;let common=0;A.forEach(x=>{if(B.has(x))common++});return 2*common/(A.size+B.size)}
+  function tokenStem(value){return String(value||'').replace(/(?:oes|aes|ais|eis|is|ns|es|s)$/,'').slice(0,18)}
+  function tokenMatches(a,b){const A=tokenStem(a),B=tokenStem(b);return !!A&&!!B&&(A===B||(Math.min(A.length,B.length)>=5&&(A.startsWith(B)||B.startsWith(A))))}
+  function tokenSimilarity(a,b){const A=[...new Set(words(a))],B=[...new Set(words(b))];if(!A.length||!B.length)return 0;let common=0;A.forEach(x=>{if(B.some(y=>tokenMatches(x,y)))common++});return 2*common/(A.length+B.length)}
   function taskText(task){const comments=Array.isArray(task.comentarios)?task.comentarios.map(c=>typeof c==='string'?c:(c.texto||c.text||c.comentario||'')).join(' '):'';return [task.nome,task.descricao,task.categoria,task.solicitante,comments].filter(Boolean).join(' ')}
   function semanticCandidates(query,options={}){
-    const q=norm(query);if(!q)return[];
+    const q=norm(query),queryWords=[...new Set(words(q))];if(!q||!queryWords.length)return[];
     return allTasks().filter(t=>options.includeClosed||!isClosed(t)).map(task=>{
-      const title=norm(task.nome),category=norm(task.categoria),full=norm(taskText(task));let score=tokenSimilarity(q,full)*.56+tokenSimilarity(q,title)*.32;
-      if(title.includes(q)||q.includes(title))score+=.24;if(category&&q.includes(category))score+=.15;if(Number(task.id)===Number(context.lastTaskId))score+=.035;
-      words(q).forEach(w=>{if(title.includes(w))score+=.018});
-      return{task,score:Math.min(1,score)};
-    }).filter(x=>x.score>=.18).sort((a,b)=>b.score-a.score).slice(0,options.limit||6);
+      const title=norm(task.nome),category=norm(task.categoria),full=norm(taskText(task));
+      const titleWords=words(title),fullWords=words(full),matchedTitle=queryWords.filter(word=>titleWords.some(item=>tokenMatches(word,item))).length,matchedFull=queryWords.filter(word=>fullWords.some(item=>tokenMatches(word,item))).length;
+      const titleCoverage=matchedTitle/queryWords.length,fullCoverage=matchedFull/queryWords.length;
+      let score=titleCoverage*.66+fullCoverage*.24+tokenSimilarity(q,title)*.10;
+      if(title===q)score=1;else if(title.includes(q)||q.includes(title))score=Math.max(score,.94);
+      else if(queryWords.length>=2&&matchedTitle===queryWords.length)score=Math.max(score,.91);
+      else if(queryWords.length>=2&&matchedFull===queryWords.length)score=Math.max(score,.84);
+      if(category&&q.includes(category))score=Math.min(1,score+.08);
+      if(Number(task.id)===Number(context.lastTaskId))score=Math.min(1,score+.018);
+      return{task,score:Math.min(1,score),matchedTitle,matchedFull,queryWordCount:queryWords.length};
+    }).filter(x=>x.score>=.20).sort((a,b)=>b.score-a.score||b.matchedTitle-a.matchedTitle||b.matchedFull-a.matchedFull).slice(0,options.limit||6);
   }
   function knownCategories(){return [...new Set(allTasks().map(t=>String(t.categoria||'').trim()).filter(Boolean))].sort((a,b)=>b.length-a.length)}
   function extractCategory(text){const n=norm(text);const known=knownCategories().find(c=>n.includes(norm(c)));if(known)return known;const m=String(text).match(/(?:condom[ií]nio|edif[ií]cio|residencial)\s+["“']?([^,.;:\n]{2,55})/i);return m?m[1].replace(/\b(?:ate|até|para|precisa|solicitou|pediu|amanha|amanhã|hoje)\b.*$/i,'').replace(/["”']$/,'').trim():''}
-  function hasDateExpression(text){const n=norm(text);return /\b(hoje|amanha|depois de amanha|segunda|terca|quarta|quinta|sexta|sabado|domingo|semana que vem|mes que vem|daqui a)\b/.test(n)||/\b\d{1,2}[\/.-]\d{1,2}(?:[\/.-]\d{2,4})?\b/.test(String(text))}
+  function hasSpecificDateExpression(text){const n=norm(text);return /\b\d{1,2}[\/.-]\d{1,2}(?:[\/.-]\d{2,4})?\b/.test(String(text))||/\b(?:dia\s+)?\d{1,2}\s+(?:de\s+)?(?:janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)(?:\s+(?:de\s+)?\d{2,4})?\b/.test(n)}
+  function hasDateExpression(text){const n=norm(text);return /\b(hoje|amanha|depois de amanha|segunda|terca|quarta|quinta|sexta|sabado|domingo|semana que vem|mes que vem|daqui a)\b/.test(n)||hasSpecificDateExpression(text)}
   function parseDate(text){
     if(!hasDateExpression(text))return null;
     try{if(typeof extractDateOnly==='function'){const d=extractDateOnly(text);if(d)return d}}catch(e){}
-    const now=new Date(),n=norm(text);let m=String(text).match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/);if(m){let y=m[3]?Number(m[3]):now.getFullYear();if(y<100)y+=2000;return isoDate(new Date(y,Number(m[2])-1,Number(m[1])))}
+    const now=new Date(),n=norm(text);let m=String(text).match(/\b(\d{1,2})[\/.-](\d{1,2})(?:[\/.-](\d{2,4}))?\b/);if(m){let y=m[3]?Number(m[3]):now.getFullYear();if(y<100)y+=2000;const day=Number(m[1]),month=Number(m[2]),candidate=new Date(y,month-1,day);if(candidate.getFullYear()===y&&candidate.getMonth()===month-1&&candidate.getDate()===day)return isoDate(candidate);return null}
     if(n.includes('depois de amanha'))return isoDate(new Date(now.getFullYear(),now.getMonth(),now.getDate()+2));if(n.includes('amanha'))return isoDate(new Date(now.getFullYear(),now.getMonth(),now.getDate()+1));if(n.includes('hoje'))return todayISO();
     const map={domingo:0,segunda:1,terca:2,quarta:3,quinta:4,sexta:5,sabado:6};for(const [name,day] of Object.entries(map)){if(new RegExp(`\\b${name}(?: feira)?\\b`).test(n)){let diff=(day-now.getDay()+7)%7;if(diff===0)diff=7;return isoDate(new Date(now.getFullYear(),now.getMonth(),now.getDate()+diff))}}
     return null;
   }
   function numberFromText(text){const n=norm(text);const m=n.match(/\b(\d{1,3})\b/);if(m)return Number(m[1]);const map={uma:1,um:1,primeira:1,primeiro:1,duas:2,dois:2,segunda:2,segundo:2,tres:3,terceira:3,terceiro:3,quatro:4,quarta:4,quarto:4,cinco:5,quinta:5,quinto:5,seis:6,sexta:6,sexto:6,sete:7,setima:7,setimo:7,oito:8,nove:9,dez:10};for(const [w,v] of Object.entries(map))if(new RegExp(`\\b${w}\\b`).test(n))return v;return null}
-  function explicitTaskNumber(text){const n=norm(text),m=n.match(/(?:tarefa|demanda|item|numero|n)\s+(?:numero\s+)?(\d{1,3})/);return m?Number(m[1]):null}
+  function explicitTaskNumber(text){
+    const raw=String(text||''),hash=raw.match(/#\s*(\d{1,3})\b/);if(hash)return Number(hash[1]);
+    const n=norm(raw),m=n.match(/(?:tarefa|demanda|item|card|cartao|numero|n)\s+(?:numero\s+)?(\d{1,3})\b/);if(m)return Number(m[1]);
+    const spoken=n.match(/(?:tarefa|demanda|item|card|cartao|numero|n)\s+(?:numero\s+)?((?:primeir[oa]|segund[oa]|terceir[oa]|quart[oa]|quint[oa]|sext[oa]|setim[oa]|oitav[oa]|non[oa]|decim[oa]|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez))\b/);
+    return spoken?numberFromText(spoken[1]):null;
+  }
   function resolveNumber(number){
     let id=null;try{if(typeof getTaskIdByVoiceNumber==='function')id=getTaskIdByVoiceNumber(Number(number))}catch(e){}
     return taskById(id)||allTasks().find(t=>Number(t.id)===Number(number))||allTasks()[Number(number)-1]||null;
   }
   function extractTaskQuery(text){
     let value=norm(text);
-    const remove=['mostre','mostrar','lista','listar','busca','buscar','procura','procurar','localiza','localizar','abra','abrir','detalhes','detalhe','conclui','concluir','finaliza','finalizar','reabre','reabrir','reagenda','reagendar','muda','mudar','altera','alterar','coloca','colocar','bota','botar','status','para','como','leia','ler','ordene','ordenar','topo'];
+    const months='janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro';
+    value=value
+      .replace(/\b\d{1,2}[\/.\-]\d{1,2}(?:[\/.\-]\d{2,4})?\b/g,' ')
+      .replace(new RegExp(`\\b(?:dia\\s+)?\\d{1,2}\\s+(?:de\\s+)?(?:${months})(?:\\s+(?:de\\s+)?\\d{2,4})?\\b`,'g'),' ')
+      .replace(new RegExp(`\\b(?:${months})\\s+\\d{1,2}(?:\\s+(?:de\\s+)?\\d{2,4})?\\b`,'g'),' ')
+      .replace(/\b(?:hoje|amanha|depois de amanha|proximo dia util|proxima semana|semana que vem|mes que vem|daqui a\s+\w+(?:\s+\w+){0,2})\b/g,' ')
+      .replace(/\b(?:segunda|terca|quarta|quinta|sexta|sabado|domingo)(?:\s+feira)?\b/g,' ');
+    const remove=['mostre','mostrar','lista','listar','busca','buscar','procura','procurar','localiza','localizar','abra','abrir','detalhes','detalhe','conclui','concluir','finaliza','finalizar','reabre','reabrir','reagenda','reagendar','reagende','remarca','remarcar','remarque','adia','adiar','adie','joga','jogar','jogue','passa','passar','passe','mova','mover','muda','mudar','altera','alterar','troca','trocar','coloca','colocar','bota','botar','status','data','prazo','para','como','leia','ler','ordene','ordenar','topo'];
     remove.forEach(w=>value=value.replace(new RegExp(`\\b${w}\\b`,'g'),' '));
     STATUS.flatMap(x=>[x[0],...x[1]]).sort((a,b)=>b.length-a.length).forEach(p=>value=value.replace(new RegExp(`\\b${norm(p).replace(/\s+/g,'\\s+')}\\b`,'g'),' '));
-    value=value.replace(/\b(?:tarefa|demanda|item|numero|n)\s+(?:numero\s+)?\d{1,3}\b/g,' ').replace(/\b(hoje|amanha|depois de amanha|segunda|terca|quarta|quinta|sexta|sabado|domingo)\b/g,' ').replace(/\s+/g,' ').trim();
+    value=value.replace(/\b(?:tarefa|demanda|item|card|cartao|numero|n)\s+(?:numero\s+)?\d{1,3}\b/g,' ')
+      .replace(new RegExp(`\\b(?:${months})\\b`,'g'),' ')
+      .replace(/\b(?:dia|ano|proximo|proxima|feira)\b/g,' ')
+      .replace(/\b\d{1,4}\b/g,' ')
+      .replace(/\s+/g,' ').trim();
     return value;
   }
   function resolveTask(text,options={}){
@@ -7083,7 +7107,7 @@ function normalizeText(str) {
     const query=extractTaskQuery(text);
     if(!query&&context.lastTaskId){const task=taskById(context.lastTaskId);if(task)return{task,confidence:.88,source:'context-fallback'}}
     const candidates=semanticCandidates(query||text,{includeClosed:!!options.includeClosed,limit:5});if(!candidates.length)return{error:'Não encontrei uma tarefa compatível.',query};
-    if(candidates.length>1&&candidates[0].score<.78&&candidates[0].score-candidates[1].score<.10)return{ambiguous:true,candidates,query};
+    if(candidates.length>1&&((words(query).length===1&&candidates[0].score-candidates[1].score<.16)||(candidates[0].score<.84&&candidates[0].score-candidates[1].score<.12)))return{ambiguous:true,candidates,query};
     return{task:candidates[0].task,confidence:Math.min(.96,.58+candidates[0].score*.42),score:candidates[0].score,source:'semantic',candidates};
   }
 
@@ -7119,7 +7143,7 @@ function normalizeText(str) {
 
   function requestedPlannerView(text){
     const n=norm(text);
-    const hasViewVerb=/\b(mostra|mostre|mostrar|abre|abra|abrir|ver|visualiza|visualizar|muda|mude|mudar|ir|vai)\b/.test(n);
+    const hasViewVerb=/\b(mostra|mostre|mostrar|exibe|exiba|exibir|abre|abra|abrir|ver|visualiza|visualizar|muda|mude|mudar|ir|vai)\b/.test(n);
     const hasAgendaContext=/\b(agenda|calendario|visao|modo)\b/.test(n);
     if(!hasViewVerb&&!hasAgendaContext)return'';
     if(/\b(?:agenda|calendario|visao|modo)?\s*(?:da|de|em)?\s*semana\b/.test(n)||/\bvisao semanal\b/.test(n))return'week';
@@ -7133,15 +7157,16 @@ function normalizeText(str) {
     const text=learnedText(raw),n=norm(text),status=statusFromText(text),date=parseDate(text);
     if(/\b(bom dia jarvis|briefing|resumo inteligente|o que precisa da minha atencao|recomendacoes|recomendacao do dia|o que esta critico)\b/.test(n))return{type:'briefing',raw:text,readOnly:true,confidence:.99};
     if(/\b(limpa|limpar|remove|tirar)\b.*\b(filtro|resultados|contexto de busca)\b/.test(n))return{type:'clear_filter',raw:text,readOnly:true,confidence:.98};
+    const wantsCalendarNavigation=/\b(mostra|mostre|mostrar|exibe|exiba|exibir|abre|abra|abrir|ver|visualiza|visualizar|agenda|calendario)\b/.test(n);
     if(isCreateCommand(text)){const title=createTitle(text),category=extractCategory(text),explicitDate=date,statusValue=status||'A Fazer';return{type:'create',raw:text,slots:{title,category,categorySpecified:!!category,date:explicitDate,status:statusValue,description:''},readOnly:false,confidence:title?.length>4?.90:.68}}
     if(/\b(leia|ler|fale|resuma|resumir)\b/.test(n)&&/\b(critica|criticas|primeira|primeiras|top|tarefas|resultados)\b/.test(n)){return{type:'read_results',raw:text,count:numberFromText(text)||3,readOnly:true,confidence:.94}}
     if(/\b(coloca|coloque|ordenar|ordene|organiza|organize)\b.*\b(topo|primeiro|prioridade|critica|criticidade)\b/.test(n))return{type:'sort_results',raw:text,sort:/aguardando orcamento/.test(n)?'waiting_quote':'criticality',readOnly:true,confidence:.92};
     const plannerView=requestedPlannerView(text);
-    if(plannerView)return{type:'view',raw:text,view:plannerView,date:date||'',readOnly:true,confidence:.99};
-    if(date&&/\b(mostra|mostre|mostrar|abre|abra|abrir|ver|visualiza|visualizar|agenda)\b/.test(n))return{type:'show_date',raw:text,date,readOnly:true,confidence:.98};
+    if(plannerView)return{type:'view',raw:text,view:plannerView,date:date||todayISO(),readOnly:true,confidence:.99};
+    if(date&&wantsCalendarNavigation)return{type:'show_date',raw:text,date,readOnly:true,confidence:.98};
     if(/\b(mostra|mostre|mostrar|lista|liste|listar|quais|busca|busque|buscar|procura|procure|procurar|localiza|localize|localizar|filtra|filtre|filtrar)\b/.test(n)||/^(atrasadas|pendentes|paradas|recorrentes)$/.test(n)||(context.lastResultIds?.length&&/\b(agora|so|somente|dessas|desses|entre elas)\b.*\b(atrasad|pendente|parada|aguardando|concluid)\w*/.test(n))){const spec=parseFilter(text);const query=extractTaskQuery(text);return{type:'filter',raw:text,spec,query,withinContext:!!(context.lastResultIds?.length&&/\b(agora|so|somente|dessas|desses|entre elas)\b/.test(n)),readOnly:true,confidence:.93}}
     if(status&&/\b(coloca|coloque|muda|mude|altera|alterar|marca|marque|deixa|deixe|passa|passou|status|esta|está|ficou)\b/.test(n)){const ref=resolveTask(text);return{type:'status',raw:text,status,ref,readOnly:false,confidence:ref.task?Math.min(.99,ref.confidence):.66}}
-    if(date&&/\b(joga|jogue|reagenda|reagendar|remarca|remarcar|adia|adiar|muda a data|troca a data|passa para)\b/.test(n)){const ref=resolveTask(text);return{type:'reschedule',raw:text,date,ref,readOnly:false,confidence:ref.task?Math.min(.98,ref.confidence):.65}}
+    if(date&&/\b(joga|jogue|jogar|reagenda|reagende|reagendar|remarca|remarque|remarcar|adia|adie|adiar|muda a data|mude a data|troca a data|troque a data|passa para|passe para|passar para|move para|mova para|mover para|deixa para|deixe para)\b/.test(n)){const ref=resolveTask(text);return{type:'reschedule',raw:text,date,ref,readOnly:false,confidence:ref.task?Math.min(.98,ref.confidence):.65}}
     if(/\b(conclui|concluir|finaliza|finalizar|encerra|encerrar|resolve|resolvida)\b/.test(n)){const ref=resolveTask(text,{includeClosed:true});return{type:'complete',raw:text,ref,readOnly:false,confidence:ref.task?Math.min(.98,ref.confidence):.64}}
     if(/\b(reabre|reabrir|volta para a fazer|retoma|retomar)\b/.test(n)){const ref=resolveTask(text,{includeClosed:true});return{type:'reopen',raw:text,ref,readOnly:false,confidence:ref.task?Math.min(.98,ref.confidence):.64}}
     if(/\b(abre|abrir|mostra detalhes|ver detalhes|detalhes da)\b/.test(n)){const ref=resolveTask(text,{includeClosed:true});return{type:'open_task',raw:text,ref,readOnly:true,confidence:ref.task?Math.min(.98,ref.confidence):.64}}
@@ -7167,8 +7192,9 @@ function normalizeText(str) {
       speak('Responda sim para executar, corrigir para editar ou cancelar.',true);return true;
     }
     if(pending.type==='choose_task'){
-      let selected=null;const index=numberFromText(answer);if(index&&pending.choices[index-1])selected=taskById(pending.choices[index-1]);if(!selected){const candidates=semanticCandidates(answer,{includeClosed:true,limit:4});selected=candidates[0]?.task||null}
-      if(!selected){speak('Não consegui identificar qual das opções você escolheu. Diga primeira, segunda ou o assunto da tarefa.',true);return true}
+      let selected=null;const visibleNumber=explicitTaskNumber(answer);if(visibleNumber){const byVisibleNumber=resolveNumber(visibleNumber);if(byVisibleNumber&&pending.choices.map(Number).includes(Number(byVisibleNumber.id)))selected=byVisibleNumber}
+      const index=numberFromText(answer);if(!selected&&index&&pending.choices[index-1])selected=taskById(pending.choices[index-1]);if(!selected){const candidates=semanticCandidates(extractTaskQuery(answer)||answer,{includeClosed:true,limit:4});selected=candidates.find(item=>pending.choices.map(Number).includes(Number(item.task.id)))?.task||null}
+      if(!selected){speak('Não consegui identificar qual tarefa você escolheu. Diga o número que aparece no card, por exemplo, tarefa 4.',true);return true}
       const plan={...pending.plan,ref:{task:selected,confidence:.97,source:'clarification'},confidence:.97};clearPending();return prepareExecution([plan],pending.original||answer);
     }
     if(pending.type==='missing_task'){
@@ -7190,7 +7216,7 @@ function normalizeText(str) {
     if(slots.date===undefined||slots.date===null){askPending({type:'create',step:'date',slots,original},'Qual é o prazo? Você também pode dizer sem prazo.');return true}
     const plan={type:'create',slots,raw:original,readOnly:false,confidence:.98};clearPending();return prepareExecution([plan],original);
   }
-  function choicePrompt(candidates){return`Encontrei mais de uma tarefa. Diga ${candidates.slice(0,3).map((x,i)=>`${i+1} para ${x.task.nome}`).join(', ')}.`}
+  function choicePrompt(candidates){return`Encontrei mais de uma tarefa parecida. Diga ${candidates.slice(0,3).map(x=>`tarefa ${taskNumber(x.task)} para ${x.task.nome}`).join(', ou ')}.`}
   function prepareExecution(plans,original){
     let previousCreate=false;for(const plan of plans){if(plan.type==='create'){previousCreate=true;continue}if(plan.ref?.ambiguous){askPending({type:'choose_task',choices:plan.ref.candidates.map(x=>x.task.id),plan,original},choicePrompt(plan.ref.candidates));return true}if(['status','reschedule','complete','reopen','open_task'].includes(plan.type)){if(previousCreate&&(!plan.ref?.task||['context','context-fallback'].includes(plan.ref?.source))){plan.targetFromPrevious=true;continue}if(!plan.ref?.task){askPending({type:'missing_task',plan,original},plan.ref?.error||'Qual tarefa você quer alterar? Diga o número ou o assunto.');return true}}}
     const mutating=plans.filter(p=>!p.readOnly);const minimum=Math.min(...plans.map(p=>Number(p.confidence||.7)),1);if(mutating.length&&(plans.length>1||minimum<settings.confirmBelow)){
@@ -8157,45 +8183,68 @@ textarea.j18-field{min-height:100px;resize:vertical;line-height:1.55}
   'use strict';
   const AI_CLOUD_KEY='jarvis18.aiCloud.v1';
   const AI_MEMORY_KEY='jarvis18.aiConversation.v1';
-  let state={configured:false,enabled:true,model:'openai/gpt-oss-20b',endpoint:'',accessToken:'',busy:false};
-  let localProcessor=null;
+  const AI_USAGE_KEY='jarvis18.aiUsage.v1';
+  const MODEL='openai/gpt-oss-20b';
+  const responseCache=new Map();
+  let state={configured:false,enabled:true,model:MODEL,endpoint:'',accessToken:'',busy:false,cooldownUntil:0,lastCallAt:0,lastUsage:null};
   const $=id=>document.getElementById(id);
-  const esc=value=>String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const toast=(message,icon='fa-brain')=>typeof showToast==='function'?showToast(message,icon):console.log(message);
   const speak=message=>typeof falar==='function'?falar(String(message||'')):toast(message);
   function setDot(mode){const dot=document.querySelector('#jarvisAiButton .jarvis-ai-dot');if(!dot)return;dot.className=`jarvis-ai-dot ${mode?`is-${mode}`:''}`;}
-  function cloudSettings(){try{const saved=JSON.parse(localStorage.getItem(AI_CLOUD_KEY)||'{}');return{endpoint:String(saved.endpoint||'').replace(/\/+$/,''),accessToken:String(saved.accessToken||''),model:['openai/gpt-oss-20b','openai/gpt-oss-120b'].includes(saved.model)?saved.model:'openai/gpt-oss-20b',enabled:saved.enabled!==false};}catch(_){return{endpoint:'',accessToken:'',model:'openai/gpt-oss-20b',enabled:true};}}
-  function persistCloudSettings(next){const safe={endpoint:String(next.endpoint||'').trim().replace(/\/+$/,''),accessToken:String(next.accessToken||'').trim(),model:next.model,enabled:next.enabled!==false};localStorage.setItem(AI_CLOUD_KEY,JSON.stringify(safe));state={...state,...safe,configured:!!(safe.endpoint&&safe.accessToken)};return safe;}
-  async function request(path,options={}){const cfg=cloudSettings();if(!cfg.endpoint)throw new Error('Informe o endereço do Jarvis Cloud Brain.');const res=await fetch(`${cfg.endpoint}${path}`,{...options,headers:{'Content-Type':'application/json','X-Jarvis-Token':cfg.accessToken,...(options.headers||{})}});let data={};try{data=await res.json()}catch(_){ }if(!res.ok)throw new Error(data.error||`Erro ${res.status}`);return data;}
+  function cloudSettings(){try{const saved=JSON.parse(localStorage.getItem(AI_CLOUD_KEY)||'{}');return{endpoint:String(saved.endpoint||'').replace(/\/+$/,''),accessToken:String(saved.accessToken||''),model:MODEL,enabled:saved.enabled!==false};}catch(_){return{endpoint:'',accessToken:'',model:MODEL,enabled:true};}}
+  function persistCloudSettings(next){const safe={endpoint:String(next.endpoint||'').trim().replace(/\/+$/,''),accessToken:String(next.accessToken||'').trim(),model:MODEL,enabled:next.enabled!==false};localStorage.setItem(AI_CLOUD_KEY,JSON.stringify(safe));state={...state,...safe,configured:!!(safe.endpoint&&safe.accessToken)};return safe;}
+  async function request(path,options={}){const cfg=cloudSettings();if(!cfg.endpoint)throw new Error('Informe o endereço do Jarvis Cloud Brain.');let lastError;for(let attempt=0;attempt<2;attempt++){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);try{const res=await fetch(`${cfg.endpoint}${path}`,{...options,signal:controller.signal,headers:{'Content-Type':'application/json','X-Jarvis-Token':cfg.accessToken,...(options.headers||{})}});let data={};try{data=await res.json()}catch(_){ }if(!res.ok){const error=new Error(data.error||`Erro ${res.status}`);error.status=res.status;error.retryAfter=Math.max(0,Number(data.retry_after)||0);throw error;}return data;}catch(error){lastError=error?.name==='AbortError'?new Error('A resposta demorou além do esperado.'):error;if(attempt===0&&(!error?.status||[500,502,503,504].includes(error.status))){await new Promise(resolve=>setTimeout(resolve,550));continue;}break;}finally{clearTimeout(timer);}}throw lastError||new Error('Falha de conexão com o Jarvis Cloud Brain.');}
   function inject(){
     const host=$('mobileJarvisActions')||document.querySelector('.glass-header>div:nth-child(2)');
     if(host&&!$('jarvisAiButton'))host.insertAdjacentHTML('beforeend',`<button id="jarvisAiButton" class="ws10-top-action" type="button" title="Configurações da inteligência artificial" aria-label="Configurações da inteligência artificial"><span class="jarvis-ai-dot"></span><i class="fas fa-wand-magic-sparkles"></i><span>IA</span></button>`);
-    if(!$('jarvisAiModal'))document.body.insertAdjacentHTML('beforeend',`<div id="jarvisAiModal" onclick="if(event.target===this)JarvisAI.close()"><div class="jarvis-ai-card"><div class="jarvis-ai-head"><div><div class="text-[9px] font-black uppercase tracking-[.18em] text-cyan-300">Groq • Jarvis Cloud Brain</div><h2 class="text-lg font-black text-white mt-1">Inteligência Artificial do Jarvis</h2><p class="text-xs text-slate-400 mt-1">Conversa e agenda funcionando diretamente pelo GitHub Pages.</p></div><button class="jarvis-ai-btn" onclick="JarvisAI.close()"><i class="fas fa-xmark"></i></button></div><div class="jarvis-ai-grid"><div><label class="jarvis-ai-label">Endereço do Cloudflare Worker</label><input id="jarvisAiEndpoint" class="jarvis-ai-field" type="url" autocomplete="off" placeholder="https://jarvis-cloud-brain.seunome.workers.dev"></div><div><label class="jarvis-ai-label">Código pessoal de acesso</label><input id="jarvisAiAccessToken" class="jarvis-ai-field" type="password" autocomplete="off" placeholder="O mesmo código cadastrado no Cloudflare"></div><div><label class="jarvis-ai-label">Modelo</label><select id="jarvisAiModel" class="jarvis-ai-field"><option value="openai/gpt-oss-20b">GPT-OSS 20B — rápido e econômico</option><option value="openai/gpt-oss-120b">GPT-OSS 120B — mais inteligente</option></select></div><label class="flex items-center gap-3 text-xs text-slate-300"><input id="jarvisAiEnabled" type="checkbox" class="accent-cyan-500"> Ativar conversa inteligente, contexto e funções da agenda</label><div id="jarvisAiStatus" class="jarvis-ai-status">Informe o endereço e o código de acesso para conectar.</div></div><div class="jarvis-ai-actions"><button class="jarvis-ai-btn" onclick="JarvisAI.clearMemory()"><i class="fas fa-eraser mr-1"></i>Limpar conversa</button><button class="jarvis-ai-btn" onclick="JarvisAI.test()"><i class="fas fa-plug mr-1"></i>Testar conexão</button><button class="jarvis-ai-btn" onclick="JarvisAI.close()">Cancelar</button><button class="jarvis-ai-btn primary" onclick="JarvisAI.save(true)"><i class="fas fa-floppy-disk mr-1"></i>Salvar e testar</button></div></div></div>`);
+    if(!$('jarvisAiModal'))document.body.insertAdjacentHTML('beforeend',`<div id="jarvisAiModal" onclick="if(event.target===this)JarvisAI.close()"><div class="jarvis-ai-card"><div class="jarvis-ai-head"><div><div class="text-[9px] font-black uppercase tracking-[.18em] text-cyan-300">Groq • Jarvis Cloud Brain</div><h2 class="text-lg font-black text-white mt-1">Inteligência Artificial do Jarvis</h2><p class="text-xs text-slate-400 mt-1">Os motores locais têm prioridade. A Groq é consultada apenas como último recurso.</p></div><button class="jarvis-ai-btn" onclick="JarvisAI.close()"><i class="fas fa-xmark"></i></button></div><div class="jarvis-ai-grid"><div><label class="jarvis-ai-label">Endereço do Cloudflare Worker</label><input id="jarvisAiEndpoint" class="jarvis-ai-field" type="url" autocomplete="off" placeholder="https://jarvis-cloud-brain.seunome.workers.dev"></div><div><label class="jarvis-ai-label">Código pessoal de acesso</label><input id="jarvisAiAccessToken" class="jarvis-ai-field" type="password" autocomplete="off" placeholder="O mesmo código cadastrado no Cloudflare"></div><label class="flex items-center gap-3 text-xs text-slate-300"><input id="jarvisAiEnabled" type="checkbox" class="accent-cyan-500"> Ativar IA somente para comandos não reconhecidos e conversa geral</label><div id="jarvisAiStatus" class="jarvis-ai-status">Informe o endereço e o código de acesso para conectar.</div></div><div class="jarvis-ai-actions"><button class="jarvis-ai-btn" onclick="JarvisAI.clearMemory()"><i class="fas fa-eraser mr-1"></i>Limpar conversa</button><button class="jarvis-ai-btn" onclick="JarvisAI.test()"><i class="fas fa-plug mr-1"></i>Testar conexão</button><button class="jarvis-ai-btn" onclick="JarvisAI.close()">Cancelar</button><button class="jarvis-ai-btn primary" onclick="JarvisAI.save(true)"><i class="fas fa-floppy-disk mr-1"></i>Salvar e testar</button></div></div></div>`);
     $('jarvisAiButton')?.addEventListener('click',open);
   }
   async function refresh(){const cfg=cloudSettings();state={...state,...cfg,configured:!!(cfg.endpoint&&cfg.accessToken)};const endpoint=$('jarvisAiEndpoint'),token=$('jarvisAiAccessToken');if(endpoint)endpoint.value=cfg.endpoint;if(token)token.value=cfg.accessToken;renderStatus();if(!state.configured){setDot('');return;}try{await request('/health');setDot(state.enabled?'online':'');renderStatus();}catch(e){setDot('error');renderStatus(e.message);}}
-  function conversation(){try{const value=JSON.parse(localStorage.getItem(AI_MEMORY_KEY)||'[]');return Array.isArray(value)?value.slice(-12):[];}catch(_){return[];}}
-  function rememberConversation(user,assistant){const items=conversation();items.push({role:'user',content:String(user||'').slice(0,1600)},{role:'assistant',content:String(assistant||'').slice(0,1600)});try{localStorage.setItem(AI_MEMORY_KEY,JSON.stringify(items.slice(-12)));}catch(_){}}
+  function conversation(){try{const value=JSON.parse(localStorage.getItem(AI_MEMORY_KEY)||'[]');return Array.isArray(value)?value.slice(-4).map(item=>({role:item.role,content:String(item.content||'').slice(0,400)})):[];}catch(_){return[];}}
+  function rememberConversation(user,assistant){const items=conversation();items.push({role:'user',content:String(user||'').slice(0,400)},{role:'assistant',content:String(assistant||'').slice(0,400)});try{localStorage.setItem(AI_MEMORY_KEY,JSON.stringify(items.slice(-4)));}catch(_){}}
+  function usage(){try{const day=new Date().toISOString().slice(0,10),value=JSON.parse(localStorage.getItem(AI_USAGE_KEY)||'{}');return value.day===day?value:{day,calls:0,prompt:0,completion:0,total:0};}catch(_){return{day:new Date().toISOString().slice(0,10),calls:0,prompt:0,completion:0,total:0};}}
+  function recordUsage(meta){if(!meta||typeof meta!=='object')return;const value=usage();value.calls+=1;value.prompt+=Number(meta.prompt_tokens)||0;value.completion+=Number(meta.completion_tokens)||0;value.total+=Number(meta.total_tokens)||0;value.remaining_tokens=Number.isFinite(Number(meta.remaining_tokens))?Number(meta.remaining_tokens):value.remaining_tokens;value.reset_tokens=String(meta.reset_tokens||value.reset_tokens||'');try{localStorage.setItem(AI_USAGE_KEY,JSON.stringify(value));}catch(_){}state.lastUsage=meta;}
   function clearMemory(){try{localStorage.removeItem(AI_MEMORY_KEY);}catch(_){}renderStatus('Memória da conversa apagada. As tarefas não foram alteradas.');toast('Conversa inteligente reiniciada.','fa-eraser');}
-  function renderStatus(custom=''){const box=$('jarvisAiStatus');if(!box)return;const turns=Math.floor(conversation().length/2);box.textContent=custom||(state.configured?`Jarvis Cloud Brain ${state.enabled?'ativado':'desativado'} • ${state.model} • ${turns} interação(ões) na memória`:'Cloud Brain ainda não configurado. O cérebro local continua funcionando.');const model=$('jarvisAiModel'),enabled=$('jarvisAiEnabled');if(model)model.value=state.model;if(enabled)enabled.checked=state.enabled;}
+  function renderStatus(custom=''){const box=$('jarvisAiStatus');if(!box)return;const turns=Math.floor(conversation().length/2),used=usage();box.textContent=custom||(state.configured?`IA ${state.enabled?'ativada':'desativada'} como último recurso • GPT-OSS 20B • ${used.calls||0} chamada(s) e ${used.total||0} tokens hoje neste navegador • ${turns} interação(ões) na memória`:'Cloud Brain ainda não configurado. Todos os comandos locais continuam funcionando.');const enabled=$('jarvisAiEnabled');if(enabled)enabled.checked=state.enabled;}
   function open(){inject();$('jarvisAiModal')?.classList.add('is-open');refresh();}
   function close(){$('jarvisAiModal')?.classList.remove('is-open');}
-  async function save(testAfter=false){try{persistCloudSettings({endpoint:$('jarvisAiEndpoint')?.value,accessToken:$('jarvisAiAccessToken')?.value,model:$('jarvisAiModel')?.value,enabled:!!$('jarvisAiEnabled')?.checked});toast('Configuração do Jarvis Cloud Brain salva.','fa-circle-check');await refresh();if(testAfter)await test();}catch(e){setDot('error');renderStatus(e.message);toast(e.message,'fa-triangle-exclamation');}}
-  async function test(){try{setDot('busy');renderStatus('Testando o Jarvis Cloud Brain e a Groq...');const cfg=cloudSettings();const data=await request('/test',{method:'POST',body:JSON.stringify({model:cfg.model})});setDot('online');renderStatus(data.message||'Conexão confirmada.');toast('Jarvis Cloud Brain conectado.','fa-plug-circle-check');}catch(e){setDot('error');renderStatus(e.message);toast(e.message,'fa-triangle-exclamation');}}
-  function taskSnapshot(){return (Array.isArray(window.tasks)?window.tasks:typeof tasks!=='undefined'&&Array.isArray(tasks)?tasks:[]).map(t=>({id:Number(t.id),title:String(t.nome||t.title||''),description:String(t.descricao||'').slice(0,500),category:String(t.categoria||''),date:t.proxima_data||null,priority:t.prioridade||null,status:t.status||'A Fazer'}));}
-  function shouldUseAI(raw){const n=String(raw||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(/\b(ia|inteligencia artificial|groq|jarvis)\b/.test(n))return true;if(/\b(organiza meu dia|analisa minha agenda|briefing inteligente|o que devo priorizar|resuma minha semana|planeja meu dia|tudo bem|esta disponivel|podemos conversar|o que voce acha|me explique|me ajuda a entender)\b/.test(n))return true;try{return typeof detectIntent==='function'&&detectIntent(raw)?.intent==='unknown';}catch(_){return false;}}
-  function findTask(id){return taskSnapshot().length&&((Array.isArray(window.tasks)?window.tasks:tasks).find(t=>Number(t.id)===Number(id)));}
+  async function save(testAfter=false){try{persistCloudSettings({endpoint:$('jarvisAiEndpoint')?.value,accessToken:$('jarvisAiAccessToken')?.value,enabled:!!$('jarvisAiEnabled')?.checked});toast('Configuração do Jarvis Cloud Brain salva.','fa-circle-check');await refresh();if(testAfter)await test();}catch(e){setDot('error');renderStatus(e.message);toast(e.message,'fa-triangle-exclamation');}}
+  async function test(){try{setDot('busy');renderStatus('Testando o Jarvis Cloud Brain e a Groq...');const data=await request('/test',{method:'POST',body:'{}'});recordUsage(data._meta);setDot('online');renderStatus(data.message||'Conexão confirmada.');toast('Jarvis Cloud Brain conectado.','fa-plug-circle-check');}catch(e){setDot('error');renderStatus(e.message);toast(e.message,'fa-triangle-exclamation');}}
+  function sourceTasks(){return Array.isArray(window.tasks)?window.tasks:typeof tasks!=='undefined'&&Array.isArray(tasks)?tasks:[];}
+  function normalizeText(value){return String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,' ');}
+  function isAgendaRequest(raw){const n=normalizeText(raw);if(/\b(agenda|tarefa|tarefas|demanda|demandas|compromisso|compromissos|lembrete|lembretes)\b/.test(n))return true;if(/\b(cria|crie|criar|adicione|adicionar|conclua|concluir|reagende|reagendar)\b/.test(n))return true;return /\b(condominio|fornecedor|orcamento)\b/.test(n)&&/\b(prazo|prioridade|pendente|atrasada|status|tarefa|demanda|agenda)\b/.test(n);}
+  function taskSnapshot(raw){
+    if(!isAgendaRequest(raw))return[];
+    const n=normalizeText(raw);
+    if(/\b(cria|crie|criar|adicione|adicionar|nova tarefa|novo lembrete|me lembre)\b/.test(n)&&!/\b(conclua|concluir|reagende|reagendar|altere|alterar|atualize|atualizar|analise|analisar|resuma|resumir|priorize|priorizar)\b/.test(n))return[];
+    const spokenNumber=Number(n.match(/\b(?:tarefa|demanda|item|card|cartao)\s+(?:numero\s+)?(\d{1,3})\b/)?.[1]||0);
+    const stop=new Set(['para','como','uma','umas','uns','que','com','sem','por','das','dos','de','da','do','em','na','no','nas','nos','meu','minha','meus','minhas','tarefa','tarefas','demanda','demandas','item','card','cartao','numero','agenda','jarvis','hoje','amanha','reagende','reagendar','reagenda','remarque','remarcar','remarca','mova','mover','jogue','jogar','conclua','concluir','altere','alterar','data','dia','mes','ano']);
+    const tokens=[...new Set(n.split(/\s+/).filter(word=>word.length>2&&!stop.has(word)&&!/\d/.test(word)))];
+    let recentIds=[];try{recentIds=(window.Jarvis17?.context?.()?.lastResultIds||[]).slice(-5).map(Number);}catch(_){}
+    const recentSet=new Set(recentIds),today=new Date().toISOString().slice(0,10);
+    const scored=sourceTasks().map((task,index)=>{
+      const title=normalizeText(task.nome||task.title),category=normalizeText(task.categoria),description=normalizeText(task.descricao).slice(0,160),status=normalizeText(task.status);
+      let voiceNumber=null;try{voiceNumber=typeof getTaskVoiceNumber==='function'?Number(getTaskVoiceNumber(task.id))||null:null;}catch(_){}
+      let score=spokenNumber&&voiceNumber===spokenNumber?1000:0;
+      if(recentSet.has(Number(task.id)))score+=8;
+      for(const token of tokens){if(title.includes(token))score+=12;if(category.includes(token))score+=6;if(description.includes(token))score+=3;if(status.includes(token))score+=2;}
+      const date=String(task.proxima_data||'');if(date&&date<=today)score+=2;if(!/concluido|cancelado/.test(status))score+=1;
+      return{task,index,score,date,voiceNumber};
+    }).sort((a,b)=>b.score-a.score||String(a.date||'9999').localeCompare(String(b.date||'9999'))||a.index-b.index).slice(0,8);
+    return scored.map(({task,voiceNumber})=>({id:Number(task.id),voice_number:voiceNumber,title:String(task.nome||task.title||'').slice(0,100),description:String(task.descricao||'').slice(0,100),category:String(task.categoria||'').slice(0,50),date:task.proxima_data||null,priority:task.prioridade||null,status:task.status||'A Fazer'}));
+  }
+  function contextSnapshot(){let value={};try{value=window.Jarvis17?.context?.()||{};}catch(_){}const today=new Date().toISOString().slice(0,10),list=sourceTasks(),open=list.filter(task=>!/concluido|cancelado/.test(normalizeText(task.status))),overdue=open.filter(task=>task.proxima_data&&String(task.proxima_data)<today),dueToday=open.filter(task=>String(task.proxima_data||'')===today);return{today,lastTaskId:Number(value.lastTaskId)||null,lastCategory:String(value.lastCategory||'').slice(0,80),lastResultIds:Array.isArray(value.lastResultIds)?value.lastResultIds.slice(-8).map(Number):[],summary:{total:list.length,open:open.length,overdue:overdue.length,due_today:dueToday.length}};}
+  function localConversationalReply(raw){const n=normalizeText(raw).replace(/^\s*(?:ei|ola|alo|ok|okay)?\s*(?:jarvis|javis|jarves|jervis|jarbas)\b[\s,:;-]*/,'').trim();if(/\b(esta disponivel|voce esta ai|ta ai|esta me ouvindo|pode me responder)\b/.test(n))return'Estou disponível e ouvindo, senhor. Todos os sistemas locais estão operacionais.';if(/^(tudo bem|como voce esta|como vai voce|esta tudo bem)[?\s]*$/.test(n))return'Tudo em ordem por aqui, senhor. Pronto para ajudar no que precisar.';if(/^(obrigado|obrigada|valeu|agradecido)[.!\s]*$/.test(n))return'Sempre às ordens, senhor.';if(/^(bom dia|boa tarde|boa noite)[.!\s]*$/.test(n))return`${n.startsWith('bom dia')?'Bom dia':n.startsWith('boa tarde')?'Boa tarde':'Boa noite'}, senhor. Estou pronto para ajudar.`;return'';}
+  function handleFallback(raw){const local=localConversationalReply(raw);if(local){speak(local);setDot(state.enabled?'online':'');return true;}const cfg=cloudSettings();if(!(cfg.endpoint&&cfg.accessToken&&cfg.enabled))return false;interpret(raw);return true;}
+  function findTask(id){return sourceTasks().find(t=>Number(t.id)===Number(id));}
   function persist(){if(typeof saveHistory==='function')saveHistory();if(typeof saveToStorage==='function')saveToStorage();else localStorage.setItem('tasks',JSON.stringify(tasks));if(typeof updateCategoryFilter==='function')updateCategoryFilter();if(typeof render==='function')render();}
   function createTask(action){const list=(Array.isArray(window.tasks)?window.tasks:tasks);const id=list.length?Math.max(...list.map(t=>Number(t.id)||0))+1:1;const now=new Date().toISOString();const raw={id,nome:action.title||'Nova tarefa',descricao:action.description||'',categoria:action.category||'Assistente IA',proxima_data:action.date||new Date().toISOString().slice(0,10),prioridade:action.priority||'Média',status:action.status||'A Fazer',recorrencia:{ativa:false,tipo:''},created_at:now,updated_at:now,origem:'groq-jarvis-18'};list.push(typeof window.normalizeTask==='function'?window.normalizeTask(raw):raw);persist();return raw;}
   function execute(result){const actions=Array.isArray(result.actions)?result.actions:[];let changed=0;for(const action of actions){if(action.type==='create_task'){const label=action.title||'Nova tarefa';if(confirm(`A IA interpretou que deve criar a tarefa:\n\n${label}\n\nConfirma?`)){createTask(action);changed++;}}else if(['update_status','reschedule'].includes(action.type)){const task=findTask(action.task_id);if(!task)continue;const description=action.type==='reschedule'?`reagendar “${task.nome}” para ${action.date}`:`alterar “${task.nome}” para ${action.status}`;if(confirm(`A IA sugere ${description}.\n\nConfirma?`)){if(action.type==='reschedule'&&action.date)task.proxima_data=action.date;if(action.type==='update_status'&&action.status)task.status=action.status;task.updated_at=new Date().toISOString();persist();changed++;}}}if(result.speech)speak(result.speech);else if(changed)speak(`${changed} alteração ou alterações concluídas.`);}
-  async function interpret(raw){if(state.busy)return true;state.busy=true;setDot('busy');toast('Jarvis está analisando...','fa-wand-magic-sparkles');try{const cfg=cloudSettings();const data=await request('/interpret',{method:'POST',body:JSON.stringify({command:String(raw),tasks:taskSnapshot(),context:window.Jarvis17?.context?.()||{},conversation:conversation(),model:cfg.model})});rememberConversation(raw,data.speech||'Ação concluída.');execute(data);setDot('online');renderStatus();}catch(e){setDot('error');toast(`IA indisponível: ${e.message}`,'fa-triangle-exclamation');speak('Não consegui acessar a inteligência artificial. Os comandos locais continuam disponíveis.');}finally{state.busy=false;}return true;}
-  function aiReadyFor(raw){const cfg=cloudSettings();return !!(cfg.endpoint&&cfg.accessToken&&cfg.enabled&&shouldUseAI(raw));}
-  function collectFinalTranscript(event){try{let text='',confidence=0;for(let i=Number(event?.resultIndex)||0;i<(event?.results?.length||0);i++){const result=event.results[i];if(result?.isFinal){const part=String(result[0]?.transcript||'').trim();if(part)text+=(text?' ':'')+part;confidence=Math.max(confidence,Number(result[0]?.confidence||0));}}return{text:text.trim(),confidence};}catch(_){return{text:'',confidence:0};}}
-  function mirrorAiTranscript(text,confidence=0){const live=$('j17LiveTranscript'),meta=$('j17VoiceMeta'),input=$('j17VoiceInput'),dock=$('j17VoiceDock');if(live){live.textContent=text;live.dataset.state='final';}if(meta)meta.textContent=`TRANSCRIÇÃO FINAL${confidence?` • ${Math.round(confidence*100)}%`:''} • CLOUD BRAIN`;if(input)input.value=text;if(dock)dock.classList.add('is-open');}
-  function installRecognitionBridge(){try{if(typeof recognition==='undefined'||!recognition||recognition.__jarvisAiCloudBridge)return;recognition.__jarvisAiCloudBridge=true;const baseResult=recognition.onresult;recognition.onresult=function(event){const heard=collectFinalTranscript(event);if(heard.text&&aiReadyFor(heard.text)){mirrorAiTranscript(heard.text,heard.confidence);interpret(heard.text);return true;}return typeof baseResult==='function'?baseResult.apply(this,arguments):undefined;};}catch(e){console.warn('Jarvis Cloud Brain: ponte de voz indisponível',e);}}
-  function installDockBridge(){try{if(!window.Jarvis17||typeof window.Jarvis17.executeDock!=='function'||window.Jarvis17.__jarvisAiDockBridge)return;window.Jarvis17.__jarvisAiDockBridge=true;const baseDock=window.Jarvis17.executeDock;window.Jarvis17.executeDock=function(){const text=String($('j17VoiceInput')?.value||'').trim();if(text&&aiReadyFor(text)){$('j17VoiceDock')?.classList.remove('is-open');interpret(text);return true;}return baseDock.apply(this,arguments);};}catch(e){console.warn('Jarvis Cloud Brain: ponte de texto indisponível',e);}}
-  function install(){inject();localProcessor=window.processVoiceCommand;if(typeof localProcessor==='function')window.processVoiceCommand=function(raw){if(aiReadyFor(raw)){interpret(raw);return true;}return localProcessor.apply(this,arguments);};installRecognitionBridge();installDockBridge();refresh();}
-  window.JarvisAI={open,close,save,test,refresh,interpret,clearMemory,conversation,state:()=>({...state})};
+  function failureSpeech(error){if(Number(error?.status)===429){const seconds=Math.max(1,Math.ceil(Number(error?.retryAfter)||15));return`A Groq pediu uma pausa temporária. Tente novamente em cerca de ${seconds} segundos, senhor.`;}if(/demorou/i.test(String(error?.message)))return'A inteligência artificial demorou para responder. Tente novamente em alguns instantes, senhor.';return'Não consegui acessar a inteligência artificial neste momento. Os comandos locais continuam disponíveis.';}
+  async function interpret(raw){if(state.busy){speak('Ainda estou processando o pedido anterior, senhor.');return true;}const command=String(raw||'').trim().slice(0,1000);if(!command)return true;const key=normalizeText(command),cached=responseCache.get(key);if(cached&&Date.now()-cached.at<120000){speak(cached.speech);return true;}if(state.cooldownUntil>Date.now()){speak(`A inteligência externa está em pausa por mais ${Math.ceil((state.cooldownUntil-Date.now())/1000)} segundos. Os recursos locais seguem disponíveis.`);return true;}state.busy=true;setDot('busy');toast('Jarvis está analisando...','fa-wand-magic-sparkles');try{const spacing=Math.max(0,2100-(Date.now()-state.lastCallAt));if(spacing)await new Promise(resolve=>setTimeout(resolve,spacing));const mode=isAgendaRequest(command)?'agenda':'chat',tasks=mode==='agenda'?taskSnapshot(command):[];state.lastCallAt=Date.now();const data=await request('/interpret',{method:'POST',body:JSON.stringify({command,mode,tasks,context:mode==='agenda'?contextSnapshot():{today:new Date().toISOString().slice(0,10)},conversation:mode==='chat'?conversation():[]})});recordUsage(data._meta);rememberConversation(raw,data.speech||'Ação concluída.');if(data.speech&&!(data.actions||[]).length){responseCache.set(key,{at:Date.now(),speech:data.speech});if(responseCache.size>20)responseCache.delete(responseCache.keys().next().value);}execute(data);setDot('online');renderStatus();}catch(e){if(Number(e?.status)===429)state.cooldownUntil=Date.now()+Math.max(15000,(Number(e.retryAfter)||0)*1000);setDot('error');toast(`IA indisponível: ${e.message}`,'fa-triangle-exclamation');renderStatus(e.message);speak(failureSpeech(e));}finally{state.busy=false;}return true;}
+  function install(){inject();refresh();}
+  window.JarvisAI={open,close,save,test,refresh,interpret,handleFallback,clearMemory,conversation,usage,isAgendaRequest,taskSnapshot,state:()=>({...state})};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(install,120));else setTimeout(install,120);
 })();
 </script>
